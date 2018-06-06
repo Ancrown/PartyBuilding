@@ -7,4 +7,5 @@ package zhuri.com.partybuilding.activity;
  */
 
 public class a {
+    private String i;
 }
