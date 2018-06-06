@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hall_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/navigation_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl"></FrameLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_color">
+
+        <RadioGroup
+
+            android:id="@+id/navigation_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:checkedButton="@+id/navigation_hall"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/navigation_hall"
+                style="@style/navigationRB"
+                android:drawableTop="@drawable/navigation_home_rb"
+                android:text="@string/home" />
+
+            <RadioButton
+                android:id="@+id/navigation_consultation"
+                style="@style/navigationRB"
+                android:drawableTop="@drawable/navigation_consultation_rb"
+                android:text="@string/consultation" />
+
+            <RadioButton
+                android:id="@+id/navigation_activities"
+                style="@style/navigationRB"
+                android:drawableTop="@drawable/navigation_activities_rb"
+                android:text="@string/activities" />
+
+            <RadioButton
+                android:id="@+id/navigation_study"
+                style="@style/navigationRB"
+                android:drawableTop="@drawable/navigation_study_rb"
+                android:text="@string/study" />
+
+            <RadioButton
+                android:id="@+id/navigation_my"
+                style="@style/navigationRB"
+                android:drawableTop="@drawable/navigation_my_rb"
+                android:text="@string/my" />
+        </RadioGroup>
+    </RelativeLayout>
+
+
+</RelativeLayout>

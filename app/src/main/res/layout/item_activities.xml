@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp90"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:id="@+id/item_activities_ll"
+    >
+
+    <View
+        android:id="@+id/item_activities_view"
+        android:layout_width="@dimen/dp3.5"
+        android:layout_height="match_parent"
+        android:background="@color/main_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp10"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp90"
+            android:layout_height="@dimen/dp75"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/item_activities_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp3"
+                android:scaleType="fitXY"
+                android:src="@drawable/photo7" />
+
+            <TextView
+                android:id="@+id/item_activities_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp3"
+                android:background="@drawable/label_yes"
+                android:paddingBottom="@dimen/dp4"
+                android:paddingLeft="@dimen/dp3"
+                android:paddingRight="@dimen/dp3"
+                android:paddingTop="@dimen/dp3"
+                android:text="进行中"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_8" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp13"
+                android:layout_marginRight="@dimen/dp11"
+                android:layout_toLeftOf="@+id/item_activities_button"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp6">
+
+                    <TextView
+                        android:id="@+id/item_activities_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp8"
+                        android:layout_toLeftOf="@+id/item_activities_istop"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="提图图图UN恩UI女司机本人特困昂卡罗纳按开关来了"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/text_size_13" />
+
+                    <TextView
+                        android:id="@+id/item_activities_istop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/fill_bg_red"
+                        android:paddingBottom="@dimen/dp1"
+                        android:paddingLeft="@dimen/dp3"
+                        android:paddingRight="@dimen/dp3"
+                        android:paddingTop="@dimen/dp1"
+                        android:text="置顶"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_9"
+                        android:visibility="gone"  />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/item_activities_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:drawableLeft="@drawable/address"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="地址：辽宁省沈阳市和平区文化路"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/item_activities_comment_join"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:maxLines="1"
+                    android:text="35条评论  12人参加"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_10" />
+
+                <TextView
+                    android:id="@+id/item_activities_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:maxLines="1"
+
+                    android:text="活动时间：2018-6-5 ~ 2018-7-5"
+                    android:textSize="@dimen/text_size_10" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/item_activities_button"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp23"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:gravity="center"
+                android:text="报名"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_11" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

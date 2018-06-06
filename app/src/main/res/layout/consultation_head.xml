@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <zhuri.com.partybuilding.view.BroadcastView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fra_consultation_bro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:circular_point="@drawable/selector_bg_point"
+        app:show_title="true"
+        app:title_color="#ffffff"
+        app:title_size="6sp"></zhuri.com.partybuilding.view.BroadcastView>
+</LinearLayout>

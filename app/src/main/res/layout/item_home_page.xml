@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+   >
+
+    <LinearLayout
+        android:id="@+id/item_home_page_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp85"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp19"
+        android:paddingRight="@dimen/dp18">
+
+        <ImageView
+            android:id="@+id/item_home_page_img"
+            android:layout_width="@dimen/dp93"
+            android:layout_height="@dimen/dp59"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp19"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_home_page_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:background="@drawable/fillet_background_bule"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp4"
+                    android:paddingRight="@dimen/dp4"
+                    android:paddingTop="@dimen/dp2"
+                    android:text="@string/party_center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_9"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/item_home_page_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="习近平书记讲话：XXXXXXXXXXXXXXXXXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_13" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_home_page_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp7"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp2"
+                android:maxLines="2"
+                android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_size_10" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp7">
+
+                <TextView
+                    android:id="@+id/item_home_page_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="2018-5-25 11:03"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_10" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_home_page_fabulous_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="14dp"
+                        android:drawableLeft="@drawable/fabulous"
+                        android:drawablePadding="@dimen/dp5"
+                        android:gravity="center"
+                        android:text="110"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/item_home_page_see_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/browse"
+                        android:drawablePadding="@dimen/dp5"
+                        android:gravity="center"
+                        android:text="23"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/text_size_10" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

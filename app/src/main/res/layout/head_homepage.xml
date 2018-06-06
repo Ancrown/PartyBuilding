@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <zhuri.com.partybuilding.view.BroadcastView
+        android:id="@+id/fra_home_bro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:circular_point="@drawable/selector_bg_point"
+        app:show_title="true"
+        app:title_color="#ffffff"
+        app:title_size="6sp"></zhuri.com.partybuilding.view.BroadcastView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp28"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp4"
+        android:background="@drawable/notice_background">
+
+        <TextView
+            android:id="@+id/fra_home_notice_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp41"
+            android:drawableLeft="@drawable/horn"
+            android:drawablePadding="@dimen/dp2"
+            android:text="公告:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12" />
+
+        <com.sunfusheng.marqueeview.MarqueeView
+            android:id="@+id/fra_home_marqueeview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp14"
+            android:layout_toRightOf="@+id/fra_home_notice_text"
+            android:padding="@dimen/dp5"
+            app:mvAnimDuration="500"
+            app:mvInterval="2000"
+            app:mvSingleLine="true"
+            app:mvTextColor="@color/white"
+            app:mvTextSize="@dimen/text_size_12" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp53"
+        android:layout_marginBottom="@dimen/dp9"
+        android:layout_marginTop="@dimen/dp9"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/fra_home_community_activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/community_activities"
+                android:drawablePadding="@dimen/dp5"
+                android:gravity="center"
+                android:text="@string/community_activities"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_11" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp3"
+            android:layout_marginRight="@dimen/dp3"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/fra_home_v_volunteer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/v_volunteer"
+                android:drawablePadding="@dimen/dp5"
+                android:gravity="center"
+                android:text="@string/v_volunteer"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_11" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/fra_home_v_wish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/v_wish"
+                android:drawablePadding="@dimen/dp5"
+                android:gravity="center"
+                android:text="@string/v_wish"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_11" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp83"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp18"
+            android:layout_weight="0.9"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_marginBottom="@dimen/dp3"
+                android:layout_weight="1"
+                android:background="@color/light_purple">
+
+                <TextView
+                    android:id="@+id/fra_home_online_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableLeft="@drawable/online_answer"
+                    android:drawablePadding="@dimen/dp5"
+                    android:gravity="center"
+                    android:text="@string/online_answer"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_weight="1"
+                android:background="@color/yellowish">
+
+                <TextView
+                    android:id="@+id/fra_home_two_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableLeft="@drawable/two_one"
+                    android:drawablePadding="@dimen/dp5"
+                    android:gravity="center"
+                    android:text="@string/two_one"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp7"
+            android:layout_marginRight="@dimen/dp18"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp3"
+                android:layout_weight="1"
+                android:background="@color/light_blue">
+
+                <TextView
+                    android:id="@+id/fra_home_nineteen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableTop="@drawable/nineteen"
+                    android:gravity="center"
+                    android:text="@string/nineteen"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/light_powder">
+
+                <TextView
+                    android:id="@+id/fra_home_work_guidance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/dp3"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableTop="@drawable/work_guidance"
+                    android:gravity="center"
+                    android:text="@string/work_guidance"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp25"
+        android:layout_marginTop="@dimen/dp9"
+        android:background="@color/red">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:drawableLeft="@drawable/arrow"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/news"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/fra_home_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp18"
+
+            android:text="@string/more"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12" />
+    </RelativeLayout>
+</LinearLayout>
