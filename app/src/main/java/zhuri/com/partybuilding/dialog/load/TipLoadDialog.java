@@ -72,15 +72,15 @@ public class TipLoadDialog {
 
     private static Handler sHandler = new Handler(Looper.getMainLooper());
     private MyDialog dialog;
-    private final GraduallyTextView loadText;
+    private final TextView loadText;
     private final ImageView img;
     private final TextView msg;
     private final ProgressBar progressBar;
     private final LinearLayout layout;
-    private FadeInTextView loadText2;
+    private TextView loadText2;
     private Context mContext;
     private int currentType;
-    private int dismissTime = 0;
+    private int dismissTime = 2000;
     private View view;
     /**
      * 消失监听
@@ -109,15 +109,15 @@ public class TipLoadDialog {
         img = (ImageView) view.findViewById(R.id.tip_img);
         msg = (TextView) view.findViewById(R.id.tip_text);
         progressBar = (ProgressBar) view.findViewById(R.id.lv_circularring);
-        loadText = (GraduallyTextView) view.findViewById(R.id.loading_text);
-        loadText2 = (FadeInTextView) view.findViewById(R.id.loading_text2);
+        loadText = (TextView) view.findViewById(R.id.loading_text);
+        loadText2 = (TextView) view.findViewById(R.id.loading_text2);
         changeUi(info, type);
         setNoShadowTheme();
     }
 
     private void changeUi(String info, int type) {
         loadText.setText(info);
-        loadText2.setTextString(info + ".", "...");
+        loadText2.setText(info + "...");
         msg.setText(info);
 
         if (type == ICON_TYPE_SUCCESS) {
@@ -348,17 +348,17 @@ public class TipLoadDialog {
         loadText.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
         return this;
     }
-
-    /**
-     * 设置加载一次文字的动画时间
-     *
-     * @param duration
-     * @return
-     */
-    public TipLoadDialog setLoadingTime(int duration) {
-        loadText.setDuration(duration);
-        return this;
-    }
+//
+//    /**
+//     * 设置加载一次文字的动画时间
+//     *
+//     * @param duration
+//     * @return
+//     */
+//    public TipLoadDialog setLoadingTime(int duration) {
+//        loadText.setDuration(duration);
+//        return this;
+//    }
 
     /**
      * 设置tip提示框时间
@@ -403,22 +403,22 @@ public class TipLoadDialog {
      */
     public void show() {
         dialog.show();
-        if (loadText.getVisibility() == View.VISIBLE) {
-            loadText.startLoading();
-        }
-        if (loadText2.getVisibility() == View.VISIBLE) {
-            loadText2.startFadeInAnimation();
-        }
+//        if (loadText.getVisibility() == View.VISIBLE) {
+//            loadText.startLoading();
+//        }
+//        if (loadText2.getVisibility() == View.VISIBLE) {
+//            loadText2.startFadeInAnimation();
+//        }
         //移除所有的message和callback,
         // 防止返回键dismiss后,callback没移除
         sHandler.removeCallbacksAndMessages(null);
         if (this.currentType != ICON_TYPE_LOADING && this.currentType != ICON_TYPE_LOADING2) {
-            if (loadText2.isLoading()) {
-                loadText2.stopFadeInAnimation();
-            }
-            if (loadText.isLoading()) {
-                loadText.stopLoading();
-            }
+//            if (loadText2.isLoading()) {
+//                loadText2.stopFadeInAnimation();
+//            }
+//            if (loadText.isLoading()) {
+//                loadText.stopLoading();
+//            }
             sHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -433,12 +433,12 @@ public class TipLoadDialog {
      */
     public void dismiss() {
         dialog.dismiss();
-        if (loadText.isLoading()) {
-            loadText.stopLoading();
-        }
-        if (loadText2.isLoading()) {
-            loadText2.stopFadeInAnimation();
-        }
+//        if (loadText.isLoading()) {
+//            loadText.stopLoading();
+//        }
+//        if (loadText2.isLoading()) {
+//            loadText2.stopFadeInAnimation();
+//        }
         if (listener != null) {
             listener.onDimissListener();
         }
@@ -455,12 +455,12 @@ public class TipLoadDialog {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 //拦截back键,防止loadview的内存泄漏
                 dialog.dismiss();
-                if (loadText.isLoading()) {
-                    loadText.stopLoading();
-                }
-                if (loadText2.isLoading()) {
-                    loadText2.stopFadeInAnimation();
-                }
+//                if (loadText.isLoading()) {
+//                    loadText.stopLoading();
+//                }
+//                if (loadText2.isLoading()) {
+//                    loadText2.stopFadeInAnimation();
+//                }
             }
             return super.onKeyDown(keyCode, event);
         }

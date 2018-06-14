@@ -24,7 +24,10 @@ public class HomePageItemBean {
     //浏览数
     private String seeNum;
 
-    public HomePageItemBean(String id, String img, String label, String title, String text, String time, String fabulousNum, String seeNum) {
+    //是否登陆可看
+    private String purview;
+
+    public HomePageItemBean(String id, String img, String label, String title, String text, String time, String fabulousNum, String seeNum, String purview) {
         this.id = id;
         this.img = img;
         this.label = label;
@@ -33,6 +36,16 @@ public class HomePageItemBean {
         this.time = time;
         this.fabulousNum = fabulousNum;
         this.seeNum = seeNum;
+        this.purview = purview;
+    }
+
+    public String getPurview() {
+
+        return purview;
+    }
+
+    public void setPurview(String purview) {
+        this.purview = purview;
     }
 
     public String getId() {

@@ -18,13 +18,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.sunfusheng.marqueeview.DisplayUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
+
 
 /**
  * 轮播图
@@ -34,7 +38,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
 
 
     private Context context;
-    public String text;
+    public String text = "";
 
     private ViewPager viewPager;
     //存轮播图
@@ -53,7 +57,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
     //圆点样式
     private int circularPoint;
     //标题大小
-    private float titleSize;
+    private int titleSize = 13;
     //标题颜色
     private int titleColor;
     //是否显示标题
@@ -84,7 +88,11 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
     private void setCustomAttributes(AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BroadcastView);
         circularPoint = a.getResourceId(R.styleable.BroadcastView_circular_point, R.drawable.selector_bg_point);
-        titleSize = a.getDimension(R.styleable.BroadcastView_title_size, SizeUtils.dip2px( 12));
+        //  titleSize = a.getDimension(R.styleable.BroadcastView_title_size, SizeUtils.dip2px( 12));
+
+        titleSize = (int) a.getDimension(R.styleable.BroadcastView_title_size, titleSize);
+        titleSize = SizeUtils.px2sp(titleSize);
+
         titleColor = a.getColor(R.styleable.BroadcastView_title_color, Color.parseColor("#000000"));
         showTitle = a.getBoolean(R.styleable.BroadcastView_show_title, true);
     }
@@ -103,7 +111,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
             public void run() {
                 while (isRunning) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -156,6 +164,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
         //showTitle为true 显示标题
         if (showTitle) {
             tv_desc = (TextView) findViewById(R.id.tv_desc);
+            Log.e("eeeee", "titleSize " + titleSize);
             tv_desc.setTextSize(titleSize);
             tv_desc.setTextColor(titleColor);
             llBackground.setBackgroundColor(Color.parseColor("#66000000"));
@@ -167,9 +176,10 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
     }
 
 
-    public void setData(List<String> imageResIds, List<String> contentDescs) {
-        this.imageResIds = imageResIds;
-        this.contentDescs = contentDescs;
+    public void setData(BroadcastBean bean) {
+
+        this.imageResIds = bean.getImg();
+        this.contentDescs = bean.getText();
         initData();
     }
 
@@ -195,7 +205,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
             pointView = new View(context);
             //小白点 样式
             pointView.setBackgroundResource(circularPoint);
-            layoutParams = new LinearLayout.LayoutParams(SizeUtils.dip2px( 10), SizeUtils.dip2px( 10));
+            layoutParams = new LinearLayout.LayoutParams(SizeUtils.dip2px(10), SizeUtils.dip2px(10));
 
             //设置小点间隔
 //            if (i != 0)

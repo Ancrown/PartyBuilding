@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <include
+        android:id="@+id/inc"
+        layout="@layout/head_new" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inc"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/answer_title"
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp20"
+            android:text="考试XXXXXXXXXXXXXXXX规则" />
+
+        <TextView
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:text="考试说明" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/answer_score"
+                style="@style/text_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="考试总分:100分" />
+
+            <TextView
+                android:id="@+id/answer_integral"
+                style="@style/text_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="获得积分:100" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/answer_num"
+                style="@style/text_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="总题数:100" />
+
+            <TextView
+                android:id="@+id/answer_times"
+                style="@style/text_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="考试时长:60分种" />
+        </LinearLayout>
+
+
+        <TextView
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:text="考试时间" />
+
+        <TextView
+            android:id="@+id/answer_stime_etime"
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:text="2018-6-11至2018-7-11" />
+
+        <TextView
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:text="考试大纲" />
+
+        <TextView
+            android:id="@+id/answer_content"
+            style="@style/text_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:text="XXXXXXXXXXXXXXXXXXXX" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/answer_start"
+        style="@style/text_white"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/fill_bg_red"
+        android:text="开始答题" />
+</RelativeLayout>

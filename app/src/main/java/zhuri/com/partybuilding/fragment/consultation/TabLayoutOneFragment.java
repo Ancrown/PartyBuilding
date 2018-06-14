@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Request;
 import com.sunfusheng.marqueeview.MarqueeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,19 +27,28 @@ import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.base.BaseRecyclerFragment;
+import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.ConsultationEntity;
+import zhuri.com.partybuilding.entity.HomeEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.twinklingrefreshlayout.header.progresslayout.ProgressLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.view.BroadcastView;
 
 /**
  * 党建要闻
  */
 
-public class TabLayoutOneFragment extends BaseFragment {
+public class TabLayoutOneFragment extends BaseRecyclerFragment {
 
     //  @BindView(R.id.fra_consultation_one_bro)
     BroadcastView bView;
@@ -46,6 +58,8 @@ public class TabLayoutOneFragment extends BaseFragment {
     @BindView(R.id.refreshlayout)
     TwinklingRefreshLayout refreshLayout;
 
+    private BroadcastBean broadcastBean;
+    private List<String> broId;
     private List<String> imageResIds;
     private List<String> contentDescs;
 
@@ -55,63 +69,17 @@ public class TabLayoutOneFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fra_one;
+        return R.layout.base_fresh_recy;
     }
 
     @Override
     public void initView() {
-
-        init();
+        super.initView();
+        setupListView();
     }
 
     @Override
     public void refreshData() {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    private void init() {
-        setupListView();
-    }
-
-    private void setupListView() {
-
-        ProgressLayout headerView = new ProgressLayout(getActivity());
-        refreshLayout.setHeaderView(headerView);
-        View exHeader = View.inflate(getActivity(), R.layout.consultation_head, null);
-        bView = exHeader.findViewById(R.id.fra_consultation_bro);
-
-
-        //添加位置固定的头部
-        // refreshLayout.addFixedExHeader(exHeader);
-
-        //添加位置跟listview滑动的头部
-        // recycler.addHeaderView(exHeader);
-
-        refreshLayout.setOverScrollRefreshShow(false);
-
-        //设置不允许上拉
-        //refreshLayout.setEnableLoadmore(false);
-
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
-
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(getActivity());
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
-        adapter = new HomePageAdapter(true,getActivity());
-        recycler.setAdapter(adapter);
-        adapter.setHeadHolder(exHeader);
-        getdata();
-
         //轮播图点击
         bView.setOnImgClick(new BroadcastView.OnImgClick() {
             @Override
@@ -130,7 +98,9 @@ public class TabLayoutOneFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishRefreshing();
+                        page = 1;
+                        // getEntity("Refresh");
+                        endRefresh("Refresh");
                     }
                 }, 1000);
             }
@@ -141,7 +111,9 @@ public class TabLayoutOneFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishLoadmore();
+                        page++;
+                        // getEntity("Loadmore");
+                        endRefresh("Loadmore");
                     }
                 }, 1000);
 
@@ -149,6 +121,30 @@ public class TabLayoutOneFragment extends BaseFragment {
             }
 
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    private void setupListView() {
+
+        ProgressLayout headerView = new ProgressLayout(getActivity());
+        refreshLayout.setHeaderView(headerView);
+        View exHeader = View.inflate(getActivity(), R.layout.consultation_head, null);
+        bView = exHeader.findViewById(R.id.fra_consultation_bro);
+
+
+        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        adapter = new HomePageAdapter(true, getActivity());
+        recycler.setAdapter(adapter);
+        adapter.setHeadHolder(exHeader);
+        //初始化数据对象
+        itemList = new ArrayList<>();
+        getdata();
+
 
     }
 
@@ -169,7 +165,9 @@ public class TabLayoutOneFragment extends BaseFragment {
         contentDescs.add("乐视网TV版大派送");
         contentDescs.add("热血屌丝的反杀");
         bView.text = "A";
-        bView.setData(imageResIds, contentDescs);
+
+        broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
+        bView.setData(broadcastBean);
 
 
         //item数据
@@ -182,9 +180,67 @@ public class TabLayoutOneFragment extends BaseFragment {
                     "2F56725e9c1ebac.png"
                     , "党中央", "习近平书记说:XXXXXXX"
                     , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                    , "2018-5-24 11:27", "100", "999+"));
+                    , "2018-5-24 11:27", "100", "999+", i % 2 + ""));
         }
         adapter.setDataList(itemList);
+
+    }
+
+    //页码
+    private int page = 0;
+
+    //网络数据
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("cid", "");
+        map.put("page", page == 0 ? 1 : page);
+
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.CONSULTATION, new OkHttpUtil.ResultCallback<BaseEntity<ConsultationEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<ConsultationEntity> response) {
+                endRefresh(gesture);
+
+                if (page <= 1) {
+                    broId = new ArrayList<>();
+                    imageResIds = new ArrayList<>();
+                    contentDescs = new ArrayList<>();
+                    for (int i = 0; i < response.getData().getSlide().size(); i++) {
+                        broId.add(response.getData().getSlide().get(i).getId());
+                        imageResIds.add(response.getData().getSlide().get(i).getImageurl());
+                        contentDescs.add(response.getData().getSlide().get(i).getTitle());
+                    }
+                    broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
+                    bView.setData(broadcastBean);
+
+                    itemList.clear();
+                }
+
+
+                //item数据
+
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new HomePageItemBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getImageurl(),
+                            "",
+                            response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getIlike(),
+                            response.getData().getInfo().get(i).getHits(),
+                            response.getData().getInfo().get(i).getPurview()));
+                }
+                adapter.setDataList(itemList);
+
+
+            }
+        }, map, "加载中", page);
 
     }
 

@@ -13,7 +13,7 @@
         app:circular_point="@drawable/selector_bg_point"
         app:show_title="true"
         app:title_color="#ffffff"
-        app:title_size="6sp"></zhuri.com.partybuilding.view.BroadcastView>
+        app:title_size="@dimen/text_size_13"></zhuri.com.partybuilding.view.BroadcastView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,12 +28,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp41"
+            android:layout_marginLeft="@dimen/dp30"
             android:drawableLeft="@drawable/horn"
             android:drawablePadding="@dimen/dp2"
             android:text="公告:"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_13" />
 
         <com.sunfusheng.marqueeview.MarqueeView
             android:id="@+id/fra_home_marqueeview"
@@ -48,7 +48,7 @@
             app:mvInterval="2000"
             app:mvSingleLine="true"
             app:mvTextColor="@color/white"
-            app:mvTextSize="@dimen/text_size_12" />
+            app:mvTextSize="@dimen/text_size_13" />
     </RelativeLayout>
 
     <LinearLayout
@@ -59,13 +59,14 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/fra_home_community_activities"
             android:layout_width="@dimen/dp0"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/fra_home_community_activities"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -74,10 +75,11 @@
                 android:gravity="center"
                 android:text="@string/community_activities"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_11" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/fra_home_v_volunteer"
             android:layout_width="@dimen/dp0"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp3"
@@ -86,7 +88,7 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/fra_home_v_volunteer"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -95,17 +97,18 @@
                 android:gravity="center"
                 android:text="@string/v_volunteer"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_11" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/fra_home_v_wish"
             android:layout_width="@dimen/dp0"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/fra_home_v_wish"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -114,7 +117,7 @@
                 android:gravity="center"
                 android:text="@string/v_wish"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_11" />
+                android:textSize="@dimen/text_size_12" />
         </RelativeLayout>
 
 
@@ -129,11 +132,12 @@
         <LinearLayout
             android:layout_width="@dimen/dp0"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp18"
+            android:layout_marginLeft="@dimen/dp10"
             android:layout_weight="0.9"
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/fra_home_online_answer"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp0"
                 android:layout_marginBottom="@dimen/dp3"
@@ -141,7 +145,7 @@
                 android:background="@color/light_purple">
 
                 <TextView
-                    android:id="@+id/fra_home_online_answer"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -150,17 +154,18 @@
                     android:gravity="center"
                     android:text="@string/online_answer"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/fra_home_two_one"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp0"
                 android:layout_weight="1"
                 android:background="@color/yellowish">
 
                 <TextView
-                    android:id="@+id/fra_home_two_one"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -169,7 +174,7 @@
                     android:gravity="center"
                     android:text="@string/two_one"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
 
 
@@ -179,11 +184,12 @@
             android:layout_width="@dimen/dp0"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp7"
-            android:layout_marginRight="@dimen/dp18"
+            android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/fra_home_nineteen"
                 android:layout_width="@dimen/dp0"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/dp3"
@@ -191,7 +197,7 @@
                 android:background="@color/light_blue">
 
                 <TextView
-                    android:id="@+id/fra_home_nineteen"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -200,17 +206,18 @@
                     android:gravity="center"
                     android:text="@string/nineteen"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/fra_home_work_guidance"
                 android:layout_width="@dimen/dp0"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/light_powder">
 
                 <TextView
-                    android:id="@+id/fra_home_work_guidance"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -220,7 +227,7 @@
                     android:gravity="center"
                     android:text="@string/work_guidance"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
 
 
@@ -232,7 +239,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp25"
         android:layout_marginTop="@dimen/dp9"
-        android:background="@color/red">
+        android:background="@drawable/gonggao_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -244,7 +251,7 @@
             android:gravity="center"
             android:text="@string/news"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_13" />
 
         <TextView
             android:id="@+id/fra_home_more"
@@ -253,9 +260,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp18"
-
+            android:visibility="gone"
             android:text="@string/more"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_13" />
     </RelativeLayout>
 </LinearLayout>

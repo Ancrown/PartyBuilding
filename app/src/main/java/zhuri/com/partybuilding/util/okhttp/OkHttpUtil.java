@@ -1,6 +1,11 @@
 package zhuri.com.partybuilding.util.okhttp;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -19,6 +24,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +59,8 @@ public class OkHttpUtil {
     private Gson g;
     private Handler handler;
     //加载框
-    public static TipLoadDialog tipLoadDialog;
-
+    public static TipLoadDialog tipLoadDialogYes;
+    public static TipLoadDialog tipLoadDialogNo;
 
     public OkHttpUtil() {
         okHttpClient = new OkHttpClient();
@@ -66,7 +74,11 @@ public class OkHttpUtil {
                 mInstance = new OkHttpUtil();
             }
         }
-        tipLoadDialog = new TipLoadDialog(context);
+        tipLoadDialogYes = new TipLoadDialog(context).setNoShadowTheme();
+
+        tipLoadDialogNo = new TipLoadDialog(context).setNoShadowTheme().setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
+
+
         return mInstance;
     }
 
@@ -266,11 +278,9 @@ public class OkHttpUtil {
      * @param callback
      * @param map
      */
-    public void doPost(String url, final ResultCallback callback, Map<String, Object> map, String dialogText) {
-
+    public void doPost(String url, final ResultCallback callback, Map<String, Object> map, final String dialogText) {
         //设置另一种loading文字动画,注意不要加后缀...
-        tipLoadDialog.setNoShadowTheme()
-                .setMsgAndType(TextUtils.isEmpty(dialogText) ? "加载中" : dialogText, TipLoadDialog.ICON_TYPE_LOADING2)
+        tipLoadDialogYes.setMsgAndType(TextUtils.isEmpty(dialogText) ? "加载中" : dialogText, TipLoadDialog.ICON_TYPE_LOADING2)
                 .show();
 
         if (okHttpClient == null) okHttpClient = new OkHttpClient();
@@ -286,22 +296,19 @@ public class OkHttpUtil {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(final Request request, final IOException e) {
-                tipLoadDialog.setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
-
-
-                handler.postDelayed(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        tipLoadDialog.dismiss();
-                        //  Toast.makeText(BaseApplication.appContext, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+                        if (tipLoadDialogYes.isShowing())
+                            tipLoadDialogYes.dismiss();
+                        tipLoadDialogNo.show();
                         callback.onError(request, e);
                     }
-                }, 1000);
+                });
             }
 
             @Override
             public void onResponse(Response response) {
-
                 String json = null;
                 try {
                     json = response.body().string();
@@ -310,19 +317,21 @@ public class OkHttpUtil {
                 }
                 Log.e(TAG, json);
                 final Object o = g.fromJson(json, callback.mType);
-                handler.post(new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tipLoadDialog.dismiss();
+                        //结束加载框
+                        tipLoadDialogYes.dismiss();
+
                         callback.onResponse(o);
                     }
-                });
+                }, 2000);
             }
         });
     }
 
     /**
-     * 异步post请求 带加载框的
+     * 异步post请求
      *
      * @param url
      * @param callback
@@ -344,7 +353,7 @@ public class OkHttpUtil {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(BaseApplication.appContext, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+                        tipLoadDialogNo.show();
                         callback.onError(request, e);
                     }
                 });
@@ -368,6 +377,17 @@ public class OkHttpUtil {
                 });
             }
         });
+    }
+
+    /**
+     * 处理上拉下拉加载的
+     */
+    public void doPostList(String url, final ResultCallback callback, Map<String, Object> map, String dialogText, int page) {
+        if (page == 0) {
+            doPost(url, callback, map, dialogText);
+        } else {
+            doPost(url, callback, map);
+        }
     }
 
 //    /**

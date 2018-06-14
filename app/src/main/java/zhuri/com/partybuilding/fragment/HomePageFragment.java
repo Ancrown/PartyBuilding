@@ -1,10 +1,12 @@
 package zhuri.com.partybuilding.fragment;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Request;
 import com.sunfusheng.marqueeview.MarqueeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,19 +33,30 @@ import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.activity.ExaminationActivity;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.base.BaseRecyclerFragment;
+import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.HomeEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.twinklingrefreshlayout.header.progresslayout.ProgressLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
+import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.BroadcastView;
+import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
+import zhuri.com.partybuilding.zbarcode.CaptureActivity;
 
 /**
  * 首页
  */
 
-public class HomePageFragment extends BaseFragment {
+public class HomePageFragment extends BaseRecyclerFragment implements TranslucentActionBar.ActionBarClickListener {
     //轮播图
     // @BindView(R.id.fra_home_bro)
     private BroadcastView bView;
@@ -47,47 +64,52 @@ public class HomePageFragment extends BaseFragment {
     //  @BindView(R.id.fra_home_marqueeview)
     private MarqueeView marqueeview;
     //社区活动
-    private TextView communityAactivities;
+    private RelativeLayout communityAactivities;
     //微志愿
-    private TextView vVolunteer;
+    private RelativeLayout vVolunteer;
     //微心愿
-    private TextView vWish;
+    private RelativeLayout vWish;
     //在线答题
-    private TextView onlineAnswer;
+    private RelativeLayout onlineAnswer;
     //两学一做
-    private TextView twoOne;
+    private RelativeLayout twoOne;
     //十九大精神
-    private TextView nineteen;
+    private RelativeLayout nineteen;
     //党务工作指导
-    private TextView workGuidance;
+    private RelativeLayout workGuidance;
     //更多
     private TextView more;
 
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.refreshlayout)
-    TwinklingRefreshLayout refreshLayout;
+//    @BindView(R.id.recycler)
+//    RecyclerView recycler;
+//    @BindView(R.id.refreshlayout)
+//    TwinklingRefreshLayout refreshLayout;
 
 
     private HomePageAdapter adapter;
     private List<HomePageItemBean> itemList;
 
+    private BroadcastBean broadcastBean;
+    private List<String> broId;
     private List<String> imageResIds;
     private List<String> contentDescs;
-    private List<String> info;
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.fra_homepage;
-    }
+    private List<String> info;
+    private List<HomeEntity.VoteBean> voteBeanList;
+
+//    @Override
+//    public int getLayoutId() {
+//        return R.layout.fra_homepage;
+//    }
 
     @Override
     public void initView() {
-
+        super.initView();
         //设置标题
-        getTitleView().setData(getResources().getString(R.string.app_name), 0, R.drawable.dian_dian_dian, null, R.drawable.plus, null, null);
-        init();
+        getTitleView().setData(getResources().getString(R.string.app_name), 0, R.drawable.dian_dian_dian, null, R.drawable.plus, null, this);
+
+        setupListView();
     }
 
     @Override
@@ -99,62 +121,6 @@ public class HomePageFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ExaminationActivity.class));
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    private void init() {
-        setupListView();
-
-
-    }
-
-    private void setupListView() {
-
-        ProgressLayout headerView = new ProgressLayout(getActivity());
-        refreshLayout.setHeaderView(headerView);
-        View exHeader = View.inflate(getActivity(), R.layout.head_homepage, null);
-        bView = exHeader.findViewById(R.id.fra_home_bro);
-        marqueeview = exHeader.findViewById(R.id.fra_home_marqueeview);
-        communityAactivities = exHeader.findViewById(R.id.fra_home_community_activities);
-        vVolunteer = exHeader.findViewById(R.id.fra_home_v_volunteer);
-        vWish = exHeader.findViewById(R.id.fra_home_v_wish);
-        onlineAnswer = exHeader.findViewById(R.id.fra_home_online_answer);
-        twoOne = exHeader.findViewById(R.id.fra_home_two_one);
-        nineteen = exHeader.findViewById(R.id.fra_home_nineteen);
-        workGuidance = exHeader.findViewById(R.id.fra_home_work_guidance);
-        more = exHeader.findViewById(R.id.fra_home_more);
-
-
-        //添加位置固定的头部
-        // refreshLayout.addFixedExHeader(exHeader);
-
-        //添加位置跟listview滑动的头部
-        // recycler.addHeaderView(exHeader);
-
-        refreshLayout.setOverScrollRefreshShow(false);
-
-        //设置不允许上拉
-        refreshLayout.setEnableLoadmore(false);
-
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
-
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(getActivity());
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-       recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
-        adapter = new HomePageAdapter(getActivity());
-        recycler.setAdapter(adapter);
-        adapter.setHeadHolder(exHeader);
-        getdata();
-
         //轮播图点击
         bView.setOnImgClick(new BroadcastView.OnImgClick() {
             @Override
@@ -168,23 +134,20 @@ public class HomePageFragment extends BaseFragment {
             @Override
             public void onItemClick(int position, TextView textView) {
                 Toast.makeText(getActivity(), String.valueOf(marqueeview.getPosition()) + ". " + textView.getText(), Toast.LENGTH_SHORT).show();
-                Log.e("eeeeee", "滚动:" + textView.getText().toString());
             }
         });
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishRefreshing();
+                        endRefresh("Refresh");
                     }
                 }, 1000);
-
-
+                page = 1;
+                //getEntity("Refresh");
             }
 
 //            @Override
@@ -196,19 +159,49 @@ public class HomePageFragment extends BaseFragment {
 //                        refreshLayout.finishLoadmore();
 //                    }
 //                }, 1000);
-//
+//       getEntity("Loadmore");
 //
 //            }
 
         });
-//        //进入到界面的时候主动调用下刷新  下拉
-//        refreshLayout.startRefresh();
-//        //进入到界面的时候主动调用下刷新  加载更多
-//        refreshLayout.startLoadMore();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    private void setupListView() {
+
+        View exHeader = View.inflate(getActivity(), R.layout.head_homepage, null);
+        bView = exHeader.findViewById(R.id.fra_home_bro);
+        marqueeview = exHeader.findViewById(R.id.fra_home_marqueeview);
+        communityAactivities = exHeader.findViewById(R.id.fra_home_community_activities);
+        vVolunteer = exHeader.findViewById(R.id.fra_home_v_volunteer);
+        vWish = exHeader.findViewById(R.id.fra_home_v_wish);
+        onlineAnswer = exHeader.findViewById(R.id.fra_home_online_answer);
+        twoOne = exHeader.findViewById(R.id.fra_home_two_one);
+        nineteen = exHeader.findViewById(R.id.fra_home_nineteen);
+        workGuidance = exHeader.findViewById(R.id.fra_home_work_guidance);
+        more = exHeader.findViewById(R.id.fra_home_more);
+
+
+        //设置不允许上拉
+        refreshLayout.setEnableLoadmore(false);
+        //设置间距
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        adapter = new HomePageAdapter(true, getActivity());
+        recyclerView.setAdapter(adapter);
+        adapter.setHeadHolder(exHeader);
+        getdata();
+
+
     }
 
     //数据
     public void getdata() {
+
         //轮播图
         imageResIds = new ArrayList<>();
         imageResIds.add("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png");
@@ -224,7 +217,8 @@ public class HomePageFragment extends BaseFragment {
         contentDescs.add("乐视网TV版大派送");
         contentDescs.add("热血屌丝的反杀");
         bView.text = "A";
-        bView.setData(imageResIds, contentDescs);
+        broadcastBean = new BroadcastBean(null, imageResIds, contentDescs);
+        bView.setData(broadcastBean);
 
         //轮播文字
         info = new ArrayList<>();
@@ -244,9 +238,68 @@ public class HomePageFragment extends BaseFragment {
                     "2F56725e9c1ebac.png"
                     , "党中央", "习近平书记说:XXXXXXX"
                     , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                    , "2018-5-24 11:27", "100", "999+"));
+                    , "2018-5-24 11:27", "100", "999+", i % 2 + ""));
         }
         adapter.setDataList(itemList);
+
+    }
+
+    private int page;
+
+    //网络数据
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.HOME, new OkHttpUtil.ResultCallback<BaseEntity<HomeEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<HomeEntity> response) {
+                endRefresh(gesture);
+
+                broId = new ArrayList<>();
+                imageResIds = new ArrayList<>();
+                contentDescs = new ArrayList<>();
+                for (int i = 0; i < response.getData().getSlide().size(); i++) {
+                    broId.add(response.getData().getSlide().get(i).getId());
+                    imageResIds.add(response.getData().getSlide().get(i).getImageurl());
+                    contentDescs.add(response.getData().getSlide().get(i).getTitle());
+                }
+                broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
+                bView.setData(broadcastBean);
+
+
+                //轮播文字
+                info = new ArrayList<>();
+                voteBeanList = response.getData().getVote();
+                for (int i = 0; i < voteBeanList.size(); i++) {
+                    info.add(voteBeanList.get(i).getTitle());
+                }
+
+                marqueeview.startWithList(info);
+
+                //item数据
+                itemList = new ArrayList<>();
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new HomePageItemBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getImageurl(),
+                            "",
+                            response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getIlike(),
+                            response.getData().getInfo().get(i).getHits(),
+                            response.getData().getInfo().get(i).getPurview()));
+                }
+                adapter.setDataList(itemList);
+
+
+            }
+        }, map, "加载中", page);
 
     }
 
@@ -269,4 +322,55 @@ public class HomePageFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onLeftClick() {
+
+    }
+
+    @Override
+    public void onRightClick() {
+        if (PermissionManager.permissionApplicationF(this, PermissionManager.Camera(), PermissionManager.PERMISSION)) {
+            Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
+            startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+        }
+
+    }
+
+    //扫码回调
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA) {
+            if (null == data) return;
+            Bundle b = data.getExtras();
+            String result = b.getString(CaptureActivity.EXTRA_STRING);
+            Toast.makeText(getActivity(), result + "", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //授权回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.e("eeeee", "eeeeeeeeeeeeeeeeeeee" + requestCode);
+        if (grantResults.length == 0) return;
+        int count = 0;
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                count++;
+            }
+        }
+        if (count == grantResults.length) {
+            if (requestCode == PermissionManager.PERMISSION) {
+                Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+            }
+        } else {
+            if (requestCode == PermissionManager.PERMISSION) {
+                PermissionManager.showDialog(getActivity(),
+                        "使用权限使用权限被禁止，一些功能无法正常使用。是否开启该权限？(步骤：应用信息->权限->'勾选'相机)");
+            }
+
+        }
+    }
 }

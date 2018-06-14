@@ -8,11 +8,11 @@ package zhuri.com.partybuilding.util;
  */
 public class StaticVariables {
     //用户id
-    public static String USER_ID;
+    public static final String USER_ID = "uid";
     //用户名字
-    public static String USER_NAME;
+    public static final String USER_NAME = "uName";
     //用户头像
-    public static String USER_HEAD_IMG;
-
-    public static final String TOKEN = "";
+    public static final String USER_HEAD_IMG = "uImg";
+    //唯一标示
+    public static final String TOKEN = "token";
 }

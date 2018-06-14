@@ -3,9 +3,8 @@
     android:id="@+id/item_examination_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,12 +21,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp14"
-            android:layout_marginLeft="@dimen/dp22"
-            android:layout_marginTop="@dimen/dp14"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
             android:orientation="vertical">
 
-            <LinearLayout
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -37,16 +39,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="多久爱手机掉手机安静如确认确认"
+                    android:ellipsize="end"
+                    android:maxEms="18"
+                    android:layout_centerVertical="true"
+                    android:maxLines="1"
+                    android:text="多久爱手机掉手机安静如确认确认多久爱手机掉手机安静如确认确认"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_13" />
+                    android:textSize="@dimen/text_size_15" />
 
                 <TextView
+                    android:layout_centerVertical="true"
                     android:id="@+id/item_examination_news"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp5"
+                    android:layout_toRightOf="@+id/item_examination_title"
                     android:background="@drawable/fill_bg_red"
                     android:paddingBottom="@dimen/dp1"
                     android:paddingLeft="@dimen/dp3"
@@ -54,28 +61,29 @@
                     android:paddingTop="@dimen/dp1"
                     android:text="最新"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_9" />
-            </LinearLayout>
-
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="visible" />
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dp11">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/item_examination_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp25"
+
+
                     android:layout_marginTop="@dimen/dp6"
                     android:layout_toLeftOf="@+id/item_examination_button"
                     android:ellipsize="end"
                     android:lineSpacingExtra="@dimen/dp2"
                     android:maxLines="2"
+
                     android:text="阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏"
                     android:textColor="@color/light_gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_13" />
 
                 <Button
                     android:id="@+id/item_examination_button"
@@ -83,11 +91,12 @@
                     android:layout_height="@dimen/dp23"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp25"
                     android:background="@color/orange"
                     android:gravity="center"
                     android:text="进行中"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_11" />
+                    android:textSize="@dimen/text_size_13" />
 
 
             </RelativeLayout>
@@ -95,8 +104,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dp11"
-                android:layout_marginTop="@dimen/dp6">
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5">
 
                 <TextView
                     android:id="@+id/item_examination_time"
@@ -111,9 +120,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="开始时间：2018-6-6"
+                    android:text="90积分"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="visible" />
             </RelativeLayout>
         </LinearLayout>
 

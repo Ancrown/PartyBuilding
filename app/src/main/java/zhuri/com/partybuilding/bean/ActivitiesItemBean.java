@@ -15,10 +15,14 @@ public class ActivitiesItemBean {
     private String address;
     private String comment;
     private String join;
-    private String time;
+    private String endTime;
+    private String startTime;
+
     private String type; // 0:进行0.1:未报名 0.2:已报名   1:结束
 
-    public ActivitiesItemBean(String id, String img, String title, String isTop, String address, String comment, String join, String time, String type) {
+    private String purview;
+
+    public ActivitiesItemBean(String id, String img, String title, String isTop, String address, String comment, String join, String endTime, String startTime, String type, String purview) {
         this.id = id;
         this.img = img;
         this.title = title;
@@ -26,8 +30,10 @@ public class ActivitiesItemBean {
         this.address = address;
         this.comment = comment;
         this.join = join;
-        this.time = time;
+        this.endTime = endTime;
+        this.startTime = startTime;
         this.type = type;
+        this.purview = purview;
     }
 
     public String getId() {
@@ -86,12 +92,20 @@ public class ActivitiesItemBean {
         this.join = join;
     }
 
-    public String getTime() {
-        return time;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getType() {
@@ -100,5 +114,13 @@ public class ActivitiesItemBean {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPurview() {
+        return purview;
+    }
+
+    public void setPurview(String purview) {
+        this.purview = purview;
     }
 }

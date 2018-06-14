@@ -2,6 +2,8 @@ package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,7 +15,10 @@ import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.StudyBean;
 import zhuri.com.partybuilding.util.AppUtils;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TextViewUitl;
 import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
@@ -28,10 +33,14 @@ public class StudyAdapter extends BaseRecyclerAdapter<StudyBean> {
 
     private Drawable fabulousYes = context.getResources().getDrawable(R.drawable.fabulous);
 
+    private boolean isLogin;
+
     public StudyAdapter(Context context) {
         super(context);
         fabulousNo.setBounds(0, 0, fabulousNo.getMinimumWidth(), fabulousNo.getMinimumHeight());
         fabulousYes.setBounds(0, 0, fabulousYes.getMinimumWidth(), fabulousYes.getMinimumHeight());
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
+
     }
 
     @Override
@@ -58,10 +67,10 @@ public class StudyAdapter extends BaseRecyclerAdapter<StudyBean> {
         }
 
         @Override
-        public void bindData(StudyBean bean, final int i) {
+        public void bindData(final StudyBean bean, final int i) {
             itemStudyTitle.setText(bean.getTitle());
             itemStudyContent.setText(bean.getContent());
-            ToolUtils.toStringChangeColor(bean.getTime() + "    " + bean.getJoin() + "人已参与", bean.getJoin() + "人已参与", "#d73734", itemStudyTimeJoin);
+            TextViewUitl.toStringChangeColor(bean.getTime() + "    " + bean.getJoin() + "人已参与", bean.getJoin() + "人已参与", "#d73734", itemStudyTimeJoin);
             itemStudyFabulousNum.setText(bean.getFabulousNum());
             itemStudySeeNum.setText(bean.getSeeNum());
 
@@ -74,7 +83,12 @@ public class StudyAdapter extends BaseRecyclerAdapter<StudyBean> {
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToolUtils.showToast(getContext(), "点击我了！" + i);
+                    if (isLogin && bean.getPurview().equals("0")) {
+                        Log.e("eeeeee", "查看： NO ×××××××");
+                    } else {
+
+                        Log.e("eeeeee", "查看： YES √√√√√√√");
+                    }
                 }
             });
         }

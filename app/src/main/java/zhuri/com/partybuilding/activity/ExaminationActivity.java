@@ -1,42 +1,44 @@
 package zhuri.com.partybuilding.activity;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.squareup.okhttp.Request;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.ExaminationAdapter;
-import zhuri.com.partybuilding.adapter.HomePageAdapter;
-import zhuri.com.partybuilding.base.BaseActivity;
-import zhuri.com.partybuilding.bean.Examinationbean;
+import zhuri.com.partybuilding.base.BaseRecyclerActivity;
+import zhuri.com.partybuilding.bean.ExaminationBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.ExaminationEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
  * 创建人: Administrator
  * 创建时间: 2018/6/6
- * 描述:
+ * 描述: 考试列表
  */
 
-public class ExaminationActivity extends BaseActivity implements TranslucentActionBar.ActionBarClickListener {
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.refreshlayout)
-    TwinklingRefreshLayout refreshLayout;
+public class ExaminationActivity extends BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
+
 
     private ExaminationAdapter adapter;
-    private List<Examinationbean> list;
+    private List<ExaminationBean> list;
+
+    private int page;
 
     @Override
     protected void initData() {
@@ -50,21 +52,15 @@ public class ExaminationActivity extends BaseActivity implements TranslucentActi
 
     @Override
     protected void initView() {
+        super.initView();
         //设置标题
         getTitleView().setData(getResources().getString(R.string.online_answer), 0, 0, null, 0, null, this);
 
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
 
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(this);
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
         adapter = new ExaminationAdapter(this);
-        recycler.setAdapter(adapter);
-
+        recyclerView.setAdapter(adapter);
+        list = new ArrayList<>();
         getdata();
 
         //下拉上拉
@@ -97,25 +93,63 @@ public class ExaminationActivity extends BaseActivity implements TranslucentActi
         });
 
     }
-//  随机 1~4 ((int) ((Math.random() * 4) + 1) + "")
+
+    //  随机 1~4 ((int) ((Math.random() * 4) + 1) + "")
     public void getdata() {
-        list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            list.add(new Examinationbean(i + "",
+            list.add(new ExaminationBean(i + "",
                     "昂阿鲁卡你个浪了康看了那看来你卡了",
                     "" + i,
                     "昂昂看了那个拉卡不能十分关键看了不可添加标签卡价格八九十可拉倒吧公交卡了不过啊那个坎",
-                    "2018-6-6 14:28",
-                    ((int) ((Math.random() * 4)) + ""),
-                    "2018-6-10"));
+                    ((int) ((Math.random() * 4)) + ""), "2018-6-9", "2018-7-9", i + "" + i,
+                    "90", i % 2 + "", i + "" + i, "100")
+            );
             Log.e("eeeee", "TYPE " + list.get(i).getType());
         }
         adapter.setDataList(list);
     }
 
-    @Override
-    protected int getLayout() {
-        return R.layout.aty_examination;
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("keyword", "");
+        map.put("page", page == 0 ? 1 : page);
+
+
+        OkHttpUtil.getInstance(this).doPostList(AddressRequest.EXAMINATION_LIST, new OkHttpUtil.ResultCallback<BaseEntity<ExaminationEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<ExaminationEntity> response) {
+                endRefresh(gesture);
+                if (page <= 1) {
+                    list.clear();
+                }
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    list.add(new ExaminationBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            "",
+                            response.getData().getInfo().get(i).getDemo(),
+
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getStime(),
+                            response.getData().getInfo().get(i).getEtime(),
+                            response.getData().getInfo().get(i).getTimes(),
+                            response.getData().getInfo().get(i).getIntegral(),
+                            response.getData().getInfo().get(i).getPurview(),
+                            response.getData().getInfo().get(i).getAmount(),
+                            response.getData().getInfo().get(i).getScore()
+
+                    ));
+                }
+                adapter.setDataList(list);
+
+            }
+        }, map, "加载中", page);
     }
 
 

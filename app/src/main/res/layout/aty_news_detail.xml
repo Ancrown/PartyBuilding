@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/head_new" />
@@ -10,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/dp30"
-        android:paddingRight="@dimen/dp30">
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10">
 
         <TextView
             android:id="@+id/news_details_title"
@@ -21,7 +22,7 @@
             android:layout_marginTop="@dimen/dp15"
             android:text="台媒：美军B5211天内第3次进入南海空域"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="@dimen/text_size_20" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:text="2018-6-1 10:11  来源：人民网"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text_size_10" />
+                android:textSize="@dimen/text_size_14" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
                     android:drawablePadding="@dimen/dp5"
                     android:text="125"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_11" />
 
                 <TextView
                     android:id="@+id/news_details_browse"
@@ -65,7 +66,7 @@
                     android:drawablePadding="@dimen/dp5"
                     android:text="125"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_11" />
 
                 <TextView
                     android:id="@+id/news_details_forward"
@@ -76,19 +77,110 @@
                     android:drawablePadding="@dimen/dp5"
                     android:text="3"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_11" />
 
             </LinearLayout>
         </RelativeLayout>
 
-        <zhuri.com.partybuilding.view.TestWebView
-            android:id="@+id/news_details_content"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
 
-        </zhuri.com.partybuilding.view.TestWebView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <zhuri.com.partybuilding.view.TestWebView
+                    android:id="@+id/news_details_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                </zhuri.com.partybuilding.view.TestWebView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:background="@drawable/red_half_round_angle"
+                    android:drawableLeft="@drawable/fabulous_no"
+                    android:drawablePadding="@dimen/dp5"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp15"
+                    android:paddingRight="@dimen/dp15"
+                    android:paddingTop="@dimen/dp10"
+                    android:text="12人点赞"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_15" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_xian_half_round_angle">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawableLeft="@drawable/vchat"
+                            android:drawablePadding="@dimen/dp3"
+                            android:text="微信"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_13" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_xian_half_round_angle">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawableLeft="@drawable/pengyouquan"
+                            android:drawablePadding="@dimen/dp3"
+                            android:text="朋友圈"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_13" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="@dimen/dp20"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_xian_half_round_angle">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawableLeft="@drawable/xinlang"
+                            android:drawablePadding="@dimen/dp3"
+                            android:text="微博"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_13" />
+                    </RelativeLayout>
 
 
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

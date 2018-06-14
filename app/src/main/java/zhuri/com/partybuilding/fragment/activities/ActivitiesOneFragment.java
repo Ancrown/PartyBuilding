@@ -1,33 +1,30 @@
 package zhuri.com.partybuilding.fragment.activities;
 
-import android.os.Bundle;
+
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.squareup.okhttp.Request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
-import zhuri.com.partybuilding.adapter.HomePageAdapter;
-import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
-import zhuri.com.partybuilding.bean.HomePageItemBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.activities.CommunityEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
-import zhuri.com.partybuilding.twinklingrefreshlayout.header.progresslayout.ProgressLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
-import zhuri.com.partybuilding.view.BroadcastView;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 /**
  * 创建人: Administrator
@@ -35,85 +32,49 @@ import zhuri.com.partybuilding.view.BroadcastView;
  * 描述: 活动社区
  */
 
-public class ActivitiesOneFragment extends BaseFragment {
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.refreshlayout)
-    TwinklingRefreshLayout refreshLayout;
+public class ActivitiesOneFragment extends BaseRecyclerFragment {
+
+    private int page;
 
     private ActivitiesAdapter adapter;
     private List<ActivitiesItemBean> itemList;
 
+
     @Override
     public int getLayoutId() {
-        return R.layout.fra_activities_one;
+        return R.layout.base_fresh_recy;
     }
 
     @Override
     public void initView() {
+        super.initView();
         setupListView();
     }
 
     @Override
     public void refreshData() {
 
-    }
-
-    private void setupListView() {
-
-        // ProgressLayout headerView = new ProgressLayout(getActivity());
-        //   refreshLayout.setHeaderView(headerView);
-//        View exHeader = View.inflate(getActivity(), R.layout.consultation_head, null);
-//        bView = exHeader.findViewById(R.id.fra_consultation_bro);
-
-
-        //添加位置固定的头部
-        // refreshLayout.addFixedExHeader(exHeader);
-
-        //添加位置跟listview滑动的头部
-        // recycler.addHeaderView(exHeader);
-
-        refreshLayout.setOverScrollRefreshShow(false);
-
-        //设置不允许上拉
-        //refreshLayout.setEnableLoadmore(false);
-
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
-
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(getActivity());
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
-        adapter = new ActivitiesAdapter(getActivity());
-        recycler.setAdapter(adapter);
-
-        getdata();
-
-
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
+                page = 1;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishRefreshing();
+                        endRefresh("Refresh");
                     }
                 }, 1000);
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
+                page++;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishLoadmore();
+                        endRefresh("LoadMore");
+
                     }
                 }, 1000);
 
@@ -121,11 +82,19 @@ public class ActivitiesOneFragment extends BaseFragment {
             }
 
         });
+    }
+
+    private void setupListView() {
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        adapter = new ActivitiesAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
+        itemList = new ArrayList<>();
+        getdata();
 
     }
 
     public void getdata() {
-        itemList = new ArrayList<>();
+
         for (int i = 0; i < 10; i++) {
             itemList.add(new ActivitiesItemBean(
                     i + ""
@@ -135,11 +104,49 @@ public class ActivitiesOneFragment extends BaseFragment {
                     , "辽宁省沈阳市和平区"
                     , "1000"
                     , "99999999"
-                    , "2018-6-5~2018-7-1"
-                    , (i % 2 == 0 ? 0 + "." + ((int) (Math.random() * 10) % 2) : 1) + ""));
+                    , "2018-7-1", "2018-6-5"
+                    , ((int) (Math.random() * 4)) + "", i % 2 + ""));
             Log.e("eeeeee", "TYPE    " + itemList.get(i).getType());
         }
         adapter.setDataList(itemList);
+    }
+
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("keyword", "");
+        map.put("page", page == 0 ? 1 : page);
+
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.ACTIVITIES_COMMUNTIY, new OkHttpUtil.ResultCallback<BaseEntity<CommunityEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<CommunityEntity> response) {
+                endRefresh(gesture);
+
+                if (page <= 1) {
+                    itemList.clear();
+                }
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new ActivitiesItemBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getImageurl(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getIstop(),
+                            response.getData().getInfo().get(i).getAddress(),
+                            response.getData().getInfo().get(i).getIlike(),
+                            response.getData().getInfo().get(i).getAmount(),
+                            response.getData().getInfo().get(i).getEtime(),
+                            response.getData().getInfo().get(i).getStime(),
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getPurview()));
+                }
+                adapter.setDataList(itemList);
+            }
+        }, map, "", page);
     }
 
 }

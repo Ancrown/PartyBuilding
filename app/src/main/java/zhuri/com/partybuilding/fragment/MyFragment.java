@@ -1,10 +1,12 @@
 package zhuri.com.partybuilding.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -12,8 +14,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.AnswerErrorActivity;
 import zhuri.com.partybuilding.base.BaseFragment;
-import zhuri.com.partybuilding.util.glideutils.GlideUtils;
+import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
  * 我的
@@ -50,6 +53,19 @@ public class MyFragment extends BaseFragment {
     @BindView(R.id.my_contribution)
     TextView myContribution;
 
+    @BindView(R.id.my_examination_error)
+    TextView myExaminationError;
+
+    @BindView(R.id.my_login)
+    TextView myLogin;
+    @BindView(R.id.my_rl_info)
+    RelativeLayout myRlInfo;
+    @BindView(R.id.my_dayuhao)
+    ImageView myDayuhao;
+
+
+    private boolean isLogin;
+
     @Override
     public int getLayoutId() {
         return R.layout.fra_my;
@@ -62,23 +78,72 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void refreshData() {
-        GlideUtils.LoadCircleImage(getActivity(),"https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/30adcbef76094b36ccec2775afcc7cd98d109d2f.jpg",img);
+        //GlideUtils.LoadCircleImage(getActivity(), "https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/30adcbef76094b36ccec2775afcc7cd98d109d2f.jpg", img);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        isLogin = ToolUtils.isLogin(getActivity());
+        if (isLogin) {
+            myLogin.setVisibility(View.GONE);
+            myRlInfo.setVisibility(View.VISIBLE);
+        } else {
+            myLogin.setVisibility(View.VISIBLE);
+            myRlInfo.setVisibility(View.GONE);
+        }
+    }
 
-    @OnClick({R.id.my_info, R.id.my_activity_record, R.id.my_learning_records, R.id.my_examination_records, R.id.my_contribution})
+    @OnClick({R.id.my_info, R.id.my_activity_record, R.id.my_learning_records, R.id.my_examination_records, R.id.my_contribution, R.id.my_login, R.id.my_rl_info, R.id.my_examination_error})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_info:
+                if (isLogin) {
+
+                } else {
+                    ToolUtils.showToast(getActivity(), "请先登录！");
+                }
                 break;
             case R.id.my_activity_record:
+                if (isLogin) {
+
+                } else {
+                    ToolUtils.showToast(getActivity(), "请先登录！");
+                }
                 break;
             case R.id.my_learning_records:
+                if (isLogin) {
+
+                } else {
+                    ToolUtils.showToast(getActivity(), "请先登录！");
+                }
                 break;
             case R.id.my_examination_records:
+                if (isLogin) {
+
+                } else {
+                    ToolUtils.showToast(getActivity(), "请先登录！");
+                }
                 break;
             case R.id.my_contribution:
+                if (isLogin) {
+
+                } else {
+                    ToolUtils.showToast(getActivity(), "请先登录！");
+                }
+                break;
+            case R.id.my_examination_error:
+                startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
+                break;
+
+            case R.id.my_login:
+                ToolUtils.showToast(getActivity(), "跳到登陆页！");
+                break;
+            case R.id.my_rl_info:
+
                 break;
         }
     }
+
+
 }

@@ -1,6 +1,9 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -9,9 +12,12 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.AnswerConfirmActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
-import zhuri.com.partybuilding.bean.Examinationbean;
+import zhuri.com.partybuilding.bean.ExaminationBean;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
@@ -20,19 +26,22 @@ import zhuri.com.partybuilding.util.ToolUtils;
  * 描述:
  */
 
-public class ExaminationAdapter extends BaseRecyclerAdapter<Examinationbean> {
+public class ExaminationAdapter extends BaseRecyclerAdapter<ExaminationBean> {
 
+
+    private boolean isLogin;
 
     public ExaminationAdapter(Context context) {
         super(context);
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
     }
 
     @Override
-    public CommonHolder<Examinationbean> setViewHolder(ViewGroup parent, int viewType) {
+    public CommonHolder<ExaminationBean> setViewHolder(ViewGroup parent, int viewType) {
         return new Holder(parent.getContext(), parent, R.layout.item_examination);
     }
 
-    class Holder extends CommonHolder<Examinationbean> {
+    class Holder extends CommonHolder<ExaminationBean> {
         @BindView(R.id.item_examination_view)
         View itemExaminationView;
         @BindView(R.id.item_examination_title)
@@ -55,7 +64,7 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<Examinationbean> {
         }
 
         @Override
-        public void bindData(final Examinationbean bean, final int i) {
+        public void bindData(final ExaminationBean bean, final int i) {
             itemExaminationTitle.setText(bean.getTitle());
             if (bean.getLabel().equals("0")) {
                 itemExaminationNews.setVisibility(View.VISIBLE);
@@ -63,7 +72,9 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<Examinationbean> {
                 itemExaminationNews.setVisibility(View.GONE);
             }
             itemExaminationContent.setText(bean.getContent());
-            itemExaminationTime.setText("答题时间：" + bean.getTime());
+            itemExaminationTime.setText("答题时间：" + bean.getStartTime() + "~" + bean.getEndTime() + "    "
+                    + (Integer.parseInt(bean.getTime()) == 0 ? "不限时间" : bean.getTime() + "分钟"));
+            itemExaminationStartTime.setText(bean.getIntegral() + "积分");
 
             if (bean.getType().equals("0") || bean.getType().equals("3")) {
                 itemExaminationView.setBackgroundColor(context.getResources().getColor(R.color.gray));
@@ -71,20 +82,20 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<Examinationbean> {
 
                 if (bean.getType().equals("0")) {
                     itemExaminationButton.setText("未开始");
-                    itemExaminationStartTime.setText("开始时间：" + bean.getStartTime());
-                    itemExaminationStartTime.setVisibility(View.VISIBLE);
+                    itemExaminationStartTime.setTextColor(context.getResources().getColor(R.color.red));
                     itemExaminationTime.setTextColor(context.getResources().getColor(R.color.red));
                 } else {
                     itemExaminationButton.setText("已结束");
-                    itemExaminationStartTime.setVisibility(View.GONE);
+                    itemExaminationStartTime.setTextColor(context.getResources().getColor(R.color.gray));
                     itemExaminationTime.setTextColor(context.getResources().getColor(R.color.gray));
                 }
             } else {
                 itemExaminationView.setBackgroundColor(context.getResources().getColor(R.color.orange));
                 itemExaminationTime.setTextColor(context.getResources().getColor(R.color.red));
+                itemExaminationStartTime.setTextColor(context.getResources().getColor(R.color.red));
                 itemExaminationButton.setBackgroundColor(context.getResources().getColor(R.color.orange));
 
-                itemExaminationStartTime.setVisibility(View.GONE);
+
                 if (bean.getType().equals("1")) {
                     itemExaminationButton.setText("进行中");
                 } else {
@@ -114,7 +125,23 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<Examinationbean> {
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToolUtils.showToast(getContext(), "点击我了！" + i);
+                    if (isLogin && bean.getPurview().equals("0")) {
+                        Log.e("eeeeee", "查看： NO ×××××××");
+                    } else {
+
+                        Log.e("eeeeee", "查看： YES √√√√√√√");
+                        Intent intent = new Intent(context, AnswerConfirmActivity.class);
+                        intent.putExtra("id", bean.getId());
+                        intent.putExtra("title", bean.getTitle());
+                        intent.putExtra("score", bean.getScore());
+                        intent.putExtra("amount", bean.getAmount());
+                        intent.putExtra("integral", bean.getIntegral());
+                        intent.putExtra("times", bean.getTime());
+                        intent.putExtra("stime", bean.getStartTime());
+                        intent.putExtra("etime", bean.getEndTime());
+                        intent.putExtra("demo", bean.getContent());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

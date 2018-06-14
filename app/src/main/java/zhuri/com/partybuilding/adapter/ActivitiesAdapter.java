@@ -1,12 +1,14 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -15,6 +17,8 @@ import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
 import zhuri.com.partybuilding.util.AppUtils;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 
@@ -27,8 +31,13 @@ import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
 
 
+
+    private boolean isLogin;
+
     public ActivitiesAdapter(Context context) {
         super(context);
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
+
     }
 
     @Override
@@ -67,64 +76,80 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
         public void bindData(final ActivitiesItemBean bean, final int i) {
 
             GlideUtils.LoadImage(getContext(), bean.getImg(), itemActivitiesImg);
-            switch (bean.getType().substring(0, 1)) {
-                case "0":
-                    view.setBackgroundColor(AppUtils.getColor(R.color.red));
-                    itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.red));
-                    itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.light_red));
-                    itemActivitiesType.setText("进行中");
-                    itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_yes));
-                    itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.light_red));
-                    if (bean.getType().equals("0.0")) {
-                        itemActivitiesButton.setText("报名");
-                    } else if (bean.getType().equals("0.1")) {
-                        itemActivitiesButton.setText("已报名");
-                    }
-                    break;
-                case "1":
-                    itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.black));
-                    itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.gray));
-                    view.setBackgroundColor(AppUtils.getColor(R.color.gray));
-                    itemActivitiesType.setText("已结束");
-                    itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_no));
-                    itemActivitiesButton.setText("已结束");
-                    itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.gray));
-                    break;
 
+
+            if (bean.getType().equals("0") || bean.getType().equals("3")) {
+                itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.black));
+                itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.gray));
+                view.setBackgroundColor(AppUtils.getColor(R.color.gray));
+                itemActivitiesType.setText(bean.getType().equals("0") ? "未开始" : "已结束");
+                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_no));
+                itemActivitiesButton.setText(bean.getType().equals("0") ? "未开始" : "已结束");
+                itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.gray));
+
+            } else {
+                view.setBackgroundColor(AppUtils.getColor(R.color.red));
+                itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.red));
+                itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.light_red));
+                itemActivitiesType.setText("进行中");
+                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_yes));
+                itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.light_red));
+                itemActivitiesButton.setText(bean.getType().equals("1") ? "报名" : "已报名");
             }
+
+
             itemActivitiesTitle.setText(bean.getTitle());
+
             if (bean.getIsTop().equals("0")) {
                 itemActivitiesIstop.setVisibility(View.VISIBLE);
             } else {
                 itemActivitiesIstop.setVisibility(View.GONE);
             }
 
-            itemActivitiesAddress.setText("地址：" + bean.getAddress());
-            itemActivitiesCommentJoin.setText(bean.getComment() + "条评论    " + bean.getJoin() + "人已参与");
-            itemActivitiesTime.setText("活动时间：" + bean.getTime());
+            if (TextUtils.isEmpty(bean.getAddress())) {
+                itemActivitiesAddress.setVisibility(View.GONE);
+            } else {
+                itemActivitiesAddress.setText("地址：" + bean.getAddress());
+                itemActivitiesAddress.setVisibility(View.VISIBLE);
+            }
+            itemActivitiesCommentJoin.setText(bean.getComment() + "预览    " + (TextUtils.isEmpty(bean.getJoin()) ? "" : bean.getJoin() + "人已参与"));
+
+            if (TextUtils.isEmpty(bean.getStartTime()) || TextUtils.isEmpty(bean.getEndTime())) {
+                itemActivitiesTime.setVisibility(View.GONE);
+            } else {
+                itemActivitiesTime.setText("活动时间：" + bean.getStartTime() + "~" + bean.getEndTime());
+                itemActivitiesTime.setVisibility(View.VISIBLE);
+            }
 
             itemActivitiesButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (bean.getType().substring(0, 1)) {
-                        case "0":
-                            if (bean.getType().equals("0.0")) {
-                                ToolUtils.showToast(getContext(), "恭喜 报名成功！");
-                            } else if (bean.getType().equals("0.1")) {
-                                ToolUtils.showToast(getContext(), "抱歉 你已报名！");
-                            }
-                            break;
-                        case "1":
-                            ToolUtils.showToast(getContext(), "抱歉 活动结束！");
-                            break;
 
+                    if (bean.getType().equals("0") || bean.getType().equals("3")) {
+                        if (bean.getType().equals("0")) {
+                            ToolUtils.showToast(context, "未开始");
+                        } else {
+                            ToolUtils.showToast(context, "已结束");
+                        }
+                    } else {
+                        if (bean.getType().equals("1")) {
+                            ToolUtils.showToast(context, "报名");
+                        } else {
+                            ToolUtils.showToast(context, "已报名");
+                        }
                     }
+
                 }
             });
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToolUtils.showToast(getContext(), "点击我了！" + i);
+                    if (isLogin && bean.getPurview().equals("0")) {
+                        Log.e("eeeeee", "查看： NO ×××××××");
+                    } else {
+
+                        Log.e("eeeeee", "查看： YES √√√√√√√");
+                    }
                 }
             });
         }

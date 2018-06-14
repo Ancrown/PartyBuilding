@@ -10,5 +10,5 @@
         app:circular_point="@drawable/selector_bg_point"
         app:show_title="true"
         app:title_color="#ffffff"
-        app:title_size="6sp"></zhuri.com.partybuilding.view.BroadcastView>
+        app:title_size="@dimen/text_size_13"></zhuri.com.partybuilding.view.BroadcastView>
 </LinearLayout>

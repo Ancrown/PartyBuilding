@@ -9,41 +9,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/item_study_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp16"
+
+            android:drawableLeft="@drawable/lingxing"
             android:drawablePadding="7dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="昂库蓝蓝天凉快哪条路昂看看了不能添加卡拉被告人你是看了湖南人"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="@dimen/text_size_15" />
 
         <TextView
             android:id="@+id/item_study_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp27"
+
             android:layout_marginTop="@dimen/dp6"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/dp2"
             android:maxLines="2"
             android:text="安居客浪啊接干嘛哭了赶快来不能太贵啦别闹了按个办理纳格兰昂昂卡罗纳讨论课本口莱宝高科结案报告卡斯比；赶快来不能太贵啦别闹了按个办理纳格兰昂昂卡罗纳讨论课本口莱宝高科结案报告卡斯比"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/text_size_10" />
+            android:textSize="@dimen/text_size_13" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp27"
-            android:layout_marginTop="@dimen/dp10">
+
+            android:layout_marginTop="@dimen/dp5">
 
             <TextView
                 android:id="@+id/item_study_time_join"
@@ -70,7 +72,7 @@
                     android:gravity="center"
                     android:text="110"
                     android:textColor="@color/light_gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_12" />
 
                 <TextView
                     android:id="@+id/item_study_see_num"
@@ -81,7 +83,7 @@
                     android:gravity="center"
                     android:text="23"
                     android:textColor="@color/light_gray"
-                    android:textSize="@dimen/text_size_10" />
+                    android:textSize="@dimen/text_size_12" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

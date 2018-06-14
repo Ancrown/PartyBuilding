@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="@dimen/dp10"
+    >
+
+    <!--<Button-->
+    <!--android:id="@+id/item_answer_single_pair"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="设置单选/双选: 单选中" />-->
+
+    <TextView
+        android:id="@+id/answer_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="题目:XXXXXX"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_18" />
+
+    <zhuri.com.partybuilding.util.NoSlideListView
+        android:id="@+id/answer_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:divider="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/answer_my_option"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="我的选项A"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/answer_true_option"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="正确选项A"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/answer_explaination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Question Explaination"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_13"
+        android:visibility="invisible" />
+
+</LinearLayout>

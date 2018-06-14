@@ -7,7 +7,10 @@ import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,77 +92,6 @@ public class ToolUtils {
         return display.getWidth();
     }
 
-    /***
-     * 改变某些字段的颜色
-     *
-     * @param text
-     * @param change
-     * @param color
-     * @param textView
-     */
-    public static void toStringChangeColor(String text, String change, String color, TextView textView) {
-        if (change != null) {
-            SpannableStringBuilder style = new SpannableStringBuilder(text);
-            text += " ";
-            if (text.indexOf(change) != -1) {
-                String[] s = text.split(change);
-                int temp = 0;
-                for (int i = 0; i < s.length; i++) {
-                    if (i != s.length - 1) {
-                        if (i == 0) {
-                            temp += s[i].length();
-                        } else {
-                            temp += s[i].length() + change.length();
-                        }
-                    }
-                    style.setSpan(
-                            new ForegroundColorSpan(Color.parseColor(color)),
-                            temp,
-                            temp + change.length(),
-                            Spannable.SPAN_EXCLUSIVE_INCLUSIVE); // 设置指定位置文字的颜色
-                    textView.setText(style);
-                }
-            }
-        }
-    }
-
-    /***
-     * 改变某些文字的颜色
-     *
-     * @param text
-     * @param change
-     * @param color
-     * @param textView
-     */
-    public static void toStringChangeColor(String text, String[] change, String color, TextView textView) {
-        if (change != null) {
-            SpannableStringBuilder style = new SpannableStringBuilder(text);
-            text += " ";
-            for (int j = 0; j < change.length; j++) {
-                if (change.length != -1) {
-                    String[] s = text.split(change[j]);
-                    int temp = 0;
-                    for (int i = 0; i < s.length; i++) {
-                        if (i != s.length - 1) {
-                            if (i == 0) {
-                                temp += s[i].length();
-                            } else {
-                                temp += s[i].length() + change[j].length();
-                            }
-                        }
-                        style.setSpan(
-                                new ForegroundColorSpan(Color.parseColor(color)),
-                                temp,
-                                temp + change[j].length(),
-                                Spannable.SPAN_EXCLUSIVE_INCLUSIVE); // 设置指定位置文字的颜色
-                        textView.setText(style);
-                    }
-                }
-            }
-
-        }
-    }
-
 
     /**
      * 设置页面最外层布局 FitsSystemWindows 属性
@@ -178,5 +110,12 @@ public class ToolUtils {
                 drawer.setClipToPadding(false);
             }
         }
+    }
+
+    /**
+     * 判断是否登陆
+     */
+    public static boolean isLogin(Context context) {
+        return TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "").toString()) ? false : true;
     }
 }

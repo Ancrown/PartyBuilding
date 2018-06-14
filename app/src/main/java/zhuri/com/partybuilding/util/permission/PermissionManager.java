@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +26,9 @@ import java.util.List;
  * 创建时间 ：2016/12/30
  */
 public class PermissionManager {
+    //授权码
+    public static int PERMISSION = 1000;
+
     //授权
     public static boolean permissionApplication(Activity activity, String[] permissions, int requestCode) {
 //        String[] permissions = null;
@@ -54,6 +58,44 @@ public class PermissionManager {
             }
             if (!mPermissionList.isEmpty()) {
                 ActivityCompat.requestPermissions(activity, permissionsNo, requestCode);
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    //授权
+    public static boolean permissionApplicationF(Fragment fragment, String[] permissions, int requestCode) {
+//        String[] permissions = null;
+//        switch (type){
+//            case 0:
+//                 permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+//                break;
+//
+//        }
+        List<String> mPermissionList = new ArrayList<>();
+        //    String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        //   String[] permissionsString = new String[]{"储存空间", "相机"};
+        if (Build.VERSION.SDK_INT >= 23) {
+            /**
+             * 判断哪些权限未授予
+             */
+            for (int i = 0; i < permissions.length; i++) {
+                if (ContextCompat.checkSelfPermission(fragment.getContext(), permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i]);
+                    Log.e("permission1  未申请", permissions[i]);
+                }
+            }
+            Log.e("permission1  未申请个数", mPermissionList.size() + "");
+            String[] permissionsNo = new String[mPermissionList.size()];
+            for (int i = 0; i < mPermissionList.size(); i++) {
+                permissionsNo[i] = mPermissionList.get(i);
+            }
+            if (!mPermissionList.isEmpty()) {
+                fragment.requestPermissions(permissionsNo, requestCode);
                 return false;
             } else {
                 return true;
@@ -94,6 +136,11 @@ public class PermissionManager {
     public static String[] AllPermission() {
         return new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE};
+    }
+
+    //存储权限
+    public static String[] Camera() {
+        return new String[]{Manifest.permission.CAMERA};
     }
 
     //关于图片的权限

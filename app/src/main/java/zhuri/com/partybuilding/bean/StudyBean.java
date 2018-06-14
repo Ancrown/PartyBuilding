@@ -16,7 +16,9 @@ public class StudyBean {
     private String isFabulous;
     private String seeNum;
 
-    public StudyBean(String id, String title, String content, String time, String join, String fabulousNum, String isFabulous, String seeNum) {
+    private String purview;
+
+    public StudyBean(String id, String title, String content, String time, String join, String fabulousNum, String isFabulous, String seeNum, String purview) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -25,9 +27,11 @@ public class StudyBean {
         this.fabulousNum = fabulousNum;
         this.isFabulous = isFabulous;
         this.seeNum = seeNum;
+        this.purview = purview;
     }
 
     public String getId() {
+
         return id;
     }
 
@@ -89,5 +93,13 @@ public class StudyBean {
 
     public void setSeeNum(String seeNum) {
         this.seeNum = seeNum;
+    }
+
+    public String getPurview() {
+        return purview;
+    }
+
+    public void setPurview(String purview) {
+        this.purview = purview;
     }
 }

@@ -17,6 +17,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--工具-->
+        <!--扫一扫-->
+        <activity
+            android:name=".zbarcode.CaptureActivity"
+            android:screenOrientation="portrait" />
+        <!--工具-->
+
+
         <activity
             android:name=".activity.NavigationActivity"
             android:label="导航页" />
@@ -25,10 +33,23 @@
             android:label="新闻详情" />
         <activity
             android:name=".activity.ExaminationActivity"
+            android:label="题库" />
+        <activity
+            android:name=".activity.AnswerActivity"
             android:label="在线答题" />
+        <activity
+            android:name=".activity.AnswerConfirmActivity"
+            android:label="确认答题" />
+        <activity
+            android:name=".activity.AnswerResultActivity"
+            android:label="答题结果页" />
+        <activity
+            android:name=".activity.AnswerErrorActivity"
+            android:label="错题集" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>

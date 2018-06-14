@@ -8,7 +8,7 @@
         <item name="android:layout_width">@dimen/dp0</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
         <item name="android:textColor">@drawable/navigation_text_rb</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
@@ -16,7 +16,7 @@
     </style>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
     </style>
 
     <style name="text_white">

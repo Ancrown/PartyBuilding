@@ -1,109 +1,83 @@
 package zhuri.com.partybuilding.fragment.activities;
 
+
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.squareup.okhttp.Request;
 
-import butterknife.BindView;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
-import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.adapter.VWishAdapter;
+import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
+import zhuri.com.partybuilding.bean.VWishBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.activities.VVolunteerEntity;
+import zhuri.com.partybuilding.entity.activities.VWish;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 /**
  * 创建人: Administrator
  * 创建时间: 2018/6/5
- * 描述: 微社区
+ * 描述: 微心愿
  */
 
-public class ActivitiesThreeFragment extends BaseFragment {
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.refreshlayout)
-    TwinklingRefreshLayout refreshLayout;
+public class ActivitiesThreeFragment extends BaseRecyclerFragment {
 
-    private ActivitiesAdapter adapter;
-    private List<ActivitiesItemBean> itemList;
+    private int page;
+
+    private VWishAdapter adapter;
+    private List<VWishBean> itemList;
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.fra_activities_one;
+        return R.layout.base_fresh_recy;
     }
 
     @Override
     public void initView() {
+        super.initView();
         setupListView();
     }
 
     @Override
     public void refreshData() {
 
-    }
-
-    private void setupListView() {
-
-        // ProgressLayout headerView = new ProgressLayout(getActivity());
-        //   refreshLayout.setHeaderView(headerView);
-//        View exHeader = View.inflate(getActivity(), R.layout.consultation_head, null);
-//        bView = exHeader.findViewById(R.id.fra_consultation_bro);
-
-
-        //添加位置固定的头部
-        // refreshLayout.addFixedExHeader(exHeader);
-
-        //添加位置跟listview滑动的头部
-        // recycler.addHeaderView(exHeader);
-
-        refreshLayout.setOverScrollRefreshShow(false);
-
-        //设置不允许上拉
-        //refreshLayout.setEnableLoadmore(false);
-
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
-
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(getActivity());
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
-        adapter = new ActivitiesAdapter(getActivity());
-        recycler.setAdapter(adapter);
-
-        getdata();
-
-
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
+                page = 1;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishRefreshing();
+                        endRefresh("Refresh");
                     }
                 }, 1000);
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
+                page++;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishLoadmore();
+                        endRefresh("LoadMore");
+
                     }
                 }, 1000);
 
@@ -111,25 +85,67 @@ public class ActivitiesThreeFragment extends BaseFragment {
             }
 
         });
+    }
+
+    private void setupListView() {
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        adapter = new VWishAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
+        itemList = new ArrayList<>();
+        getdata();
 
     }
 
     public void getdata() {
-        itemList = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            itemList.add(new ActivitiesItemBean(
-                    i + ""
-                    , "https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/30adcbef76094b36ccec2775afcc7cd98d109d2f.jpg"
-                    , "间隔我哦阿尔及哦啊好你欧尼奥尔太糊弄 "
-                    , i + ""
-                    , "辽宁省沈阳市和平区"
-                    , "1000"
-                    , "99999999"
-                    , "2018-6-5~2018-7-1"
-                    , (i % 2 == 0 ? 0 + "." + ((int) (Math.random() * 10) % 2) : 1) + ""));
+
+        for (int i = 0; i < 10; i++) {
+            itemList.add(new VWishBean(
+                    i + "",
+                    "喂喂喂喂喂喂喂喂喂无无无无喂喂喂喂喂喂喂喂喂无无无无我问问",
+                    i % 2 + "",
+                    "灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过给狗狗嘎嘎嘎嘎嘎嘎嘎",
+                    i % 2 + "",
+                    "2018-6-9 10:20",
+                    "90",
+                    i % 2 + ""));
             Log.e("eeeeee", "TYPE    " + itemList.get(i).getType());
         }
         adapter.setDataList(itemList);
+    }
+
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("keyword", "");
+        map.put("page", page == 0 ? 1 : page);
+
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.ACTIVITIES_V_WISH, new OkHttpUtil.ResultCallback<BaseEntity<VWish>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<VWish> response) {
+                endRefresh(gesture);
+
+                if (page <= 1) {
+                    itemList.clear();
+                }
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            "",
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getIntegral(),
+                            response.getData().getInfo().get(i).getPurview()));
+                }
+                adapter.setDataList(itemList);
+            }
+        }, map, "", page);
     }
 
 }

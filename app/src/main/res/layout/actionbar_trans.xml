@@ -39,6 +39,7 @@
                 android:maxLength="2"
                 android:singleLine="true"
                 android:text="返回"
+                android:textSize="@dimen/text_size_16"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -47,7 +48,7 @@
             style="@style/text_white"
             android:layout_centerInParent="true"
             android:text="标题"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_size_16" />
 
         <RelativeLayout
             android:id="@+id/lay_actionbar_right"
@@ -74,6 +75,7 @@
                 android:layout_toLeftOf="@+id/v_actionbar_right"
                 android:gravity="center_vertical|right"
                 android:singleLine="true"
+                android:textSize="@dimen/text_size_16"
                 android:visibility="gone" />
         </RelativeLayout>
 

@@ -24,7 +24,7 @@
         android:indeterminateTintMode="src_atop"
         android:padding="10dp"/>
 
-    <zhuri.com.partybuilding.dialog.load.GraduallyTextView
+    <TextView
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:textColor="#ffffff"
         android:textSize="15sp"/>
 
-    <zhuri.com.partybuilding.dialog.load.FadeInTextView
+    <TextView
         android:id="@+id/loading_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

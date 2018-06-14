@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.okhttp.Request;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,13 +24,22 @@ import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.adapter.StudyAdapter;
 import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.base.BaseRecyclerFragment;
+import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
 import zhuri.com.partybuilding.bean.StudyBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.ConsultationEntity;
+import zhuri.com.partybuilding.entity.StudyEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.twinklingrefreshlayout.header.progresslayout.ProgressLayout;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.view.BroadcastView;
 
 /**
@@ -35,23 +48,20 @@ import zhuri.com.partybuilding.view.BroadcastView;
  * 描述:十九大报告
  */
 
-public class StudyOneFragment extends BaseFragment {
+public class StudyOneFragment extends BaseRecyclerFragment {
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
-    @BindView(R.id.refreshlayout)
-    TwinklingRefreshLayout refreshLayout;
-
+    private int page;
     private StudyAdapter adapter;
     private List<StudyBean> itemList;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fra_study_one;
+        return R.layout.base_fresh_recy;
     }
 
     @Override
     public void initView() {
+        super.initView();
         setupListView();
     }
 
@@ -63,29 +73,10 @@ public class StudyOneFragment extends BaseFragment {
     private void setupListView() {
 
 
-        //添加位置固定的头部
-        // refreshLayout.addFixedExHeader(exHeader);
-
-        //添加位置跟listview滑动的头部
-        // recycler.addHeaderView(exHeader);
-
-        refreshLayout.setOverScrollRefreshShow(false);
-
-        //设置不允许上拉
-        //refreshLayout.setEnableLoadmore(false);
-
-        //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
-        refreshLayout.setFloatRefresh(true);
-
-        //listview 效果
-        LinearLayoutManager lmr = new LinearLayoutManager(getActivity());
-        lmr.setOrientation(OrientationHelper.VERTICAL);
-        //设置布局管理器
-        recycler.setLayoutManager(lmr);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
         adapter = new StudyAdapter(getActivity());
-        recycler.setAdapter(adapter);
-
+        recyclerView.setAdapter(adapter);
+        itemList = new ArrayList<>();
         getdata();
 
 
@@ -98,7 +89,9 @@ public class StudyOneFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishRefreshing();
+                        page = 1;
+                        // getEntity("Refresh");
+                        endRefresh("Refresh");
                     }
                 }, 1000);
             }
@@ -109,7 +102,9 @@ public class StudyOneFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshLayout.finishLoadmore();
+                        page++;
+                        // getEntity("Loadmore");
+                        endRefresh("Loadmore");
                     }
                 }, 1000);
 
@@ -122,10 +117,7 @@ public class StudyOneFragment extends BaseFragment {
 
     //数据
     public void getdata() {
-
-
         //item数据
-        itemList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             itemList.add(new StudyBean(i + "",
                     "咖喱牛唠嗑呢来拿来呢来看你可怜你看了那看来你",
@@ -134,8 +126,45 @@ public class StudyOneFragment extends BaseFragment {
                     "9991",
                     "20",
                     "" + i % 2,
-                    "100"));
+                    "100", i % 2 + ""));
         }
         adapter.setDataList(itemList);
     }
+
+    public void getEntity(final String gesture) {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("cid", "");
+        map.put("page", page == 0 ? 1 : page);
+
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.STUDY, new OkHttpUtil.ResultCallback<BaseEntity<StudyEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                endRefresh(gesture);
+            }
+
+            @Override
+            public void onResponse(BaseEntity<StudyEntity> response) {
+                endRefresh(gesture);
+                if (page <= 1) {
+                    itemList.clear();
+                }
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new StudyBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getAmount(),
+                            response.getData().getInfo().get(i).getIlike(),
+                            "",
+                            response.getData().getInfo().get(i).getHits(),
+                            response.getData().getInfo().get(i).getPurview()));
+                }
+                adapter.setDataList(itemList);
+
+            }
+        }, map, "加载中", page);
+    }
+
 }

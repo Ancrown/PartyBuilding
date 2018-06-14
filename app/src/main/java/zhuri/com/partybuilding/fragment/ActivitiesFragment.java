@@ -56,8 +56,8 @@ public class ActivitiesFragment extends BaseFragment {
         fList = new ArrayList<>();
         // 装填
         fList.add(new ActivitiesOneFragment());
-        fList.add(new ActivitiesThreeFragment());
         fList.add(new ActivitiesTwoFragment());
+        fList.add(new ActivitiesThreeFragment());
 
         tList = new ArrayList<>();
         tList.add(AppUtils.getString(R.string.community_activities));
