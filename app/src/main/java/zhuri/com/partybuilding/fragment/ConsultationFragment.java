@@ -100,8 +100,8 @@ public class ConsultationFragment extends BaseFragment {
         fList = new ArrayList<>();
         // 装填
         fList.add(new TabLayoutOneFragment());
-        fList.add(new TabLayoutThreeFragment());
         fList.add(new TabLayoutTwoFragment());
+        fList.add(new TabLayoutThreeFragment());
 
         tList = new ArrayList<>();
         tList.add("党建要闻");

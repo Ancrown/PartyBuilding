@@ -132,27 +132,19 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
         }.start();
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean running) {
-        isRunning = running;
-    }
-
-    @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        if (visibility == View.VISIBLE) {
-            Log.e("eeeee!", text + " View可见");
-            //开始某些任务
-            isRunning = true;
-        } else if (visibility == INVISIBLE || visibility == GONE) {
-            Log.e("eeeee!", text + " View不可见");
-            //停止某些任务
-            isRunning = false;
-        }
-    }
+//    @Override
+//    protected void onWindowVisibilityChanged(int visibility) {
+//        super.onWindowVisibilityChanged(visibility);
+//        if (visibility == View.VISIBLE) {
+//            Log.e("eeeee!", text + " View可见");
+//            //开始某些任务
+//            isRunning = true;
+//        } else if (visibility == INVISIBLE || visibility == GONE) {
+//            Log.e("eeeee!", text + " View不可见");
+//            //停止某些任务
+//            isRunning = false;
+//        }
+//    }
 
 
     private void initViews() {
@@ -197,7 +189,7 @@ public class BroadcastView extends RelativeLayout implements ViewPager.OnPageCha
             // 初始化要显示的图片对象
             imageView = new ImageView(context);
             //  imageView.setBackgroundResource(imageResIds.get(i));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             GlideUtils.LoadImage(context, imageResIds.get(i), imageView);
             imageViewList.add(imageView);
 

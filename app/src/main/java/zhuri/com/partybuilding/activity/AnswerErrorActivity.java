@@ -60,7 +60,7 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
     protected void initData() {
         adapter = new AnswerAdapter(this);
         getData();
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         recyclerView.setAdapter(adapter);
         adapter.setDataList(answerBeanList);
 

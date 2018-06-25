@@ -73,7 +73,7 @@ public class StudyOneFragment extends BaseRecyclerFragment {
     private void setupListView() {
 
 
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new StudyAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
@@ -120,10 +120,10 @@ public class StudyOneFragment extends BaseRecyclerFragment {
         //item数据
         for (int i = 0; i < 5; i++) {
             itemList.add(new StudyBean(i + "",
-                    "咖喱牛唠嗑呢来拿来呢来看你可怜你看了那看来你",
-                    "爱看美女反馈滥发开朗了半年可填报情况不太认可清洁不发动机卡布法规尽快把看个几把开个本会计报告卡不到关键看吧again",
-                    "2018-6-5 15:48",
-                    "9991",
+                    "遵义会议与红军长征、信仰的力量、红军悍将钟赤",
+                    "遵义会议，是中国共产党历史上一个生死攸关的转折点。这次会议确立了毛泽东同志在党和红军中的领导地位，结束了王明“左”倾教条主义在党内的统治，从而使党领导的民主革命和革命战争转危为安，转败为胜，大大加快了我国革命胜利发展的进程。 ",
+                    "2018-6-155",
+                    "30",
                     "20",
                     "" + i % 2,
                     "100", i % 2 + ""));

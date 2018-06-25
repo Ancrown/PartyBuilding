@@ -39,7 +39,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
-                    android:maxEms="18"
+                    android:maxEms="15"
                     android:maxLines="1"
                     android:text="多久爱手机掉手机安静如确认确认多久爱手机掉手机安静如确认确认"
                     android:textColor="@color/black"

@@ -77,7 +77,7 @@ public class AnswerResultActivity extends BaseActivity implements TranslucentAct
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycler.setLayoutManager(llm);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
 
         adapter = new AnswerAdapter(this, 0);
         recycler.setAdapter(adapter);

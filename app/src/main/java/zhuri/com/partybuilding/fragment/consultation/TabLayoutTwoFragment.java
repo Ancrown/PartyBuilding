@@ -125,7 +125,7 @@ public class TabLayoutTwoFragment extends BaseRecyclerFragment {
         bView = exHeader.findViewById(R.id.fra_consultation_bro);
 
 
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new HomePageAdapter(true, getActivity());
         recycler.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
@@ -140,19 +140,19 @@ public class TabLayoutTwoFragment extends BaseRecyclerFragment {
     public void getdata() {
         //轮播图
         imageResIds = new ArrayList<>();
-        imageResIds.add("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925682&di=d12775547359b0c44d837f51f02e6518&imgtype=0&src=http%3A%2F%2Fu5.qiyipic.com%2Fimage%2F20170815%2F9c%2F5d%2Fuv_3066296689_m_601_480_270.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=51e62c9a9f63768cbb089f90668a17a2&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F06%2F20160106173647_yiXdf.jpeg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=f92d19cc97cb850b93d622c248a9327a&imgtype=0&src=http%3A%2F%2Fi2.qhmsg.com%2Ft01e909ef83b1591352.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=ae1442d7c0da3969ab98dfcdf8bf2a31&imgtype=0&src=http%3A%2F%2Fp2.qhmsg.com%2Ft01fcf832a92d4bd986.jpg");
+        imageResIds.add("http://images.wenming.cn/web_djw/djw2016sy/djwbfq/201806/W020180619345889972995.jpg");
+        imageResIds.add("http://images1.wenming.cn/web_djw/djw2016sy/djwbfq/201806/W020180615370080057216.jpg");
+        imageResIds.add("http://images.wenming.cn/web_djw/djw2016sy/djwbfq/201806/W020180618396478717942.jpg");
+        imageResIds.add("http://images1.wenming.cn/web_djw/djw2016sy/djwbfq/201806/W020180618393023283314.jpg");
+        imageResIds.add("http://images.wenming.cn/web_djw/djw2016sy/djwbfq/201806/W020180614376614466052.jpg");
 
         contentDescs = new ArrayList<>();
-        contentDescs.add("巩俐不低俗，我就不能低俗");
-        contentDescs.add("扑树又回来啦！再唱经典老歌引万人大合唱");
-        contentDescs.add("揭秘北京电影如何升级");
-        contentDescs.add("乐视网TV版大派送");
-        contentDescs.add("热血屌丝的反杀");
-        bView.text = "A";
+        contentDescs.add("走访《习近平谈治国理政》英文版翻译团队");
+        contentDescs.add("习近平在山东考察");
+        contentDescs.add("统帅关怀励兵心 矢志强军谋打赢");
+        contentDescs.add("北京：追求精彩非凡卓越 全力推进冬奥筹办");
+        contentDescs.add("山东：打造乡村振兴的“齐鲁样板”");
+
 
         broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
         bView.setData(broadcastBean);
@@ -160,16 +160,37 @@ public class TabLayoutTwoFragment extends BaseRecyclerFragment {
 
         //item数据
         itemList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            itemList.add(new HomePageItemBean(i + ""
-                    , "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_" +
-                    "10000&sec=1527142406419&di=bcdf4024750e8647e876f6df31334935&imgt" +
-                    "ype=0&src=http%3A%2F%2Fjiweixin168.com%2FUploads%2F2015%2F12%2F17%" +
-                    "2F56725e9c1ebac.png"
-                    , "党中央", "习近平书记说:XXXXXXX"
-                    , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                    , "2018-5-24 11:27", "100", "999+", i % 2 + ""));
-        }
+
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://www.people.com.cn/mediafile/pic/20180615/81/14729970956243590109.jpg"
+                , "党中央", "福建省东山县陈城镇澳角村村民自力更生，艰苦奋斗，用智慧和双手实现了由传统落后的渔村到现代美丽渔村的华丽蝶变。新华社发"
+                , ""
+                , "2018-6-15", "25", "53", 0 + ""));
+
+        itemList.add(new HomePageItemBean(2 + ""
+                , "http://dangjian.people.com.cn/NMediaFile/2018/0613/MAIN201806130921070354054484766.jpg"
+                , "", "让贫困群众稳定脱贫、逐步致富，为贫困地区找到更多脱贫致富的光源，是扶贫干部新时代的历史使命"
+                , ""
+                , "2018-6-16", "11", "20", 1 + ""));
+
+        itemList.add(new HomePageItemBean(3 + ""
+                , "http://dangjian.people.com.cn/NMediaFile/2018/0508/MAIN201805080818049056278193206.jpg"
+                , "", "福建省东山县陈城镇澳角村村民自力更生，艰苦奋斗，用智慧和双手实现了由传统落后的渔村到现代美丽渔村的华丽蝶变。新华社发"
+                , ""
+                , "2018-6-15", "25", "53", 0 + ""));
+
+        itemList.add(new HomePageItemBean(4 + ""
+                , "http://dangjian.people.com.cn/NMediaFile/2018/0507/MAIN201805071649000374359575469.jpg"
+                , "党中央", "人民网·中国共产党新闻网推出升级版“人民党建云”平台"
+                , ""
+                , "2018-6-15", "25", "53", 1 + ""));
+
+        itemList.add(new HomePageItemBean(5 + ""
+                , "http://dangjian.people.com.cn/NMediaFile/2018/0508/MAIN201805081627000118959442100.jpg"
+                , "", "中国共产党新闻网北京5月8日电 党的十九大胜利召开以来，全党全国全军把学习贯彻党的十九大精神作为当前和今后一个时期的首要政治任务，及时部署、有序组织开展学习宣传贯彻党的十九大精神各项工作。"
+                , ""
+                , "2018-5-9", "55", "999+", 0 + ""));
+
         adapter.setDataList(itemList);
 
     }
@@ -232,10 +253,5 @@ public class TabLayoutTwoFragment extends BaseRecyclerFragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        bView.setRunning(false);
-    }
 
 }

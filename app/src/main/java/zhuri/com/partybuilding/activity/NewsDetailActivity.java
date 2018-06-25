@@ -1,11 +1,9 @@
 package zhuri.com.partybuilding.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -14,7 +12,7 @@ import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.util.htmlutils.HtmlFormat;
-import zhuri.com.partybuilding.view.TestWebView;
+import zhuri.com.partybuilding.view.ScrollViewExt;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
@@ -37,7 +35,10 @@ public class NewsDetailActivity extends BaseActivity implements TranslucentActio
     TextView newsDetailsForward;
 
     @BindView(R.id.news_details_content)
-    TestWebView newsDetailsContent;
+    WebView newsDetailsContent;
+
+    @BindView(R.id.news_details_scrollviewext)
+    ScrollViewExt newsDetailsScrollviewext;
 
     private String fabulousType;
 
@@ -51,7 +52,17 @@ public class NewsDetailActivity extends BaseActivity implements TranslucentActio
 
     @Override
     protected void initListener() {
+        newsDetailsScrollviewext.setScrollViewListener(new ScrollViewExt.IScrollChangedListener() {
+            @Override
+            public void onScrolledToBottom() {
+                Log.e("eeeeee", "滑动底部了");
+            }
 
+            @Override
+            public void onScrolledToTop() {
+                Log.e("eeeeee", "滑动头部了");
+            }
+        });
     }
 
     @Override
@@ -59,8 +70,7 @@ public class NewsDetailActivity extends BaseActivity implements TranslucentActio
         getTitleView().setData("新闻详情", 0, R.drawable.back, null, 0, null, this);
 
         newsDetailsContent.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
-        newsDetailsContent.setWebViewClient(new TestWebViewClient());
-        webViewScroolChangeListener(newsDetailsContent);
+
     }
 
     @Override
@@ -92,47 +102,5 @@ public class NewsDetailActivity extends BaseActivity implements TranslucentActio
         }
     }
 
-
-    //核心代码
-    private void webViewScroolChangeListener(final TestWebView webView) {
-        webView.setOnCustomScroolChangeListener(new TestWebView.ScrollInterface() {
-            @Override
-            public void onSChanged(int l, int t, int oldl, int oldt) {
-                //WebView的总高度
-                float webViewContentHeight = webView.getContentHeight() * webView.getScale();
-                //WebView的现高度
-                float webViewCurrentHeight = (webView.getHeight() + webView.getScrollY());
-                Log.e("eeee", "webViewContentHeight=" + webViewContentHeight);
-                Log.e("eeee", "webViewCurrentHeight=" + webViewCurrentHeight);
-                if ((webViewContentHeight - webViewCurrentHeight) == 0) {
-                    Log.e("eeeee", "WebView滑动到了底端");
-                }
-            }
-        });
-    }
-
-    private class TestWebViewClient extends WebViewClient {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-
-        }
-
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            super.onReceivedError(view, errorCode, description, failingUrl);
-        }
-    }
 
 }

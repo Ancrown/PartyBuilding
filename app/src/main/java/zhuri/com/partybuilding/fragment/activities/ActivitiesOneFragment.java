@@ -85,7 +85,7 @@ public class ActivitiesOneFragment extends BaseRecyclerFragment {
     }
 
     private void setupListView() {
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new ActivitiesAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
@@ -98,8 +98,8 @@ public class ActivitiesOneFragment extends BaseRecyclerFragment {
         for (int i = 0; i < 10; i++) {
             itemList.add(new ActivitiesItemBean(
                     i + ""
-                    , "https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/30adcbef76094b36ccec2775afcc7cd98d109d2f.jpg"
-                    , "间隔我哦阿尔及哦啊好你欧尼奥尔太糊弄 "
+                    , "http://img1.dzwww.com:8080/tupian/20170728/9/12094154024698648245.jpg"
+                    , "为喜迎十九大，山塘片区新庄联合市职工文体协会结合建党96周年等，举办猜谜解题受党教、沙画创作学党史、以画会友庆党建、漫画诙谐做党人、舞动新庄歌唱党等丰富多彩系列活动，通过丰富多彩的活动，为党的生日献一份礼，抒发社区群众永远跟党走的心声。 "
                     , i + ""
                     , "辽宁省沈阳市和平区"
                     , "1000"

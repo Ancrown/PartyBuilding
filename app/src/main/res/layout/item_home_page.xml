@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
-   >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/item_home_page_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp85"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
@@ -19,22 +18,23 @@
         <ImageView
             android:id="@+id/item_home_page_img"
             android:layout_width="@dimen/dp100"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/line1"
-            android:layout_alignTop="@+id/line1"
+            android:layout_height="@dimen/dp70"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@color/black" />
 
-            android:scaleType="fitXY" />
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/item_home_page_img"
+            android:layout_alignTop="@+id/item_home_page_img"
             android:layout_marginLeft="@dimen/dp19"
             android:layout_toRightOf="@+id/item_home_page_img"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -60,10 +60,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-
+                    android:layout_marginTop="2dp"
+                    android:lineSpacingExtra="@dimen/dp2"
                     android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="习近平书记讲话：XXXXXXXXXXXXXXXXXXXXXXXX"
+                    android:maxLines="2"
+                    android:text="习近平书记讲话习近平书记讲话习近平书记讲话习近平书记讲话习近平书记讲话：XXXXXXXXXXXXXXXXXXXXXXXX"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_15" />
             </LinearLayout>
@@ -72,17 +73,21 @@
                 android:id="@+id/item_home_page_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/line2"
                 android:layout_marginTop="@dimen/dp6"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/dp2"
                 android:maxLines="2"
                 android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/text_size_13" />
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp2"
                 android:layout_marginTop="@dimen/dp5">
 
                 <TextView
@@ -91,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="2018-5-25 11:03"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="@dimen/text_size_12" />
 
                 <LinearLayout
@@ -125,6 +130,6 @@
                         android:textSize="@dimen/text_size_12" />
                 </LinearLayout>
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

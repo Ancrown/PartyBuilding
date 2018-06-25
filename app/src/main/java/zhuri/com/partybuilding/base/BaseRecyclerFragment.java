@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
+import zhuri.com.partybuilding.util.SizeUtils;
+import zhuri.com.partybuilding.util.SpaceItemDecoration;
 
 /**
  * 创建人: Administrator
@@ -40,6 +42,7 @@ public abstract class BaseRecyclerFragment extends BaseFragment {
         lmr.setOrientation(OrientationHelper.VERTICAL);
         //设置布局管理器
         recyclerView.setLayoutManager(lmr);
+
 
     }
 

@@ -5,11 +5,9 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/login_in"
+        style="@style/text_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="登陆"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:text="登陆" />
 </RelativeLayout>

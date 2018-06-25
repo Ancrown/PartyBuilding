@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,9 @@
             android:screenOrientation="portrait" />
         <!--工具-->
 
-
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="登陆" />
         <activity
             android:name=".activity.NavigationActivity"
             android:label="导航页" />
@@ -46,6 +48,20 @@
         <activity
             android:name=".activity.AnswerErrorActivity"
             android:label="错题集" />
+
+        <activity
+            android:name=".activity.activities.ActivitiesOneActivity"
+            android:label="社区活动" />
+        <activity
+            android:name=".activity.activities.ActivitiesTwoActivity"
+            android:label="微志愿" />
+        <activity
+            android:name=".activity.activities.ActivitiesThreeActivity"
+            android:label="微心愿" />
+        <activity
+            android:name=".activity.StudyActivity"
+            android:label="学习 十九大精神 两学一做 党务工作" />
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

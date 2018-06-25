@@ -125,7 +125,7 @@ public class TabLayoutThreeFragment extends BaseRecyclerFragment {
         bView = exHeader.findViewById(R.id.fra_consultation_bro);
 
 
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new HomePageAdapter(true, getActivity());
         recycler.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
@@ -140,19 +140,19 @@ public class TabLayoutThreeFragment extends BaseRecyclerFragment {
     public void getdata() {
         //轮播图
         imageResIds = new ArrayList<>();
-        imageResIds.add("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925682&di=d12775547359b0c44d837f51f02e6518&imgtype=0&src=http%3A%2F%2Fu5.qiyipic.com%2Fimage%2F20170815%2F9c%2F5d%2Fuv_3066296689_m_601_480_270.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=51e62c9a9f63768cbb089f90668a17a2&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F06%2F20160106173647_yiXdf.jpeg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=f92d19cc97cb850b93d622c248a9327a&imgtype=0&src=http%3A%2F%2Fi2.qhmsg.com%2Ft01e909ef83b1591352.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=ae1442d7c0da3969ab98dfcdf8bf2a31&imgtype=0&src=http%3A%2F%2Fp2.qhmsg.com%2Ft01fcf832a92d4bd986.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0606/cc5372c0e4e04055976885d4946dd7c8.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/de79d1ac2d4343c29d590f623a5cbd79.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/92be28d16e4f46d88938f189c3681d5a.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0521/d845ed9eeb0d4672b8e62674ebf9fadc.jpg");
+        imageResIds.add("http://dangjian.people.com.cn/NMediaFile/2016/0630/MAIN201606301910107798646305239.jpg");
 
         contentDescs = new ArrayList<>();
-        contentDescs.add("巩俐不低俗，我就不能低俗");
-        contentDescs.add("扑树又回来啦！再唱经典老歌引万人大合唱");
-        contentDescs.add("揭秘北京电影如何升级");
-        contentDescs.add("乐视网TV版大派送");
-        contentDescs.add("热血屌丝的反杀");
-        bView.text = "A";
+        contentDescs.add("推进人力资源服务业创新发展 深圳（南山）人力资源服务产业联盟成立");
+        contentDescs.add("南山区开展“不忘初心、牢记使命”主题微型马拉松活动");
+        contentDescs.add("南山区召开“双百”人才座谈会");
+        contentDescs.add("南山举行首届“企业红色运动会” 520名党员用行动向党“表白”");
+        contentDescs.add("组织部长面对面");
+
 
         broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
         bView.setData(broadcastBean);
@@ -160,16 +160,37 @@ public class TabLayoutThreeFragment extends BaseRecyclerFragment {
 
         //item数据
         itemList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            itemList.add(new HomePageItemBean(i + ""
-                    , "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_" +
-                    "10000&sec=1527142406419&di=bcdf4024750e8647e876f6df31334935&imgt" +
-                    "ype=0&src=http%3A%2F%2Fjiweixin168.com%2FUploads%2F2015%2F12%2F17%" +
-                    "2F56725e9c1ebac.png"
-                    , "党中央", "习近平书记说:XXXXXXX"
-                    , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                    , "2018-5-24 11:27", "100", "999+", i % 2 + ""));
-        }
+
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://www.people.com.cn/mediafile/pic/20180615/45/8657476590562130661.jpg"
+                , "", "核心阅读习近平总书记指出：“人民是历史的创造者，群众是真正的英雄。人民群众是我们力量的源泉。”党同人民群众联系问题是关系党生死存亡的问题。坚持以人民为中心的发展思想，就是坚持人民主体地位，践行全心全意为人民服务的根本宗旨，把党的群众路线贯彻到治国理政全部…"
+                , ""
+                , "2018-5-24", "11", "999+", 0 + ""));
+        itemList.add(new HomePageItemBean(2 + ""
+                , "http://cpc.people.com.cn/NMediaFile/2018/0615/MAIN201806150846227533060354023.jpg"
+                , "", "　人民网北京6月14日电 （记者赵成）国家主席习近平14日在人民大会堂会见美国国务卿蓬佩奥。"
+                , ""
+                , "2018-6-14", "999+", "999+", 1 + ""));
+
+        itemList.add(new HomePageItemBean(3 + ""
+                , "http://cpc.people.com.cn/NMediaFile/2018/0212/MAIN201802120901276824665637665.jpg"
+                , "", "不忘初心，枝叶关情。是什么样的成长经历，在总书记心中烙下深深的“人民情怀”？"
+                , ""
+                , "2018-5-24", "45", "999+", 0 + ""));
+
+        itemList.add(new HomePageItemBean(4 + ""
+                , "http://paper.people.com.cn/rmrb/res/1/20171026/1508964076506_1.jpg"
+                , "", "习近平：新时代要有新气象更要有新作为中国人民生活一定会一年更比一年好"
+                , ""
+                , "2018-5-24", "56", "999+", 1 + ""));
+
+        itemList.add(new HomePageItemBean(5 + ""
+                , "http://rencai.people.com.cn/NMediaFile/2017/0828/MAIN201708281519208668866763469.gif"
+                , "", "新中国成立以来，从钱学森到杨振宁，从施一公到黄大年，一批又一批海归人才学成归来，书写着科技报国的壮丽篇章，为祖国的建设与发展作出了卓越贡献。人民网·中国人才网邀请罗克佳华工业有限公司董事长李玮、电子科技大学计算机科学与工程学院院长戴元顺、南京大学现代工程与应用科学学院教授朱嘉，就“千人计划”专家谈归国创业故事与网友在线交流，欢迎收看。"
+                , ""
+                , "2018-5-24", "66", "999+", 0 + ""));
+
+
         adapter.setDataList(itemList);
 
     }
@@ -232,10 +253,5 @@ public class TabLayoutThreeFragment extends BaseRecyclerFragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        bView.setRunning(false);
-    }
 
 }

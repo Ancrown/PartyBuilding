@@ -48,7 +48,7 @@
             style="@style/text_white"
             android:layout_centerInParent="true"
             android:text="标题"
-            android:textSize="@dimen/text_size_16" />
+            android:textSize="@dimen/text_size_17" />
 
         <RelativeLayout
             android:id="@+id/lay_actionbar_right"

@@ -49,7 +49,7 @@ public class StudyFourFragment extends BaseRecyclerFragment {
     public void initView() {
         super.initView();
 
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new ExaminationAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
@@ -93,12 +93,12 @@ public class StudyFourFragment extends BaseRecyclerFragment {
 
     //  随机 1~4 ((int) ((Math.random() * 4) + 1) + "")
     public void getdata() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 9; i++) {
             list.add(new ExaminationBean(i + "",
-                    "昂阿鲁卡你个浪了康看了那看来你卡了",
+                    "201"+i+"党校考试题库大全",
                     "" + i,
-                    "昂昂看了那个拉卡不能十分关键看了不可添加标签卡价格八九十可拉倒吧公交卡了不过啊那个坎",
-                    ((int) ((Math.random() * 4)) + ""), "2018-6-9", "2018-7-9", i + "" + i,
+                    "201"+i+"年党纪法规知识考试题库(更新) - 全市党纪法规知识考试题库(共 365 题) ",
+                    ((int) ((Math.random() * 4)) + ""), "2018-6-9", "2018-10-1", i + "" + i,
                     "90", i % 2 + "", i + "" + i, "100")
             );
             Log.e("eeeee", "TYPE " + list.get(i).getType());

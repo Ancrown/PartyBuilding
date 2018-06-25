@@ -88,7 +88,7 @@ public class ActivitiesThreeFragment extends BaseRecyclerFragment {
     }
 
     private void setupListView() {
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new VWishAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
@@ -101,9 +101,9 @@ public class ActivitiesThreeFragment extends BaseRecyclerFragment {
         for (int i = 0; i < 10; i++) {
             itemList.add(new VWishBean(
                     i + "",
-                    "喂喂喂喂喂喂喂喂喂无无无无喂喂喂喂喂喂喂喂喂无无无无我问问",
+                    "微心愿|“点亮微心愿，争做圆梦人”",
                     i % 2 + "",
-                    "灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过灌灌灌灌灌过过过过给狗狗嘎嘎嘎嘎嘎嘎嘎",
+                    "微心愿”是在微博上新近兴起的一个网络热词，是指借助微博平台发表自己的个人心愿，用户可以通过微博发布个人愿望，也可以认领其他人发布的愿望，发起人与认领人可以借助微博平台相互沟通，最终完成用户的微心愿。",
                     i % 2 + "",
                     "2018-6-9 10:20",
                     "90",

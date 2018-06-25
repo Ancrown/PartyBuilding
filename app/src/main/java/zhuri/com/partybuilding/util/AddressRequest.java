@@ -6,6 +6,11 @@ package zhuri.com.partybuilding.util;
 public class AddressRequest {
 
     public static final String URL = "";
+    //加载页
+    public static final String GET_LOAD_PAGE = URL + "";
+    //登陆
+    public static final String LOGIN = URL + "";
+
 
     //首页
     public static final String HOME = URL + "";
@@ -29,4 +34,5 @@ public class AddressRequest {
 
     //错题集
     public static final String ERROR_ANSWER = URL + "";
+
 }

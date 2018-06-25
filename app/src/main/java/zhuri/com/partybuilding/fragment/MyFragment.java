@@ -9,14 +9,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.activity.AnswerErrorActivity;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.base.BaseFragment;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
+import zhuri.com.partybuilding.util.glideutils.GlideUtils;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 /**
  * 我的
@@ -101,43 +109,46 @@ public class MyFragment extends BaseFragment {
                 if (isLogin) {
 
                 } else {
-                    ToolUtils.showToast(getActivity(), "请先登录！");
+                    goLogin();
                 }
                 break;
             case R.id.my_activity_record:
                 if (isLogin) {
 
                 } else {
-                    ToolUtils.showToast(getActivity(), "请先登录！");
+                    goLogin();
                 }
                 break;
             case R.id.my_learning_records:
                 if (isLogin) {
 
                 } else {
-                    ToolUtils.showToast(getActivity(), "请先登录！");
+                    goLogin();
                 }
                 break;
             case R.id.my_examination_records:
                 if (isLogin) {
 
                 } else {
-                    ToolUtils.showToast(getActivity(), "请先登录！");
+                    goLogin();
                 }
                 break;
             case R.id.my_contribution:
                 if (isLogin) {
 
                 } else {
-                    ToolUtils.showToast(getActivity(), "请先登录！");
+                    goLogin();
                 }
                 break;
             case R.id.my_examination_error:
-                startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
+                if (isLogin) {
+                    startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
+                } else {
+                    goLogin();
+                }
                 break;
-
             case R.id.my_login:
-                ToolUtils.showToast(getActivity(), "跳到登陆页！");
+                goLogin();
                 break;
             case R.id.my_rl_info:
 
@@ -145,5 +156,40 @@ public class MyFragment extends BaseFragment {
         }
     }
 
+    public void getEntity() {
+        if (!isLogin) return;
+        //编号
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.CODES, "");
+        //名字
+        myName.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NAME, "") + "");
+        //头像
+        GlideUtils.LoadImage(getActivity(), SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_HEAD_IMG, "") + "", img);
+        //积分
+        myIntegral.setText("当前积分：" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.INTEGRAL, "") + "分");
+
+
+        //昵称
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "");
+        //性别
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.SEX, "");
+        //年龄
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.AGE, "");
+        //生日
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.BIRTHDAY, "");
+        //所在支部ID
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.DID, "");
+        //所在支部名称
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "");
+        //电话
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TEL, "");
+        //邮箱
+        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.EMAIL, "");
+
+
+    }
+
+    public void goLogin() {
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+    }
 
 }

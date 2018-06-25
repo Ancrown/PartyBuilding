@@ -2,18 +2,11 @@ package zhuri.com.partybuilding.fragment;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.StudyActivity;
+import zhuri.com.partybuilding.activity.activities.ActivitiesOneActivity;
+import zhuri.com.partybuilding.activity.activities.ActivitiesThreeActivity;
+import zhuri.com.partybuilding.activity.activities.ActivitiesTwoActivity;
 import zhuri.com.partybuilding.activity.ExaminationActivity;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
-import zhuri.com.partybuilding.base.BaseFragment;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
@@ -40,7 +33,6 @@ import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.HomeEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
-import zhuri.com.partybuilding.twinklingrefreshlayout.header.progresslayout.ProgressLayout;
 import zhuri.com.partybuilding.util.AddressRequest;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
@@ -56,7 +48,7 @@ import zhuri.com.partybuilding.zbarcode.CaptureActivity;
  * 首页
  */
 
-public class HomePageFragment extends BaseRecyclerFragment implements TranslucentActionBar.ActionBarClickListener {
+public class HomePageFragment extends BaseRecyclerFragment  {
     //轮播图
     // @BindView(R.id.fra_home_bro)
     private BroadcastView bView;
@@ -107,13 +99,41 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
     public void initView() {
         super.initView();
         //设置标题
-        getTitleView().setData(getResources().getString(R.string.app_name), 0, R.drawable.dian_dian_dian, null, R.drawable.plus, null, this);
+        getTitleView().setData(getResources().getString(R.string.app_name), 0, 0, null, 0, null, null);
 
         setupListView();
     }
 
     @Override
     public void refreshData() {
+        //社区活动
+        communityAactivities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ActivitiesOneActivity.class));
+            }
+        });
+        //微志愿
+        vVolunteer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ActivitiesTwoActivity.class));
+            }
+        });
+        //微心愿
+        vWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ActivitiesThreeActivity.class));
+            }
+        });
+        //社区活动
+        communityAactivities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ActivitiesOneActivity.class));
+            }
+        });
         //在线答题
         onlineAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +141,28 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
                 startActivity(new Intent(getActivity(), ExaminationActivity.class));
             }
         });
+        //两学一做
+        twoOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "1"));
+            }
+        });
+        //十九大精神
+        nineteen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "0"));
+            }
+        });
+        //党务工作
+        workGuidance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "2"));
+            }
+        });
+
         //轮播图点击
         bView.setOnImgClick(new BroadcastView.OnImgClick() {
             @Override
@@ -166,11 +208,6 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
 
     private void setupListView() {
 
@@ -190,7 +227,7 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
         //设置不允许上拉
         refreshLayout.setEnableLoadmore(false);
         //设置间距
-        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
+        recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new HomePageAdapter(true, getActivity());
         recyclerView.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
@@ -204,42 +241,57 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
 
         //轮播图
         imageResIds = new ArrayList<>();
-        imageResIds.add("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925682&di=d12775547359b0c44d837f51f02e6518&imgtype=0&src=http%3A%2F%2Fu5.qiyipic.com%2Fimage%2F20170815%2F9c%2F5d%2Fuv_3066296689_m_601_480_270.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=51e62c9a9f63768cbb089f90668a17a2&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F06%2F20160106173647_yiXdf.jpeg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=f92d19cc97cb850b93d622c248a9327a&imgtype=0&src=http%3A%2F%2Fi2.qhmsg.com%2Ft01e909ef83b1591352.jpg");
-        imageResIds.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525344925648&di=ae1442d7c0da3969ab98dfcdf8bf2a31&imgtype=0&src=http%3A%2F%2Fp2.qhmsg.com%2Ft01fcf832a92d4bd986.jpg");
+        imageResIds.add("http://new.syist.cn/public/home/images/sy.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/92be28d16e4f46d88938f189c3681d5a.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/640be637218b42738664351f6a120a03.jpg");
+        imageResIds.add("http://www.nsxf.cn/upload/2018/0521/d845ed9eeb0d4672b8e62674ebf9fadc.jpg");
+        imageResIds.add("http://new.syist.cn/public/home/images/sy.jpg");
 
         contentDescs = new ArrayList<>();
-        contentDescs.add("巩俐不低俗，我就不能低俗");
-        contentDescs.add("扑树又回来啦！再唱经典老歌引万人大合唱");
-        contentDescs.add("揭秘北京电影如何升级");
-        contentDescs.add("乐视网TV版大派送");
-        contentDescs.add("热血屌丝的反杀");
-        bView.text = "A";
+        contentDescs.add("党建网 - 中宣部主管全国性党建网站");
+        contentDescs.add("人民网·中国共产党新闻网主办的全国性党建频道,传播党的声音,密切党群关系,推动党的工作,展现党的形象。");
+        contentDescs.add("党的建设即马克思主义建党理论同党的建设实践的统一，马克思主义党的学说的应用");
+        contentDescs.add("光明网党建频道_报道最新党建工作,党建研究新闻");
+        contentDescs.add("党建工作有哪些方面");
+
         broadcastBean = new BroadcastBean(null, imageResIds, contentDescs);
         bView.setData(broadcastBean);
 
         //轮播文字
         info = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            info.add("这里是热门头条" + i);
-        }
+        info.add("中共浙江盘石信息技术股份有限公司委员会");
+        info.add("恭喜盘石股份党委被评委市级示范点（互联网业党建双强示范点)");
+        info.add("关于召开《向解放军学习，打造盘石铁军》观看8.1建军节阅兵视频的活动");
+        info.add("关于表彰2017年度盘石先进党支部及优秀党员的决定");
+        info.add("盘石先进党支部及优秀党员评比的通知");
+
 
         marqueeview.startWithList(info);
 
         //item数据
         itemList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            itemList.add(new HomePageItemBean(i + ""
-                    , "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_" +
-                    "10000&sec=1527142406419&di=bcdf4024750e8647e876f6df31334935&imgt" +
-                    "ype=0&src=http%3A%2F%2Fjiweixin168.com%2FUploads%2F2015%2F12%2F17%" +
-                    "2F56725e9c1ebac.png"
-                    , "党中央", "习近平书记说:XXXXXXX"
-                    , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                    , "2018-5-24 11:27", "100", "999+", i % 2 + ""));
-        }
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://a4.peoplecdn.cn/cdd73b1852da4edbc70ca622c5208bae.jpg"
+                , "", "习近平要求把这项工作作为重大政治任务 “没有比人更高的山,没有比脚更长的路。"
+                , ""
+                , "2018-5-24", "100", "999+", 0 % 2 + ""));
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://a1.peoplecdn.cn/64a06ff0f3c188ab6edd29a824c3c5c2.jpg"
+                , "党中央", "中共中央总书记、国家主席、中央军委主席习近平在山西太原市主持召开深度贫困地区脱贫攻坚座谈会并发表重要讲话。"
+                , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
+                , "2017-6-23", "60", "52", 1 % 2 + ""));
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://a2.peoplecdn.cn/51b4412cdaf821971abc8d3a5b5487d3.jpg"
+                , "", "难干的事要派能干的人,有针对性地选配政治素质高、工作能力强、熟悉“三农”工作的干部担任贫困乡镇党政主要领导。"
+                , ""
+                , "2017-6-30", "5", "23", 2 % 2 + ""));
+        itemList.add(new HomePageItemBean(1 + ""
+                , "http://a4.peoplecdn.cn/43e27090904975c9abd514c5cb749548.jpg"
+                , "", "传达学习贯彻习近平总书记重要讲话和重要指示精神"
+                , ""
+                , "2018-06-18", "66", "89", 3 % 2 + ""));
+
+
         adapter.setDataList(itemList);
 
     }
@@ -315,26 +367,31 @@ public class HomePageFragment extends BaseRecyclerFragment implements Translucen
         marqueeview.stopFlipping();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        bView.setRunning(false);
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        bView.setRunning(true);
+//    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        bView.setRunning(false);
+//    }
+//
 
-
-    @Override
-    public void onLeftClick() {
-
-    }
-
-    @Override
-    public void onRightClick() {
-        if (PermissionManager.permissionApplicationF(this, PermissionManager.Camera(), PermissionManager.PERMISSION)) {
-            Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
-            startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
-        }
-
-    }
+//    @Override
+//    public void onLeftClick() {
+//
+//    }
+//
+//    @Override
+//    public void onRightClick() {
+//        if (PermissionManager.permissionApplicationF(this, PermissionManager.Camera(), PermissionManager.PERMISSION)) {
+//            Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
+//            startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+//        }
+//
+//    }
 
     //扫码回调
     @Override

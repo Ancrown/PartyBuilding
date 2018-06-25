@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">沈阳智慧党建</string>
+    <string name="app_name">沈阳党建</string>
     <string name="home">首页</string>
-    <string name="consultation">咨询</string>
+    <string name="consultation">资讯</string>
     <string name="activities">活动</string>
     <string name="study">学习</string>
     <string name="my">我的</string>
-    <string name="pb_consultation">党建咨询</string>
+    <string name="pb_consultation">党建资讯</string>
 
     <string name="community_activities">社区活动</string>
     <string name="v_volunteer">微志愿</string>

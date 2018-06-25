@@ -1,4 +1,4 @@
-package zhuri.com.partybuilding.fragment.study;
+package zhuri.com.partybuilding.activity;
 
 import android.os.Handler;
 import android.util.Log;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.StudyAdapter;
-import zhuri.com.partybuilding.base.BaseRecyclerFragment;
+import zhuri.com.partybuilding.base.BaseRecyclerActivity;
 import zhuri.com.partybuilding.bean.StudyBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.StudyEntity;
@@ -24,23 +24,22 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
+import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
  * 创建人: Administrator
- * 创建时间: 2018/6/5
- * 描述:党务工作
+ * 创建时间: 2018/6/20
+ * 描述: 十九大 两学一做 党务工作
  */
 
-public class StudyThreeFragment extends BaseRecyclerFragment {
+public class StudyActivity extends BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
+    private String cid;
 
     private int page;
     private StudyAdapter adapter;
     private List<StudyBean> itemList;
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.base_fresh_recy;
-    }
+    private String title;
 
     @Override
     public void initView() {
@@ -48,16 +47,23 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
         setupListView();
     }
 
-    @Override
-    public void refreshData() {
-
-    }
-
     private void setupListView() {
+        cid = getIntent().getStringExtra("cid");
 
-
+        switch (cid) {
+            case "0":
+                title = "十九大精神";
+                break;
+            case "1":
+                title = "两学一做";
+                break;
+            case "2":
+                title = "党务工作";
+                break;
+        }
+        getTitleView().setData(title, 0, R.drawable.back, null, 0, null, this);
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new StudyAdapter(getActivity());
+        adapter = new StudyAdapter(this);
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
         getdata();
@@ -116,12 +122,12 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
 
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
         map.put("cid", "");
         map.put("page", page == 0 ? 1 : page);
 
-        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.STUDY, new OkHttpUtil.ResultCallback<BaseEntity<StudyEntity>>() {
+        OkHttpUtil.getInstance(this).doPostList(AddressRequest.STUDY, new OkHttpUtil.ResultCallback<BaseEntity<StudyEntity>>() {
             @Override
             public void onError(Request request, Exception e) {
                 endRefresh(gesture);
@@ -150,4 +156,23 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
         }, map, "加载中", page);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void onLeftClick() {
+        onBack();
+    }
+
+    @Override
+    public void onRightClick() {
+
+    }
 }

@@ -1,5 +1,4 @@
-package zhuri.com.partybuilding.fragment.activities;
-
+package zhuri.com.partybuilding.activity.activities;
 
 import android.os.Handler;
 import android.util.Log;
@@ -13,11 +12,13 @@ import java.util.Map;
 
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
-import zhuri.com.partybuilding.base.BaseRecyclerFragment;
+import zhuri.com.partybuilding.adapter.VWishAdapter;
+import zhuri.com.partybuilding.base.BaseRecyclerActivity;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
+import zhuri.com.partybuilding.bean.VWishBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.activities.CommunityEntity;
-import zhuri.com.partybuilding.entity.activities.VVolunteerEntity;
+import zhuri.com.partybuilding.entity.activities.VWish;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.util.AddressRequest;
@@ -26,25 +27,20 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
+import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
  * 创建人: Administrator
- * 创建时间: 2018/6/5
- * 描述: 微志愿
+ * 创建时间: 2018/6/20
+ * 描述:
  */
 
-public class ActivitiesTwoFragment extends BaseRecyclerFragment {
-
+public class ActivitiesThreeActivity extends BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
     private int page;
 
-    private ActivitiesAdapter adapter;
-    private List<ActivitiesItemBean> itemList;
+    private VWishAdapter adapter;
+    private List<VWishBean> itemList;
 
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.base_fresh_recy;
-    }
 
     @Override
     public void initView() {
@@ -53,7 +49,7 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
     }
 
     @Override
-    public void refreshData() {
+    public void initData() {
 
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
@@ -85,9 +81,15 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
         });
     }
 
+    @Override
+    protected void initListener() {
+
+    }
+
     private void setupListView() {
+        getTitleView().setData("微心愿", 0, R.drawable.back, null, 0, null, this);
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new ActivitiesAdapter(getActivity());
+        adapter = new VWishAdapter(this);
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
         getdata();
@@ -97,16 +99,15 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
     public void getdata() {
 
         for (int i = 0; i < 10; i++) {
-            itemList.add(new ActivitiesItemBean(
-                    i + ""
-                    , "http://www.shmh.gov.cn/Plugins/ueditor_release-ueditor1_4_3_1-utf8-net/net/upload/image/20171213/6364877839491409896842106914ffcdaf.jpg"
-                    , "“党员’微’志愿点亮’大’党建”华漕微自治•红色微志愿版块正式上线启动。"
-                    , i + ""
-                    , "辽宁省沈阳市和平区"
-                    , "1000"
-                    , "99999999"
-                    , "2018-7-1", "2018-6-5"
-                    , ((int) (Math.random() * 4)) + "", i % 2 + ""));
+            itemList.add(new VWishBean(
+                    i + "",
+                    "微心愿|“点亮微心愿，争做圆梦人”",
+                    i % 2 + "",
+                    "微心愿”是在微博上新近兴起的一个网络热词，是指借助微博平台发表自己的个人心愿，用户可以通过微博发布个人愿望，也可以认领其他人发布的愿望，发起人与认领人可以借助微博平台相互沟通，最终完成用户的微心愿。",
+                    i % 2 + "",
+                    "2018-6-9 10:20",
+                    "90",
+                    i % 2 + ""));
             Log.e("eeeeee", "TYPE    " + itemList.get(i).getType());
         }
         adapter.setDataList(itemList);
@@ -114,35 +115,32 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
 
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
         map.put("keyword", "");
         map.put("page", page == 0 ? 1 : page);
 
-        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.ACTIVITIES_V_VOLUNTEER, new OkHttpUtil.ResultCallback<BaseEntity<VVolunteerEntity>>() {
+        OkHttpUtil.getInstance(this).doPostList(AddressRequest.ACTIVITIES_V_WISH, new OkHttpUtil.ResultCallback<BaseEntity<VWish>>() {
             @Override
             public void onError(Request request, Exception e) {
                 endRefresh(gesture);
             }
 
             @Override
-            public void onResponse(BaseEntity<VVolunteerEntity> response) {
+            public void onResponse(BaseEntity<VWish> response) {
                 endRefresh(gesture);
 
                 if (page <= 1) {
                     itemList.clear();
                 }
                 for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                    itemList.add(new ActivitiesItemBean(response.getData().getInfo().get(i).getId(),
-                            response.getData().getInfo().get(i).getImageurl(),
+                    itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
                             response.getData().getInfo().get(i).getTitle(),
-                            response.getData().getInfo().get(i).getIstop(),
-                            response.getData().getInfo().get(i).getAddress(),
-                            response.getData().getInfo().get(i).getIlike(),
-                            response.getData().getInfo().get(i).getAmount(),
-                            response.getData().getInfo().get(i).getEtime(),
-                            response.getData().getInfo().get(i).getStime(),
+                            "",
+                            response.getData().getInfo().get(i).getDemo(),
                             response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getIntegral(),
                             response.getData().getInfo().get(i).getPurview()));
                 }
                 adapter.setDataList(itemList);
@@ -150,4 +148,13 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
         }, map, "", page);
     }
 
+    @Override
+    public void onLeftClick() {
+        onBack();
+    }
+
+    @Override
+    public void onRightClick() {
+
+    }
 }
