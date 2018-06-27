@@ -1,9 +1,9 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -11,12 +11,11 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.StudyDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
-import zhuri.com.partybuilding.bean.StudyBean;
-import zhuri.com.partybuilding.util.AppUtils;
+import zhuri.com.partybuilding.bean.study.StudyBean;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
-import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.TextViewUitl;
 import zhuri.com.partybuilding.util.ToolUtils;
@@ -31,17 +30,19 @@ public class StudyAdapter extends BaseRecyclerAdapter<StudyBean> {
 
     private Drawable fabulousNo = context.getResources().getDrawable(R.drawable.fabulous);
 
-    private Drawable fabulousYes = context.getResources().getDrawable(R.drawable.fabulous);
+    private Drawable fabulousYes = context.getResources().getDrawable(R.drawable.fabulous_yes);
 
-    private boolean isLogin;
 
-    public StudyAdapter(Context context) {
+    public StudyAdapter(Context context, String cid) {
         super(context);
+        this.cid = cid;
         fabulousNo.setBounds(0, 0, fabulousNo.getMinimumWidth(), fabulousNo.getMinimumHeight());
         fabulousYes.setBounds(0, 0, fabulousYes.getMinimumWidth(), fabulousYes.getMinimumHeight());
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
+
 
     }
+
+    private String cid;
 
     @Override
     public CommonHolder<StudyBean> setViewHolder(ViewGroup parent, int viewType) {
@@ -83,14 +84,25 @@ public class StudyAdapter extends BaseRecyclerAdapter<StudyBean> {
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLogin && bean.getPurview().equals("0")) {
-                        Log.e("eeeeee", "查看： NO ×××××××");
-                    } else {
-
-                        Log.e("eeeeee", "查看： YES √√√√√√√");
-                    }
+                    look(isLogin,bean.getPurview().equals("0"),bean.getId());
                 }
             });
         }
     }
+    //跳页 type判断是 查看报道 1  报名  0
+    public void look(boolean isLogin, boolean purview, String id) {
+
+        if (isLogin) {
+            //没登录
+            if (purview) {
+                //游客可看
+                context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));
+            } else {
+                ToolUtils.showToast(context, "游客不可看");
+            }
+        } else
+            context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));
+
+    }
+
 }

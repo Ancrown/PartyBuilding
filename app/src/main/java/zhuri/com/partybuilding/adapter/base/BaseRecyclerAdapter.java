@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 
 
 /**
@@ -30,8 +33,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public Context context;
 
+    //是否登录
+    public boolean isLogin;
+
+
     public BaseRecyclerAdapter(Context context) {
         this.context = context;
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
     }
 
     @Override

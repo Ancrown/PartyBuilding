@@ -249,13 +249,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/arrow"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:text="@string/news"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="@dimen/text_size_14" />
 
         <TextView
             android:id="@+id/fra_home_more"

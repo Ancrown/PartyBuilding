@@ -9,119 +9,109 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="vertical">
 
-        android:orientation="horizontal">
-
-        <View
-            android:id="@+id/item_v_wish_view"
-            android:layout_width="@dimen/dp3.5"
-            android:layout_height="match_parent"
-            android:background="@color/orange" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp10"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/item_v_wish_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:maxEms="15"
-                    android:maxLines="1"
-                    android:text="多久爱手机掉手机安静如确认确认多久爱手机掉手机安静如确认确认"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15" />
-
-                <TextView
-                    android:id="@+id/item_v_wish_istop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_toRightOf="@+id/item_v_wish_title"
-                    android:background="@drawable/fill_bg_red"
-                    android:paddingBottom="@dimen/dp1"
-                    android:paddingLeft="@dimen/dp3"
-                    android:paddingRight="@dimen/dp3"
-                    android:paddingTop="@dimen/dp1"
-                    android:text="最新"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_10"
-                    android:visibility="visible" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/item_v_wish_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-
-                    android:layout_marginTop="@dimen/dp6"
-                    android:layout_toLeftOf="@+id/item_v_wish_button"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="@dimen/dp2"
-                    android:maxLines="2"
-                    android:text="阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏"
-                    android:textColor="@color/light_gray"
-                    android:textSize="@dimen/text_size_13" />
-
-                <Button
-                    android:id="@+id/item_v_wish_button"
-                    android:layout_width="@dimen/dp48"
-                    android:layout_height="@dimen/dp23"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp25"
-                    android:background="@color/orange"
-                    android:gravity="center"
-                    android:text="认领"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_13" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/item_v_wish_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5">
+                android:layout_toLeftOf="@+id/item_v_wish_label"
+                android:drawableLeft="@drawable/xinxing"
+                android:drawablePadding="@dimen/dp5"
+                android:ellipsize="end"
+                android:gravity="center|left"
+                android:maxLines="1"
+                android:text="帮助安徽发件客户放假骨奥术大师大多群无啊啊啊啊提"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/item_v_wish_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+
+                android:paddingBottom="@dimen/dp1"
+                android:paddingLeft="@dimen/dp3"
+                android:paddingRight="@dimen/dp3"
+                android:paddingTop="@dimen/dp1"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp21"
+            android:layout_marginTop="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/item_v_wish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/clock"
+                android:drawablePadding="@dimen/dp5"
+                android:text="2018-6-15 --2018-10-1"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_size_13" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_v_wish_time"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_toLeftOf="@+id/dayuhao">
 
                 <TextView
-                    android:id="@+id/item_v_wish_time"
+                    android:id="@+id/item_v_wish_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="发布时间：2018-6-6 14:01"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_12" />
+                    android:layout_centerVertical="true"
+                    android:text="人数:2人"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/text_size_13" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="@dimen/dp1"
+                    android:layout_height="@dimen/dp15"
+                    android:layout_marginLeft="@dimen/dp90"
+                    android:background="@color/light_gray"></View>
 
                 <TextView
-                    android:id="@+id/item_v_wish_integral"
+                    android:id="@+id/item_v_wish_send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="90积分"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_12" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:layout_toRightOf="@+id/view"
+                    android:ellipsize="end"
+                    android:minLines="1"
+                    android:text="发布者:XXXXXXXXXXXXXXXXXXXX"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/text_size_13" />
+
             </RelativeLayout>
-        </LinearLayout>
 
+            <ImageView
+                android:id="@+id/dayuhao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/dayuhao_light_gray" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

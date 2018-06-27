@@ -1,10 +1,7 @@
 package zhuri.com.partybuilding.fragment;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -20,11 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import zhuri.com.partybuilding.R;
-import zhuri.com.partybuilding.activity.StudyActivity;
+import zhuri.com.partybuilding.activity.study.StudyActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesOneActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesThreeActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesTwoActivity;
 import zhuri.com.partybuilding.activity.ExaminationActivity;
+import zhuri.com.partybuilding.activity.study.StudyOneActivity;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.BroadcastBean;
@@ -39,16 +37,13 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
-import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.BroadcastView;
-import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
-import zhuri.com.partybuilding.zbarcode.CaptureActivity;
 
 /**
  * 首页
  */
 
-public class HomePageFragment extends BaseRecyclerFragment  {
+public class HomePageFragment extends BaseRecyclerFragment {
     //轮播图
     // @BindView(R.id.fra_home_bro)
     private BroadcastView bView;
@@ -152,7 +147,7 @@ public class HomePageFragment extends BaseRecyclerFragment  {
         nineteen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "0"));
+                startActivity(new Intent(getActivity(), StudyOneActivity.class));
             }
         });
         //党务工作
@@ -393,41 +388,41 @@ public class HomePageFragment extends BaseRecyclerFragment  {
 //
 //    }
 
-    //扫码回调
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA) {
-            if (null == data) return;
-            Bundle b = data.getExtras();
-            String result = b.getString(CaptureActivity.EXTRA_STRING);
-            Toast.makeText(getActivity(), result + "", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    //授权回调
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.e("eeeee", "eeeeeeeeeeeeeeeeeeee" + requestCode);
-        if (grantResults.length == 0) return;
-        int count = 0;
-        for (int i = 0; i < grantResults.length; i++) {
-            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                count++;
-            }
-        }
-        if (count == grantResults.length) {
-            if (requestCode == PermissionManager.PERMISSION) {
-                Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
-                startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
-            }
-        } else {
-            if (requestCode == PermissionManager.PERMISSION) {
-                PermissionManager.showDialog(getActivity(),
-                        "使用权限使用权限被禁止，一些功能无法正常使用。是否开启该权限？(步骤：应用信息->权限->'勾选'相机)");
-            }
-
-        }
-    }
+//    //扫码回调
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA) {
+//            if (null == data) return;
+//            Bundle b = data.getExtras();
+//            String result = b.getString(CaptureActivity.EXTRA_STRING);
+//            Toast.makeText(getActivity(), result + "", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    //授权回调
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        Log.e("eeeee", "eeeeeeeeeeeeeeeeeeee" + requestCode);
+//        if (grantResults.length == 0) return;
+//        int count = 0;
+//        for (int i = 0; i < grantResults.length; i++) {
+//            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+//                count++;
+//            }
+//        }
+//        if (count == grantResults.length) {
+//            if (requestCode == PermissionManager.PERMISSION) {
+//                Intent intent2 = new Intent(getActivity(), CaptureActivity.class);
+//                startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+//            }
+//        } else {
+//            if (requestCode == PermissionManager.PERMISSION) {
+//                PermissionManager.showDialog(getActivity(),
+//                        "使用权限使用权限被禁止，一些功能无法正常使用。是否开启该权限？(步骤：应用信息->权限->'勾选'相机)");
+//            }
+//
+//        }
+//    }
 }

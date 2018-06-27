@@ -13,19 +13,11 @@ public class VWishBean {
     private String content;
     private String type;
     private String time;
+    private String endtime;
     private String integral;
     private String purview;
-
-    public VWishBean(String id, String title, String isTop, String content, String type, String time, String integral, String purview) {
-        this.id = id;
-        this.title = title;
-        this.isTop = isTop;
-        this.content = content;
-        this.type = type;
-        this.time = time;
-        this.integral = integral;
-        this.purview = purview;
-    }
+    private String peopleNum;
+    private String send;
 
     public String getId() {
         return id;
@@ -75,6 +67,14 @@ public class VWishBean {
         this.time = time;
     }
 
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
     public String getIntegral() {
         return integral;
     }
@@ -89,5 +89,36 @@ public class VWishBean {
 
     public void setPurview(String purview) {
         this.purview = purview;
+    }
+
+    public String getPeopleNum() {
+        return peopleNum;
+    }
+
+    public void setPeopleNum(String peopleNum) {
+        this.peopleNum = peopleNum;
+    }
+
+    public String getSend() {
+        return send;
+    }
+
+    public void setSend(String send) {
+        this.send = send;
+    }
+
+    public VWishBean(String id, String title, String isTop, String content, String type, String time, String endtime, String integral, String purview, String peopleNum, String send) {
+
+        this.id = id;
+        this.title = title;
+        this.isTop = isTop;
+        this.content = content;
+        this.type = type;
+        this.time = time;
+        this.endtime = endtime;
+        this.integral = integral;
+        this.purview = purview;
+        this.peopleNum = peopleNum;
+        this.send = send;
     }
 }

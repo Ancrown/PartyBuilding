@@ -1,18 +1,19 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.activitiesdetail.ActivitiesDetail;
+import zhuri.com.partybuilding.activity.activitiesdetail.ActivitiesReportDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
@@ -31,26 +32,54 @@ import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
 
 
+    private String type;
 
     private boolean isLogin;
 
-    public ActivitiesAdapter(Context context) {
+    public ActivitiesAdapter(Context context, String type) {
         super(context);
+        this.type = type;
         isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
 
     }
 
     @Override
     public CommonHolder<ActivitiesItemBean> setViewHolder(ViewGroup parent, int viewType) {
-        return new Hodler(parent.getContext(), parent, R.layout.item_activities);
+        Log.e("eeeee", "viewType:  " + viewType);
+        switch (viewType) {
+            case 1:
+                return new Holder(parent.getContext(), parent, R.layout.item_activities);
+            case 2:
+                return new HolderTwo(parent.getContext(), parent, R.layout.item_activities_two);
+            case 3:
+                return new HolderThree(parent.getContext(), parent, R.layout.item_activities_three);
+            default:
+                return new Holder(parent.getContext(), parent, R.layout.item_activities);
+        }
     }
 
-    class Hodler extends CommonHolder<ActivitiesItemBean> {
 
-        @BindView(R.id.item_activities_ll)
-        LinearLayout ll;
-        @BindView(R.id.item_activities_view)
-        View view;
+    @Override
+    public int getItemViewType(int position) {
+        Log.e("eeeeee", "getItemViewType viewType:" + getItemList().get(position).getType());
+
+//        if (getItemList().get(position).getType() == 1) {
+//
+//            return 1;
+//        } else {
+//            return BaseRecyclerAdapter.TYPE_CONTENT;
+//        }
+        return getItemList().get(position).getType();
+    }
+
+    @Override
+    public int getItemCount() {
+        return getItemList().size();
+
+    }
+
+    class Holder extends CommonHolder<ActivitiesItemBean> {
+
         @BindView(R.id.item_activities_img)
         ImageView itemActivitiesImg;
         @BindView(R.id.item_activities_type)
@@ -61,97 +90,206 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
         TextView itemActivitiesIstop;
         @BindView(R.id.item_activities_address)
         TextView itemActivitiesAddress;
-        @BindView(R.id.item_activities_comment_join)
-        TextView itemActivitiesCommentJoin;
         @BindView(R.id.item_activities_time)
         TextView itemActivitiesTime;
-        @BindView(R.id.item_activities_button)
-        Button itemActivitiesButton;
+        @BindView(R.id.item_activities_ll)
+        LinearLayout itemActivitiesLl;
 
-        public Hodler(Context context, ViewGroup root, int layoutRes) {
+        public Holder(Context context, ViewGroup root, int layoutRes) {
             super(context, root, layoutRes);
         }
 
         @Override
         public void bindData(final ActivitiesItemBean bean, final int i) {
 
-            GlideUtils.LoadImage(getContext(), bean.getImg(), itemActivitiesImg);
-
-
-            if (bean.getType().equals("0") || bean.getType().equals("3")) {
-                itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.black));
-                itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.gray));
-                view.setBackgroundColor(AppUtils.getColor(R.color.gray));
-                itemActivitiesType.setText(bean.getType().equals("0") ? "未开始" : "已结束");
-                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_no));
-                itemActivitiesButton.setText(bean.getType().equals("0") ? "未开始" : "已结束");
-                itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.gray));
-
-            } else {
-                view.setBackgroundColor(AppUtils.getColor(R.color.red));
-                itemActivitiesTitle.setTextColor(context.getResources().getColor(R.color.red));
-                itemActivitiesTime.setTextColor(context.getResources().getColor(R.color.light_red));
-                itemActivitiesType.setText("进行中");
-                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_yes));
-                itemActivitiesButton.setBackgroundColor(AppUtils.getColor(R.color.light_red));
-                itemActivitiesButton.setText(bean.getType().equals("1") ? "报名" : "已报名");
-            }
-
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[0], itemActivitiesImg);
 
             itemActivitiesTitle.setText(bean.getTitle());
 
-            if (bean.getIsTop().equals("0")) {
+
+            if (bean.getStatus().equals("0")) {
+                itemActivitiesType.setText("报名中");
+                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_yes));
+                switch (bean.getFlag()) {
+                    case "0":
+                        itemActivitiesIstop.setVisibility(View.GONE);
+                        break;
+                    case "1":
+                        itemActivitiesIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesIstop.setText("推荐");
+                        itemActivitiesIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                    case "2":
+                        itemActivitiesIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesIstop.setText("置顶");
+                        itemActivitiesIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                }
+            } else {
+                itemActivitiesType.setText("已结束");
+                itemActivitiesType.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.label_no));
                 itemActivitiesIstop.setVisibility(View.VISIBLE);
-            } else {
-                itemActivitiesIstop.setVisibility(View.GONE);
+                itemActivitiesIstop.setText("报道");
+                itemActivitiesIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_orange_4));
             }
 
-            if (TextUtils.isEmpty(bean.getAddress())) {
-                itemActivitiesAddress.setVisibility(View.GONE);
-            } else {
-                itemActivitiesAddress.setText("地址：" + bean.getAddress());
-                itemActivitiesAddress.setVisibility(View.VISIBLE);
-            }
-            itemActivitiesCommentJoin.setText(bean.getComment() + "预览    " + (TextUtils.isEmpty(bean.getJoin()) ? "" : bean.getJoin() + "人已参与"));
+            itemActivitiesAddress.setText(bean.getAddress());
+            itemActivitiesTime.setText(bean.getAddtime());
 
-            if (TextUtils.isEmpty(bean.getStartTime()) || TextUtils.isEmpty(bean.getEndTime())) {
-                itemActivitiesTime.setVisibility(View.GONE);
-            } else {
-                itemActivitiesTime.setText("活动时间：" + bean.getStartTime() + "~" + bean.getEndTime());
-                itemActivitiesTime.setVisibility(View.VISIBLE);
-            }
-
-            itemActivitiesButton.setOnClickListener(new View.OnClickListener() {
+            itemActivitiesLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if (bean.getType().equals("0") || bean.getType().equals("3")) {
-                        if (bean.getType().equals("0")) {
-                            ToolUtils.showToast(context, "未开始");
-                        } else {
-                            ToolUtils.showToast(context, "已结束");
-                        }
-                    } else {
-                        if (bean.getType().equals("1")) {
-                            ToolUtils.showToast(context, "报名");
-                        } else {
-                            ToolUtils.showToast(context, "已报名");
-                        }
-                    }
-
+                    look(isLogin, bean.getPurview().equals("0"), bean.getStatus(), bean.getId());
                 }
             });
-            ll.setOnClickListener(new View.OnClickListener() {
+
+
+        }
+    }
+
+    class HolderTwo extends CommonHolder<ActivitiesItemBean> {
+
+
+        @BindView(R.id.item_activities_two_title)
+        TextView itemActivitiesTwoTitle;
+        @BindView(R.id.item_activities_two_istop)
+        TextView itemActivitiesTwoIstop;
+        @BindView(R.id.item_activities_two_img_one)
+        ImageView itemActivitiesTwoImgOne;
+        @BindView(R.id.item_activities_two_img_two)
+        ImageView itemActivitiesTwoImgTwo;
+        @BindView(R.id.item_activities_two_ll)
+        LinearLayout itemActivitiesTwoLl;
+
+        public HolderTwo(Context context, ViewGroup root, int layoutRes) {
+            super(context, root, layoutRes);
+        }
+
+        @Override
+        public void bindData(final ActivitiesItemBean bean, int i) {
+
+            itemActivitiesTwoTitle.setText(bean.getTitle());
+
+
+            if (bean.getStatus().equals("0")) {
+                switch (bean.getFlag()) {
+                    case "0":
+                        itemActivitiesTwoIstop.setVisibility(View.GONE);
+                        break;
+                    case "1":
+                        itemActivitiesTwoIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesTwoIstop.setText("推荐");
+                        itemActivitiesTwoIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                    case "2":
+                        itemActivitiesTwoIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesTwoIstop.setText("置顶");
+                        itemActivitiesTwoIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                }
+            } else {
+                itemActivitiesTwoIstop.setVisibility(View.VISIBLE);
+                itemActivitiesTwoIstop.setText("报道");
+                itemActivitiesTwoIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_orange_4));
+            }
+
+
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[0], itemActivitiesTwoImgOne);
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[1], itemActivitiesTwoImgTwo);
+
+            itemActivitiesTwoLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLogin && bean.getPurview().equals("0")) {
-                        Log.e("eeeeee", "查看： NO ×××××××");
-                    } else {
-
-                        Log.e("eeeeee", "查看： YES √√√√√√√");
-                    }
+                    look(isLogin, bean.getPurview().equals("0"), bean.getStatus(), bean.getId());
                 }
             });
         }
+    }
+
+    class HolderThree extends CommonHolder<ActivitiesItemBean> {
+        @BindView(R.id.item_activities_three_title)
+        TextView itemActivitiesThreeTitle;
+        @BindView(R.id.item_activities_three_istop)
+        TextView itemActivitiesThreeIstop;
+        @BindView(R.id.item_activities_three_img_one)
+        ImageView itemActivitiesThreeImgOne;
+        @BindView(R.id.item_activities_three_img_two)
+        ImageView itemActivitiesThreeImgTwo;
+        @BindView(R.id.item_activities_three_img_three)
+        ImageView itemActivitiesThreeImgThree;
+        @BindView(R.id.item_activities_three_ll)
+        LinearLayout itemActivitiesThreeLl;
+
+        public HolderThree(Context context, ViewGroup root, int layoutRes) {
+            super(context, root, layoutRes);
+        }
+
+        @Override
+        public void bindData(final ActivitiesItemBean bean, int i) {
+
+
+            itemActivitiesThreeTitle.setText(bean.getTitle());
+
+
+            if (bean.getStatus().equals("0")) {
+                switch (bean.getFlag()) {
+                    case "0":
+                        itemActivitiesThreeIstop.setVisibility(View.GONE);
+                        break;
+                    case "1":
+                        itemActivitiesThreeIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesThreeIstop.setText("推荐");
+                        itemActivitiesThreeIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                    case "2":
+                        itemActivitiesThreeIstop.setVisibility(View.VISIBLE);
+                        itemActivitiesThreeIstop.setText("置顶");
+                        itemActivitiesThreeIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                        break;
+                }
+            } else {
+                itemActivitiesThreeIstop.setVisibility(View.VISIBLE);
+                itemActivitiesThreeIstop.setText("报道");
+                itemActivitiesThreeIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_orange_4));
+            }
+
+
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[0], itemActivitiesThreeImgOne);
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[1], itemActivitiesThreeImgTwo);
+            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[2], itemActivitiesThreeImgThree);
+
+            itemActivitiesThreeLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    look(isLogin, bean.getPurview().equals("0"), bean.getStatus(), bean.getId());
+                }
+            });
+        }
+    }
+
+    //跳页 type判断是 查看报道 1  报名  0
+    public void look(boolean isLogin, boolean purview, String type, String id) {
+
+        if (isLogin) {
+            //没登录
+            if (purview) {
+                if (type.equals("0")) {
+                    context.startActivity(new Intent(context, ActivitiesDetail.class).putExtra("type", this.type).putExtra("id", id));
+                } else {
+                    context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("type", this.type).putExtra("id", id));
+                }
+            } else {
+                ToolUtils.showToast(context, "游客不可");
+            }
+        } else {
+            //登陆了
+            if (type.equals("0")) {
+                context.startActivity(new Intent(context, ActivitiesDetail.class).putExtra("type", this.type).putExtra("id", id));
+            } else {
+                context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("type", this.type).putExtra("id", id));
+            }
+
+        }
+
     }
 }

@@ -8,12 +8,13 @@ import java.util.List;
  * 描述:活动-微心愿
  */
 
-public class VWish {
+public class VWishEntity {
+
 
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"心愿ID","title":"标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","status":"心愿状态","integral":"获得积分","addtime":"发布时间","purview":"是否登陆可看"},{"id":"心愿ID","title":"标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","status":"心愿状态","integral":"获得积分","addtime":"发布时间","purview":"是否登陆可看"}]
+     * info : [{"id":"心愿ID","title":"标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","integral":"获得积分","status":"心愿状态","addtime":"发布时间","endtime":"结束时间","purview":"是否登陆可看","peopleNum":"参加人数","send":"发布者"}]
      */
 
     private String page;
@@ -53,10 +54,13 @@ public class VWish {
          * ilike : 点赞数
          * share : 分享数
          * hits : 点击数
-         * status : 心愿状态
          * integral : 获得积分
+         * status : 心愿状态
          * addtime : 发布时间
+         * endtime : 结束时间
          * purview : 是否登陆可看
+         * peopleNum : 参加人数
+         * send : 发布者
          */
 
         private String id;
@@ -66,10 +70,13 @@ public class VWish {
         private String ilike;
         private String share;
         private String hits;
-        private String status;
         private String integral;
+        private String status;
         private String addtime;
+        private String endtime;
         private String purview;
+        private String peopleNum;
+        private String send;
 
         public String getId() {
             return id;
@@ -127,20 +134,20 @@ public class VWish {
             this.hits = hits;
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
         public String getIntegral() {
             return integral;
         }
 
         public void setIntegral(String integral) {
             this.integral = integral;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public String getAddtime() {
@@ -151,12 +158,36 @@ public class VWish {
             this.addtime = addtime;
         }
 
+        public String getEndtime() {
+            return endtime;
+        }
+
+        public void setEndtime(String endtime) {
+            this.endtime = endtime;
+        }
+
         public String getPurview() {
             return purview;
         }
 
         public void setPurview(String purview) {
             this.purview = purview;
+        }
+
+        public String getPeopleNum() {
+            return peopleNum;
+        }
+
+        public void setPeopleNum(String peopleNum) {
+            this.peopleNum = peopleNum;
+        }
+
+        public String getSend() {
+            return send;
+        }
+
+        public void setSend(String send) {
+            this.send = send;
         }
     }
 }

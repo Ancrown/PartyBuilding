@@ -1,5 +1,7 @@
 package zhuri.com.partybuilding.bean;
 
+import android.util.Log;
+
 /**
  * 创建人: Administrator
  * 创建时间: 2018/6/5
@@ -7,33 +9,49 @@ package zhuri.com.partybuilding.bean;
  */
 
 public class ActivitiesItemBean {
+
+
+    /**
+     * id : 活动ID
+     * title : 活动标题
+     * imageurl : 首图
+     * address : 地点
+     * addtime : 发布时间
+     * purview : 是否登陆可看
+     * flag : 置顶2|推荐1|正常0
+     * status : 活动状态
+     */
+
     private String id;
-    private String img;
-    //  private String progress; //进度
     private String title;
-    private String isTop; //是否顶置
+    private String imageurl;
     private String address;
-    private String comment;
-    private String join;
-    private String endTime;
-    private String startTime;
-
-    private String type; // 0:进行0.1:未报名 0.2:已报名   1:结束
-
+    private String addtime;
     private String purview;
+    private String flag;
+    private String status;
 
-    public ActivitiesItemBean(String id, String img, String title, String isTop, String address, String comment, String join, String endTime, String startTime, String type, String purview) {
+    private int type;  //0 三张 2两张 1一张图正常
+
+    public ActivitiesItemBean(String id, String title, String imageurl, String address, String addtime, String purview, String flag, String status) {
         this.id = id;
-        this.img = img;
         this.title = title;
-        this.isTop = isTop;
+        this.imageurl = imageurl;
         this.address = address;
-        this.comment = comment;
-        this.join = join;
-        this.endTime = endTime;
-        this.startTime = startTime;
-        this.type = type;
+        this.addtime = addtime;
         this.purview = purview;
+        this.flag = flag;
+        this.status = status;
+        this.type = imageurl.split("#").length > 3 ? 3 : imageurl.split("#").length % 4;
+        Log.e("eeeeee", "type type type" + type +"  "+imageurl.split("#").length);
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getId() {
@@ -44,14 +62,6 @@ public class ActivitiesItemBean {
         this.id = id;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -60,12 +70,12 @@ public class ActivitiesItemBean {
         this.title = title;
     }
 
-    public String getIsTop() {
-        return isTop;
+    public String getImageurl() {
+        return imageurl;
     }
 
-    public void setIsTop(String isTop) {
-        this.isTop = isTop;
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 
     public String getAddress() {
@@ -76,44 +86,12 @@ public class ActivitiesItemBean {
         this.address = address;
     }
 
-    public String getComment() {
-        return comment;
+    public String getAddtime() {
+        return addtime;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getJoin() {
-        return join;
-    }
-
-    public void setJoin(String join) {
-        this.join = join;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setAddtime(String addtime) {
+        this.addtime = addtime;
     }
 
     public String getPurview() {
@@ -122,5 +100,21 @@ public class ActivitiesItemBean {
 
     public void setPurview(String purview) {
         this.purview = purview;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

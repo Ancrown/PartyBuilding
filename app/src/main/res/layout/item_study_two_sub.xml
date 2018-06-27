@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/study_two_subitem_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="@dimen/dp105"
+        android:layout_height="@dimen/dp46"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/study_two_subitem_view"
+            android:layout_marginLeft="@dimen/dp1"
+            android:layout_width="@dimen/dp3"
+            android:layout_height="@dimen/dp30"
+            android:layout_gravity="center_vertical"
+            android:background="@color/light_red" />
+
+        <TextView
+            android:id="@+id/study_two_subitem_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp10"
+            android:text="党章党规啊"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_17" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,19 +1,19 @@
-package zhuri.com.partybuilding.entity;
+package zhuri.com.partybuilding.entity.study;
 
 import java.util.List;
 
 /**
  * 创建人: Administrator
- * 创建时间: 2018/6/8
- * 描述:
+ * 创建时间: 2018/6/27
+ * 描述: 十九大
  */
 
-public class StudyEntity {
+public class StudyOneEntity {
 
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","amount":"参加人数","addtime":"发布时间","integral":"获得积分","purview":"是否登陆可看"},{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","amount":"参加人数","integral":"获得积分","addtime":"发布时间","purview":"是否登陆可看"}]
+     * info : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","isstudy":"是否学过 0为学习 1已学习","isvideo":"是否有视频 0没有 1有","amount":"参加人数","purview":"是否登陆可看"}]
      */
 
     private String page;
@@ -50,12 +50,9 @@ public class StudyEntity {
          * title : 文章标题
          * imageurl : 首图
          * demo : 摘要
-         * ilike : 点赞数
-         * share : 分享数
-         * hits : 点击数
+         * isstudy : 是否学过 0为学习 1已学习
+         * isvideo : 是否有视频 0没有 1有
          * amount : 参加人数
-         * addtime : 发布时间
-         * integral : 获得积分
          * purview : 是否登陆可看
          */
 
@@ -63,12 +60,9 @@ public class StudyEntity {
         private String title;
         private String imageurl;
         private String demo;
-        private String ilike;
-        private String share;
-        private String hits;
+        private String isstudy;
+        private String isvideo;
         private String amount;
-        private String addtime;
-        private String integral;
         private String purview;
 
         public String getId() {
@@ -103,28 +97,20 @@ public class StudyEntity {
             this.demo = demo;
         }
 
-        public String getIlike() {
-            return ilike;
+        public String getIsstudy() {
+            return isstudy;
         }
 
-        public void setIlike(String ilike) {
-            this.ilike = ilike;
+        public void setIsstudy(String isstudy) {
+            this.isstudy = isstudy;
         }
 
-        public String getShare() {
-            return share;
+        public String getIsvideo() {
+            return isvideo;
         }
 
-        public void setShare(String share) {
-            this.share = share;
-        }
-
-        public String getHits() {
-            return hits;
-        }
-
-        public void setHits(String hits) {
-            this.hits = hits;
+        public void setIsvideo(String isvideo) {
+            this.isvideo = isvideo;
         }
 
         public String getAmount() {
@@ -133,22 +119,6 @@ public class StudyEntity {
 
         public void setAmount(String amount) {
             this.amount = amount;
-        }
-
-        public String getAddtime() {
-            return addtime;
-        }
-
-        public void setAddtime(String addtime) {
-            this.addtime = addtime;
-        }
-
-        public String getIntegral() {
-            return integral;
-        }
-
-        public void setIntegral(String integral) {
-            this.integral = integral;
         }
 
         public String getPurview() {

@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.fragment.study;
 
 import android.os.Handler;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import com.squareup.okhttp.Request;
 
@@ -48,6 +49,10 @@ public class StudyFourFragment extends BaseRecyclerFragment {
     @Override
     public void initView() {
         super.initView();
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+        params.setMargins(0, 10, 0, 0);
+        recyclerView.setLayoutParams(params);
 
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
         adapter = new ExaminationAdapter(getActivity());

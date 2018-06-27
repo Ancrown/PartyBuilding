@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_new" />
+
+    <zhuri.com.partybuilding.view.ScrollViewExt
+        android:id="@+id/study_details_scrollviewext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10">
+
+                <TextView
+                    android:id="@+id/study_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="台媒：美军B5211天内第3次进入南海空域"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_20" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/study_details_time_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2018-6-1 10:11 "
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_13"
+                        android:layout_alignBottom="@+id/linearLayout2"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal"
+                        android:id="@+id/linearLayout2">
+
+                        <TextView
+                            android:id="@+id/study_details_fabulous"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:drawableLeft="@drawable/fabulous"
+                            android:drawablePadding="@dimen/dp5"
+                            android:text="125"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/study_details_browse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp12"
+                            android:layout_marginRight="@dimen/dp12"
+                            android:drawableLeft="@drawable/browse"
+                            android:drawablePadding="@dimen/dp5"
+                            android:text="125"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/text_size_12" />
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <WebView
+                    android:id="@+id/study_details_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                </WebView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:background="@drawable/fillet_background_red">
+
+                    <TextView
+                        android:id="@+id/study_details_jishi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="正在阅读：00:00:10"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_15"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/study_details_rule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="积分获取详情"
+                    android:drawableLeft="@drawable/guize"
+                    android:drawablePadding="@dimen/dp5"
+                    android:textColor="@color/light_red"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/study_details_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="上一篇：XXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/study_details_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:text="下一篇：XXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+        </LinearLayout>
+    </zhuri.com.partybuilding.view.ScrollViewExt>
+
+</LinearLayout>

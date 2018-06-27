@@ -99,21 +99,29 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
                         onClickItem.onItem(homePageItemBean.getId(), i);
                     }
 
-                    {
-                        if (isLogin && homePageItemBean.getPurview().equals("0")) {
-                            Log.e("eeeeee", "查看： NO ×××××××");
-                        } else {
-
-                            Log.e("eeeeee", "查看： YES √√√√√√√");
-                            getContext().startActivity(new Intent(new Intent(getContext(), NewsDetailActivity.class)));
-
-                        }
-                    }
+                    look(isLogin, homePageItemBean.getPurview().equals("0"), homePageItemBean.getId());
 
 
                 }
             });
         }
+    }
+
+
+    //跳页 type判断是 查看报道 1  报名  0
+    public void look(boolean isLogin, boolean purview, String id) {
+
+        if (isLogin) {
+            //没登录
+            if (purview) {
+                //游客可看
+                context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id)));
+            } else {
+                ToolUtils.showToast(context, "游客不可看");
+            }
+        } else
+            context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id)));
+
     }
 
     /**

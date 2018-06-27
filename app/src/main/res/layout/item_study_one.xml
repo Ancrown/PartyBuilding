@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_study_one_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/item_study_one_img"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp75"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/item_study_one_img"
+            android:layout_alignTop="@+id/item_study_one_img"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_toRightOf="@+id/item_study_one_img"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/item_study_one_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/item_study_one_istop"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="我我我我我我无无呜呜呜呜问我我我无无呜呜呜呜问问"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/item_study_one_istop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:background="@drawable/fill_bg_red_4"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp4"
+                    android:paddingRight="@dimen/dp4"
+                    android:paddingTop="@dimen/dp2"
+                    android:text="为学习"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/item_study_one_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp2"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp2"
+                android:maxLines="2"
+                android:text="安居客浪啊接干嘛哭了赶快来不能太贵啦别闹了按个办理纳格兰昂昂卡罗纳讨论课本口莱宝高科结案报告卡斯比；赶快来不能太贵啦别闹了按个办理纳格兰昂昂卡罗纳讨论课本口莱宝高科结案报告卡斯比"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/item_study_one_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/dp2"
+                android:text="12人参与"
+                android:textColor="@color/light_red"
+                android:textSize="@dimen/text_size_13" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

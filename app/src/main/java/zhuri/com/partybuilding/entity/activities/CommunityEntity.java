@@ -14,7 +14,7 @@ public class CommunityEntity {
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"活动ID","title":"活动标题","imageurl":"首图","demo":"摘要","integral":"获得积分","ilike":"点赞数","share":"分享数","hits":"点击数","amount":"参加人数","stime":"开始时间","etime":"结束时间","address":"地点","status":"活动状态","isjoin":"是否报名","addtime":"发布时间","purview":"是否登陆可看","istop":"置顶"},{"id":"活动ID","title":"活动标题","imageurl":"首图","demo":"摘要","integral":"获得积分","ilike":"点赞数","share":"分享数","hits":"点击数","amount":"参加人数","stime":"开始时间","etime":"结束时间","address":"地点","status":"活动状态","isjoin":"是否报名","addtime":"发布时间","purview":"是否登陆可看","istop":"置顶"}]
+     * info : [{"id":"活动ID","title":"活动标题","imageurl":"首图|首图","address":"地点","addtime":"发布时间","purview":"是否登陆可看","flag":"置顶2|推荐1|正常0","status":"活动状态"}]
      */
 
     private String page;
@@ -49,40 +49,22 @@ public class CommunityEntity {
         /**
          * id : 活动ID
          * title : 活动标题
-         * imageurl : 首图
-         * demo : 摘要
-         * integral : 获得积分
-         * ilike : 点赞数
-         * share : 分享数
-         * hits : 点击数
-         * amount : 参加人数
-         * stime : 开始时间
-         * etime : 结束时间
+         * imageurl : 首图|首图
          * address : 地点
-         * status : 活动状态
-         * isjoin : 是否报名
          * addtime : 发布时间
          * purview : 是否登陆可看
-         * istop : 置顶
+         * flag : 置顶2|推荐1|正常0
+         * status : 活动状态
          */
 
         private String id;
         private String title;
         private String imageurl;
-        private String demo;
-        private String integral;
-        private String ilike;
-        private String share;
-        private String hits;
-        private String amount;
-        private String stime;
-        private String etime;
         private String address;
-        private String status;
-        private String isjoin;
         private String addtime;
         private String purview;
-        private String istop;
+        private String flag;
+        private String status;
 
         public String getId() {
             return id;
@@ -108,92 +90,12 @@ public class CommunityEntity {
             this.imageurl = imageurl;
         }
 
-        public String getDemo() {
-            return demo;
-        }
-
-        public void setDemo(String demo) {
-            this.demo = demo;
-        }
-
-        public String getIntegral() {
-            return integral;
-        }
-
-        public void setIntegral(String integral) {
-            this.integral = integral;
-        }
-
-        public String getIlike() {
-            return ilike;
-        }
-
-        public void setIlike(String ilike) {
-            this.ilike = ilike;
-        }
-
-        public String getShare() {
-            return share;
-        }
-
-        public void setShare(String share) {
-            this.share = share;
-        }
-
-        public String getHits() {
-            return hits;
-        }
-
-        public void setHits(String hits) {
-            this.hits = hits;
-        }
-
-        public String getAmount() {
-            return amount;
-        }
-
-        public void setAmount(String amount) {
-            this.amount = amount;
-        }
-
-        public String getStime() {
-            return stime;
-        }
-
-        public void setStime(String stime) {
-            this.stime = stime;
-        }
-
-        public String getEtime() {
-            return etime;
-        }
-
-        public void setEtime(String etime) {
-            this.etime = etime;
-        }
-
         public String getAddress() {
             return address;
         }
 
         public void setAddress(String address) {
             this.address = address;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getIsjoin() {
-            return isjoin;
-        }
-
-        public void setIsjoin(String isjoin) {
-            this.isjoin = isjoin;
         }
 
         public String getAddtime() {
@@ -212,12 +114,20 @@ public class CommunityEntity {
             this.purview = purview;
         }
 
-        public String getIstop() {
-            return istop;
+        public String getFlag() {
+            return flag;
         }
 
-        public void setIstop(String istop) {
-            this.istop = istop;
+        public void setFlag(String flag) {
+            this.flag = flag;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
     }
 }

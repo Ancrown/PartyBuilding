@@ -32,7 +32,7 @@ public class StudyFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        getTitleView().setData(getResources().getString(R.string.study), 0, 0, null, 0, null, null);
+        getTitleView().setData("指尖课堂", 0, 0, null, 0, null, null);
         initViewPager();
     }
 

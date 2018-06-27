@@ -125,25 +125,48 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<ExaminationBean> {
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLogin && bean.getPurview().equals("0")) {
-                        Log.e("eeeeee", "查看： NO ×××××××");
-                    } else {
-
-                        Log.e("eeeeee", "查看： YES √√√√√√√");
-                        Intent intent = new Intent(context, AnswerConfirmActivity.class);
-                        intent.putExtra("id", bean.getId());
-                        intent.putExtra("title", bean.getTitle());
-                        intent.putExtra("score", bean.getScore());
-                        intent.putExtra("amount", bean.getAmount());
-                        intent.putExtra("integral", bean.getIntegral());
-                        intent.putExtra("times", bean.getTime());
-                        intent.putExtra("stime", bean.getStartTime());
-                        intent.putExtra("etime", bean.getEndTime());
-                        intent.putExtra("demo", bean.getContent());
-                        context.startActivity(intent);
-                    }
+                    look(isLogin, bean.getPurview().equals("0"), bean);
                 }
             });
         }
+    }
+
+    //跳页 type判断是 查看报道 1  报名  0
+    public void look(boolean isLogin, boolean purview, ExaminationBean bean) {
+
+        if (isLogin) {
+            //没登录
+            if (purview) {
+                //游客可看
+                Intent intent = new Intent(context, AnswerConfirmActivity.class);
+                intent.putExtra("id", bean.getId());
+                intent.putExtra("title", bean.getTitle());
+                intent.putExtra("score", bean.getScore());
+                intent.putExtra("amount", bean.getAmount());
+                intent.putExtra("integral", bean.getIntegral());
+                intent.putExtra("times", bean.getTime());
+                intent.putExtra("stime", bean.getStartTime());
+                intent.putExtra("etime", bean.getEndTime());
+                intent.putExtra("demo", bean.getContent());
+                context.startActivity(intent);
+            } else {
+                ToolUtils.showToast(context, "游客不可");
+            }
+        } else {
+            //登陆了
+            Intent intent = new Intent(context, AnswerConfirmActivity.class);
+            intent.putExtra("id", bean.getId());
+            intent.putExtra("title", bean.getTitle());
+            intent.putExtra("score", bean.getScore());
+            intent.putExtra("amount", bean.getAmount());
+            intent.putExtra("integral", bean.getIntegral());
+            intent.putExtra("times", bean.getTime());
+            intent.putExtra("stime", bean.getStartTime());
+            intent.putExtra("etime", bean.getEndTime());
+            intent.putExtra("demo", bean.getContent());
+            context.startActivity(intent);
+
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,12 +12,15 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.StudyDetailActivity;
+import zhuri.com.partybuilding.activity.VWishDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.VWishBean;
 import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TextViewUitl;
 import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
@@ -41,20 +45,17 @@ public class VWishAdapter extends BaseRecyclerAdapter<VWishBean> {
 
     class Holder extends CommonHolder<VWishBean> {
 
-        @BindView(R.id.item_v_wish_view)
-        View itemVWishView;
         @BindView(R.id.item_v_wish_title)
         TextView itemVWishTitle;
-        @BindView(R.id.item_v_wish_istop)
-        TextView itemVWishIstop;
-        @BindView(R.id.item_v_wish_content)
-        TextView itemVWishContent;
-        @BindView(R.id.item_v_wish_button)
-        Button itemVWishButton;
+        @BindView(R.id.item_v_wish_label)
+        TextView itemVWishLabel;
         @BindView(R.id.item_v_wish_time)
         TextView itemVWishTime;
-        @BindView(R.id.item_v_wish_integral)
-        TextView itemVWishIntegral;
+        @BindView(R.id.item_v_wish_num)
+        TextView itemVWishNum;
+        @BindView(R.id.item_v_wish_send)
+        TextView itemVWishSend;
+
         @BindView(R.id.item_v_wish_ll)
         LinearLayout itemVWishLl;
 
@@ -65,54 +66,44 @@ public class VWishAdapter extends BaseRecyclerAdapter<VWishBean> {
         @Override
         public void bindData(final VWishBean bean, int i) {
             itemVWishTitle.setText(bean.getTitle());
-            itemVWishContent.setText(bean.getContent());
-            itemVWishTime.setText("发布时间：" + bean.getTime());
-            itemVWishIntegral.setText(bean.getIntegral() + "积分");
-            if ("0".equals(bean.getIsTop())) {
-                itemVWishIstop.setVisibility(View.VISIBLE);
-            } else {
-                itemVWishIstop.setVisibility(View.GONE);
-            }
+
+            itemVWishTime.setText(bean.getTime() + " -- " + bean.getEndtime());
+            String num = bean.getPeopleNum() + "人";
+            TextViewUitl.toStringChangeColor("人数：" + num, num, "#d5605f", itemVWishNum);
+            itemVWishSend.setText("发布者：" + bean.getSend());
             if ("0".equals(bean.getType())) {
-                itemVWishView.setBackgroundColor(AppUtils.getColor(R.color.red));
-                itemVWishButton.setText("认领");
-                itemVWishButton.setBackgroundColor(AppUtils.getColor(R.color.light_red));
 
-                itemVWishTime.setTextColor(AppUtils.getColor(R.color.red));
-                itemVWishIntegral.setTextColor(AppUtils.getColor(R.color.red));
+                itemVWishLabel.setText("可认领");
+                itemVWishLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
             } else {
-                itemVWishView.setBackgroundColor(AppUtils.getColor(R.color.gray));
-                itemVWishButton.setText("已认领");
-                itemVWishButton.setBackgroundColor(AppUtils.getColor(R.color.gray));
-
-                itemVWishTime.setTextColor(AppUtils.getColor(R.color.gray));
-                itemVWishIntegral.setTextColor(AppUtils.getColor(R.color.gray));
+                itemVWishLabel.setText("已认领");
+                itemVWishLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray_4));
             }
 
-
-            itemVWishButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (bean.getPurview().equals("0")) {
-                        ToolUtils.showToast(context, "认领成功");
-                    } else {
-                        ToolUtils.showToast(context, "已认领");
-                    }
-                }
-            });
 
             itemVWishLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLogin && bean.getPurview().equals("0")) {
-                        Log.e("eeeeee", "查看： NO ×××××××");
-                    } else {
-
-                        Log.e("eeeeee", "查看： YES √√√√√√√");
-                    }
+                    look(isLogin, bean.getPurview().equals("0"), bean.getId());
                 }
             });
 
         }
+    }
+
+    //跳页 type判断是 查看报道 1  报名  0
+    public void look(boolean isLogin, boolean purview, String id) {
+
+        if (isLogin) {
+            //没登录
+            if (purview) {
+                //游客可看
+                context.startActivity(new Intent(context,VWishDetailActivity.class).putExtra("id",id));
+            } else {
+                ToolUtils.showToast(context, "游客不可看");
+            }
+        } else
+            context.startActivity(new Intent(context,VWishDetailActivity.class).putExtra("id",id));
+
     }
 }

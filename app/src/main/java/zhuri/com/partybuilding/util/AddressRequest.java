@@ -22,8 +22,14 @@ public class AddressRequest {
     public static final String ACTIVITIES_V_VOLUNTEER = URL + "";
     //活动-微心愿
     public static final String ACTIVITIES_V_WISH = URL + "";
-    //学习
     public static final String STUDY = URL + "";
+    //学习 19大
+    public static final String STUDY_ONE = URL + "";
+    //学习 两学一做
+    public static final String STUDY_TWO = URL + "";
+    //学习 党务工作
+    public static final String STUDY_THREE = URL + "";
+
 
     //考试列表
     public static final String EXAMINATION_LIST = URL + "";

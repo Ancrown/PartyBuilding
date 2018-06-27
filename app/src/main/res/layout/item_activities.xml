@@ -6,13 +6,7 @@
     android:background="@color/white"
     android:orientation="horizontal">
 
-    <View
-        android:id="@+id/item_activities_view"
-        android:layout_width="@dimen/dp3.5"
-        android:layout_height="match_parent"
-        android:background="@color/main_color" />
-
-    <LinearLayout
+    <RelativeLayout
 
         android:id="@+id/line1"
         android:layout_width="match_parent"
@@ -24,7 +18,8 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="@dimen/dp90"
+            android:id="@+id/relativeLayout"
+            android:layout_width="@dimen/dp100"
             android:layout_height="@dimen/dp75"
             android:layout_gravity="center_vertical">
 
@@ -33,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp3"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/photo7" />
 
             <TextView
@@ -53,45 +48,52 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/relativeLayout"
+            android:layout_alignTop="@+id/relativeLayout"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp13">
+            android:layout_marginBottom="@dimen/dp3"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_toRightOf="@+id/relativeLayout">
 
 
             <RelativeLayout
-                android:id="@+id/rl"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/item_activities_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
 
+                    android:layout_toLeftOf="@+id/item_activities_istop"
                     android:ellipsize="end"
-                    android:maxEms="10"
+
                     android:maxLines="1"
-                    android:text="我我我我我我无无呜呜呜呜问问我我我我我我无无呜呜呜呜问问我我我我我我无无呜呜呜呜问问"
-                    android:textColor="@color/red"
+                    android:text="我我我我我我无无呜呜呜呜问我我我无无呜呜呜呜问问"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_15" />
 
                 <TextView
+
                     android:id="@+id/item_activities_istop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_toRightOf="@+id/item_activities_title"
-                    android:background="@drawable/fill_bg_red"
-                    android:paddingBottom="@dimen/dp1"
-                    android:paddingLeft="@dimen/dp3"
-                    android:paddingRight="@dimen/dp3"
-                    android:paddingTop="@dimen/dp1"
-                    android:text="置顶"
+                    android:background="@drawable/fill_bg_red_4"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp4"
+                    android:paddingRight="@dimen/dp4"
+                    android:paddingTop="@dimen/dp2"
+                    android:text="推荐"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_10"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -99,54 +101,29 @@
                 android:id="@+id/item_activities_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl"
-                android:layout_marginTop="@dimen/dp5"
-                android:layout_toLeftOf="@+id/item_activities_button"
+                android:layout_above="@+id/item_activities_time"
+                android:layout_marginBottom="@dimen/dp5"
                 android:drawableLeft="@drawable/address"
-                android:gravity="center_vertical"
+                android:drawablePadding="@dimen/dp5"
+
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="地址：辽宁省沈阳市和平区文化路"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/text_size_12" />
+                android:textSize="@dimen/text_size_13" />
 
-            <TextView
-                android:id="@+id/item_activities_comment_join"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_activities_address"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp3"
-                android:maxLines="1"
-                android:text="35条评论  12人参加"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/item_activities_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/item_activities_comment_join"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp3"
+                android:layout_alignParentBottom="true"
+                android:drawableLeft="@drawable/clock"
+                android:drawablePadding="@dimen/dp5"
+                android:ellipsize="end"
                 android:maxLines="1"
-
-                android:text="活动时间：2018-6-5 ~ 2018-7-5"
-                android:textSize="@dimen/text_size_12" />
-
-
-            <Button
-
-                android:id="@+id/item_activities_button"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="@dimen/dp23"
-                android:background="@color/red"
-                android:gravity="center"
-                android:text="报名"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_13"
-                android:layout_alignTop="@+id/item_activities_address"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:text="2018-6-5 15:10"
+                android:textSize="@dimen/text_size_13" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

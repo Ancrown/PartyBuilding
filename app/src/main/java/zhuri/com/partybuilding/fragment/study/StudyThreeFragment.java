@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.fragment.study;
 
 import android.os.Handler;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import com.squareup.okhttp.Request;
 
@@ -13,9 +14,9 @@ import java.util.Map;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.StudyAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
-import zhuri.com.partybuilding.bean.StudyBean;
+import zhuri.com.partybuilding.bean.study.StudyBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
-import zhuri.com.partybuilding.entity.StudyEntity;
+import zhuri.com.partybuilding.entity.study.StudyEntity;
 import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.util.AddressRequest;
@@ -46,6 +47,9 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
     public void initView() {
         super.initView();
         setupListView();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
+        params.setMargins(0, 10, 0, 0);
+        recyclerView.setLayoutParams(params);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
 
 
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new StudyAdapter(getActivity());
+        adapter = new StudyAdapter(getActivity(), "2");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
         getdata();
@@ -133,17 +137,17 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
                 if (page <= 1) {
                     itemList.clear();
                 }
-                for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                    itemList.add(new StudyBean(response.getData().getInfo().get(i).getId(),
-                            response.getData().getInfo().get(i).getTitle(),
-                            response.getData().getInfo().get(i).getDemo(),
-                            response.getData().getInfo().get(i).getAddtime(),
-                            response.getData().getInfo().get(i).getAmount(),
-                            response.getData().getInfo().get(i).getIlike(),
-                            "",
-                            response.getData().getInfo().get(i).getHits(),
-                            response.getData().getInfo().get(i).getPurview()));
-                }
+//                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+//                    itemList.add(new StudyBean(response.getData().getInfo().get(i).getId(),
+//                            response.getData().getInfo().get(i).getTitle(),
+//                            response.getData().getInfo().get(i).getDemo(),
+//                            response.getData().getInfo().get(i).getAddtime(),
+//                            response.getData().getInfo().get(i).getAmount(),
+//                            response.getData().getInfo().get(i).getIlike(),
+//                            "",
+//                            response.getData().getInfo().get(i).getHits(),
+//                            response.getData().getInfo().get(i).getPurview()));
+//                }
                 adapter.setDataList(itemList);
 
             }

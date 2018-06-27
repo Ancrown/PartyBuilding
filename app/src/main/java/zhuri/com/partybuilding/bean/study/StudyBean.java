@@ -1,4 +1,4 @@
-package zhuri.com.partybuilding.bean;
+package zhuri.com.partybuilding.bean.study;
 
 /**
  * 创建人: Administrator

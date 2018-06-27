@@ -59,9 +59,23 @@
             android:name=".activity.activities.ActivitiesThreeActivity"
             android:label="微心愿" />
         <activity
-            android:name=".activity.StudyActivity"
+            android:name=".activity.study.StudyActivity"
             android:label="学习 十九大精神 两学一做 党务工作" />
-
+        <activity
+            android:name=".activity.study.StudyOneActivity"
+            android:label="十九大报告" />
+        <activity
+            android:name=".activity.StudyDetailActivity"
+            android:label="学习 十九大精神 两学一做 党务工作 详情" />
+        <activity
+            android:name=".activity.activitiesdetail.ActivitiesDetail"
+            android:label="社区活动 微志愿 详情" />
+        <activity
+            android:name=".activity.activitiesdetail.ActivitiesReportDetailActivity"
+            android:label="社区活动 微志愿 报道" />
+        <activity
+            android:name=".activity.VWishDetailActivity"
+            android:label="微心愿 详情" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

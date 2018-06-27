@@ -29,8 +29,8 @@
                     android:id="@+id/news_details_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp21"
-                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
                     android:text="台媒：美军B5211天内第3次进入南海空域"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_20" />
@@ -38,7 +38,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="17dp">
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:id="@+id/news_details_time_in"
