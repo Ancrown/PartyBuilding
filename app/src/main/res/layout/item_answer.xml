@@ -2,68 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+
     android:background="@color/white"
-    android:padding="@dimen/dp10"
-    >
-
-    <!--<Button-->
-    <!--android:id="@+id/item_answer_single_pair"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="设置单选/双选: 单选中" />-->
-
-    <TextView
-        android:id="@+id/answer_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="题目:XXXXXX"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_18" />
-
-    <zhuri.com.partybuilding.util.NoSlideListView
-        android:id="@+id/answer_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:divider="@null" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10"
+        >
 
         <TextView
-            android:id="@+id/answer_my_option"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="我的选项A"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13"
-            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/answer_true_option"
-            android:layout_width="0dp"
+            android:id="@+id/answer_subject"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="正确选项A"
+            android:lineSpacingExtra="@dimen/dp2"
+            android:text="题目:十八大党章指出，中国共产党以（）作为自己的行动指南。"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13"
-            android:visibility="gone" />
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold" />
 
+        <zhuri.com.partybuilding.util.NoSlideListView
+            android:id="@+id/answer_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:divider="@null"
+            android:dividerHeight="@dimen/dp5" />
+
+
+        <RelativeLayout
+            android:id="@+id/answer_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp35"
+            android:layout_marginTop="@dimen/dp10"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/light_gray_99" />
+
+
+            <TextView
+                android:id="@+id/answer_true_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="正确选项A"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+
+                android:id="@+id/answer_explaination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="解析XXXXXXXXX"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/dp1"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:background="@color/light_gray_99" />-->
+        </RelativeLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/answer_explaination"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Question Explaination"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_13"
-        android:visibility="invisible" />
 
 </LinearLayout>

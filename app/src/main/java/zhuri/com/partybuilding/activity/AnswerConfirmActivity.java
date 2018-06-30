@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
+import zhuri.com.partybuilding.util.TextViewUitl;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
@@ -20,25 +21,21 @@ import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 public class AnswerConfirmActivity extends BaseActivity implements TranslucentActionBar.ActionBarClickListener {
 
+
     @BindView(R.id.answer_title)
     TextView answerTitle;
-
     @BindView(R.id.answer_score)
     TextView answerScore;
-
     @BindView(R.id.answer_num)
     TextView answerNum;
-    @BindView(R.id.answer_times)
-    TextView answerTimes;
-    @BindView(R.id.answer_stime_etime)
-    TextView answerStimeEtime;
+    @BindView(R.id.answer_time_long)
+    TextView answerTimeLong;
+    @BindView(R.id.answer_time)
+    TextView answerTime;
     @BindView(R.id.answer_content)
     TextView answerContent;
     @BindView(R.id.answer_start)
     Button answerStart;
-    @BindView(R.id.answer_integral)
-    TextView answerIntegral;
-
     private Intent intent;
 
     private String id;
@@ -60,11 +57,13 @@ public class AnswerConfirmActivity extends BaseActivity implements TranslucentAc
         id = intent.getStringExtra("id");
         getTitleView().setData("在线考试", 0, R.drawable.back, null, 0, null, this);
         answerTitle.setText(intent.getStringExtra("title"));
-        answerScore.setText("考卷总分：" + intent.getStringExtra("score") + "分");
-        answerNum.setText("总题数：" + intent.getStringExtra("amount") + "题");
-        answerTimes.setText("考卷时长：" + intent.getStringExtra("integral") + "分");
-        answerIntegral.setText("获得积分：" + intent.getStringExtra("times") + "分钟");
-        answerStimeEtime.setText(intent.getStringExtra("stime") + "至" + intent.getStringExtra("etime"));
+
+        TextViewUitl.toStringChangeColor("考卷总分：" + intent.getStringExtra("score") + "分", "考卷总分：", "#535353", answerScore);
+        TextViewUitl.toStringChangeColor("考题数量：" + intent.getStringExtra("amount") + "题", "考题数量：", "#535353", answerNum);
+        TextViewUitl.toStringChangeColor("考卷时长：" + intent.getStringExtra("times") + "分", "考卷时长：", "#535353", answerTimeLong);
+        TextViewUitl.toStringChangeColor("考试时间：" + intent.getStringExtra("stime") + "至" + intent.getStringExtra("etime"), "考试时间：", "#535353", answerTime);
+
+
         answerContent.setText(intent.getStringExtra("demo"));
     }
 
@@ -91,4 +90,10 @@ public class AnswerConfirmActivity extends BaseActivity implements TranslucentAc
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

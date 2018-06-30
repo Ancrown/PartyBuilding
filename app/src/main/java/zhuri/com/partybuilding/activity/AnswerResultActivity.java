@@ -31,11 +31,6 @@ public class AnswerResultActivity extends BaseActivity implements TranslucentAct
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
-    @BindView(R.id.answer_score)
-    TextView answerScore;
-
-    @BindView(R.id.answer_text)
-    TextView text;
 
     private AnswerAdapter adapter;
 
@@ -71,15 +66,11 @@ public class AnswerResultActivity extends BaseActivity implements TranslucentAct
         amount = answerBeanList.size() + "";
         amountError = getIntent().getStringExtra("amountError");
 
-        answerScore.setText("得分:" + score + "分");
-        text.setText("总共：" + amount + "题   " + amountError + "题错");
-        TextViewUitl.toStringChangeColor(text.getText().toString(), amountError + "题错", "#d73734", text);
-
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycler.setLayoutManager(llm);
-        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
+        recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(5)));
 
-        adapter = new AnswerAdapter(this, 0);
+        adapter = new AnswerAdapter(this);
         recycler.setAdapter(adapter);
         Log.e("eeeeee ", "answerBeanList   " + answerBeanList.get(0).getTitle());
         adapter.setDataList(answerBeanList);

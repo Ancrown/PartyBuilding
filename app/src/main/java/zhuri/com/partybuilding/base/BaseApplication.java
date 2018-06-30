@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.util.Log;
 
 
@@ -89,6 +90,11 @@ public class BaseApplication extends Application {
 
         //初始化Activity管理
         initActivityManager();
+
+        // android 7.0系统解决拍照的问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
 
 //        /**
 //         * 初始化common库

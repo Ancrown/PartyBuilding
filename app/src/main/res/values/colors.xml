@@ -21,6 +21,18 @@
     <color name="light_powder">#ed6c8d</color>
     <color name="blue">#2aa5e6</color>
     <color name="yellow">#fae34e</color>
-
+    <color name="yellow1">#fec100</color>
     <color name="orange">#e68c15</color>
+    <color name="light_orange">#59e68c15</color>
+    <color name="light_gray_99">#999999</color>
+    <color name="green">#5ac453</color>
+    <color name="dark_blue">#6585c1</color>
+
+    <color name="action_text_color_normal">#cfcfcf</color>
+    <color name="action_text_color_pressed">#353535</color>
+    <color name="action_text_color_enabled">#818585</color>
+    <color name="golden">#fbf4c3</color>
+    <color name="app_name_color">#efdb63</color>
+    <color name="translate">#00000000</color>
+    <color name="pop_title_bg">#C7C7C7</color>
 </resources>

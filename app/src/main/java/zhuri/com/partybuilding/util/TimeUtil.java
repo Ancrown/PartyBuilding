@@ -85,8 +85,8 @@ public class TimeUtil {
     /**
      * 时间比较大小
      *
-     * @param date1 date1
-     * @param date2 date2
+     * @param date1  date1
+     * @param date2  date2
      * @param format "yyyy-MM-dd HH:mm:ss"
      * @return 1:date1大于date2；
      * -1:date1小于date2
@@ -176,14 +176,52 @@ public class TimeUtil {
 
     /**
      * 根据毫秒返回时分秒
+     *
      * @param time
      * @return
      */
-    public static String getFormatHMS(long time){
-        time=time/1000;//总秒数
-        int s= (int) (time%60);//秒
-        int m= (int) (time/60);//分
-        int h=(int) (time/3600);//秒
-        return String.format("%02d:%02d:%02d",h,m,s);
+    public static String getFormatHMS(long time) {
+        time = time / 1000;//总秒数
+        int s = (int) (time % 60);//秒
+        int m = (int) (time / 60);//分
+        int h = (int) (time / 3600);//秒
+        return String.format("%02d:%02d:%02d", h, m, s);
+    }
+
+
+
+    //出生日期字符串转化成Date对象
+    public static Date parse(String strDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.parse(strDate);
+    }
+
+    //由出生日期获得年龄
+    public static int getAge(Date birthDay) throws Exception {
+        Calendar cal = Calendar.getInstance();
+
+        if (cal.before(birthDay)) {
+            throw new IllegalArgumentException(
+                    "The birthDay is before Now.It's unbelievable!");
+        }
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH);
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(birthDay);
+
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+        int age = yearNow - yearBirth;
+
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                if (dayOfMonthNow < dayOfMonthBirth) age--;
+            } else {
+                age--;
+            }
+        }
+        return age;
     }
 }

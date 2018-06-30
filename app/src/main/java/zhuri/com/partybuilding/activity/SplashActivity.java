@@ -110,6 +110,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                 
                     startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
                     finish();
                 }
@@ -236,6 +237,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                     mLlCountDown.setText("跳过 0秒");
                     if (!aBoolean) {
                         //操作
+                     
                         startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
                         finish();
                     }
@@ -255,6 +257,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             case R.id.ll_count_down:
                 mTimer.stop();
                 aBoolean = true;
+             
                 startActivity(new Intent(this, NavigationActivity.class));
                 finish();
                 break;

@@ -19,6 +19,10 @@ import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.activity.AnswerErrorActivity;
 import zhuri.com.partybuilding.activity.LoginActivity;
+import zhuri.com.partybuilding.activity.MyInfoActivity;
+import zhuri.com.partybuilding.activity.RecordAnswerActivity;
+import zhuri.com.partybuilding.activity.RecordIntegralActivity;
+import zhuri.com.partybuilding.activity.RecordStudyActivity;
 import zhuri.com.partybuilding.base.BaseFragment;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
@@ -107,7 +111,7 @@ public class MyFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.my_info:
                 if (isLogin) {
-
+                startActivity(new Intent(getActivity(), MyInfoActivity.class));
                 } else {
                     goLogin();
                 }
@@ -121,13 +125,14 @@ public class MyFragment extends BaseFragment {
                 break;
             case R.id.my_learning_records:
                 if (isLogin) {
-
+                    startActivity(new Intent(getActivity(), RecordStudyActivity.class));
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_examination_records:
                 if (isLogin) {
+                    startActivity(new Intent(getActivity(), RecordAnswerActivity.class));
 
                 } else {
                     goLogin();
@@ -135,14 +140,14 @@ public class MyFragment extends BaseFragment {
                 break;
             case R.id.my_contribution:
                 if (isLogin) {
-
+                   startActivity(new Intent(getActivity(), RecordIntegralActivity.class));
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_examination_error:
                 if (isLogin) {
-                    startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
+                   startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
                 } else {
                     goLogin();
                 }
@@ -189,7 +194,7 @@ public class MyFragment extends BaseFragment {
     }
 
     public void goLogin() {
-        startActivity(new Intent(getActivity(), LoginActivity.class));
+       startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 }

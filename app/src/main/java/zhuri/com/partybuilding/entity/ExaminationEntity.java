@@ -14,7 +14,7 @@ public class ExaminationEntity {
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"试卷ID","title":"试卷名称","demo":"摘要","amount":"总题数","score":"总分数","times":"答卷时间","stime":"开始时间","etime":"结束时间","hits":"点击数","repeat":"重复参加","isjoin":"是否答过","integral":"获得积分","purview":"是否登陆可看","status":"状态"}]
+     * info : [{"id":"试卷ID","title":"试卷名称","demo":"摘要","amount":"总题数","score":"总分数","times":"答卷时长","stime":"开始时间","etime":"结束时间","myscore":" 我的考卷的分 isjoin=1的时候","isjoin":"是否答过","purview":"是否登陆可看","status":"状态"}]
      */
 
     private String page;
@@ -52,13 +52,11 @@ public class ExaminationEntity {
          * demo : 摘要
          * amount : 总题数
          * score : 总分数
-         * times : 答卷时间
+         * times : 答卷时长
          * stime : 开始时间
          * etime : 结束时间
-         * hits : 点击数
-         * repeat : 重复参加
+         * myscore :  我的考卷的分 isjoin=1的时候
          * isjoin : 是否答过
-         * integral : 获得积分
          * purview : 是否登陆可看
          * status : 状态
          */
@@ -71,10 +69,8 @@ public class ExaminationEntity {
         private String times;
         private String stime;
         private String etime;
-        private String hits;
-        private String repeat;
+        private String myscore;
         private String isjoin;
-        private String integral;
         private String purview;
         private String status;
 
@@ -142,20 +138,12 @@ public class ExaminationEntity {
             this.etime = etime;
         }
 
-        public String getHits() {
-            return hits;
+        public String getMyscore() {
+            return myscore;
         }
 
-        public void setHits(String hits) {
-            this.hits = hits;
-        }
-
-        public String getRepeat() {
-            return repeat;
-        }
-
-        public void setRepeat(String repeat) {
-            this.repeat = repeat;
+        public void setMyscore(String myscore) {
+            this.myscore = myscore;
         }
 
         public String getIsjoin() {
@@ -164,14 +152,6 @@ public class ExaminationEntity {
 
         public void setIsjoin(String isjoin) {
             this.isjoin = isjoin;
-        }
-
-        public String getIntegral() {
-            return integral;
-        }
-
-        public void setIntegral(String integral) {
-            this.integral = integral;
         }
 
         public String getPurview() {

@@ -46,6 +46,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="text_light_gray">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
     <!--加载框-->
     <style name="loading_dialog_no_shadow" parent="android:style/Theme.Dialog">
@@ -67,4 +73,22 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <!--Toolbar处理-->
+    <style name="NoSpaceActionBarTheme" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_size_17</item>
+    </style>
+
+    <!--popwidnow 显示消失动画 -->
+    <style name="pop_anim_style">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in
+        </item> <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/push_bottom_out
+        </item> <!-- 指定消失的动画xml -->
+    </style>
+
 </resources>

@@ -7,15 +7,18 @@
     <LinearLayout
         android:id="@+id/item_answer_rl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp30"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@drawable/xian_light_gray"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingTop="@dimen/dp5">
 
         <ImageView
             android:id="@+id/item_answer_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp10"
             android:src="@drawable/unchecked" />
 
         <TextView
@@ -23,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
             android:text="选项A"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_13" />

@@ -1,9 +1,10 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -15,7 +16,6 @@ import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.NoSlideListView;
 import zhuri.com.partybuilding.util.StringUtil;
 import zhuri.com.partybuilding.util.TextViewUitl;
-import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
  * 创建人: Administrator
@@ -26,22 +26,8 @@ import zhuri.com.partybuilding.util.ToolUtils;
 public class AnswerAdapter extends BaseRecyclerAdapter<AnswerBean> {
 
 
-    private int red;
-
-
     public AnswerAdapter(Context context) {
         super(context);
-        red = R.color.black;
-    }
-
-    public AnswerAdapter(Context context, int type) {
-        super(context);
-        if (type == 0) {
-            red = R.color.red;
-        } else {
-            red = R.color.black;
-        }
-
 
     }
 
@@ -57,13 +43,18 @@ public class AnswerAdapter extends BaseRecyclerAdapter<AnswerBean> {
         TextView answerSubject;
         @BindView(R.id.answer_listview)
         NoSlideListView answerListview;
-        @BindView(R.id.answer_explaination)
-        TextView answerExplaination;
 
-        @BindView(R.id.answer_my_option)
-        TextView answerMyOption;
+//        @BindView(R.id.answer_explaination)
+//        TextView answerExplaination;
+
+        //        @BindView(R.id.answer_my_option)
+//        TextView answerMyOption;
         @BindView(R.id.answer_true_option)
         TextView answerTrueOption;
+
+        @BindView(R.id.answer_ll)
+        RelativeLayout answerLl;
+
 
         public Holder(Context context, ViewGroup root, int layoutRes) {
             super(context, root, layoutRes);
@@ -76,29 +67,33 @@ public class AnswerAdapter extends BaseRecyclerAdapter<AnswerBean> {
             AnswerItemAdapter answerAdapter = new AnswerItemAdapter(context);
             answerListview.setAdapter(answerAdapter);
             answerAdapter.setRefreshList(b.getOptionList());
-            if (b.getMyOptions().equals("-1")) {
-                answerMyOption.setText("我的选项：" + "你没有选择");
-            } else {
-                answerMyOption.setText("我的选项：" + StringUtil.getLetter(b.getMyOptions()));
-            }
 
+//            if (b.getMyOptions().equals("-1")) {
+//                answerMyOption.setText("我的选项：" + "你没有选择");
+//            } else {
+//                answerMyOption.setText("我的选项：" + StringUtil.getLetter(b.getMyOptions()));
+//            }
 
-            answerTrueOption.setText("正确选项:" + StringUtil.getLetter(b.getCorrectOptions()));
+            answerLl.setVisibility(View.VISIBLE);
 
-            answerExplaination.setText("分析:" + b.getAnalysis());
+            answerTrueOption.setText("正确选项：【" + StringUtil.getLetter(b.getCorrectOptions()) + "】");
 
-            answerMyOption.setVisibility(View.VISIBLE);
+            //  answerExplaination.setText("分析:" + b.getAnalysis());
+
+            // answerMyOption.setVisibility(View.VISIBLE);
             answerTrueOption.setVisibility(View.VISIBLE);
-            answerExplaination.setVisibility(View.VISIBLE);
+            // answerExplaination.setVisibility(View.VISIBLE);
 
             if (!b.isErrorOptions()) {
-                answerSubject.setTextColor(AppUtils.getColor(red));
+                answerSubject.setTextColor(AppUtils.getColor(R.color.red));
+            } else {
+                answerSubject.setTextColor(AppUtils.getColor(R.color.black));
             }
 
             String ttt = "（" + (b.getSinglePair().equals("0") ? "单选题" : "多选题") + b.getScore() + "分）";
             answerSubject.setText(b.getTitle() + ttt);
 
-            TextViewUitl.toStringChangeSizeAndColor(answerSubject.getText().toString(), ttt, 15, "#7b7b7b", answerSubject);
+            TextViewUitl.toStringChangeSizeAndColor(answerSubject.getText().toString(), ttt, 12, "#7b7b7b", answerSubject);
 
         }
     }

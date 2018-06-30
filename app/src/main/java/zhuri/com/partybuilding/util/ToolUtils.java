@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,5 +118,30 @@ public class ToolUtils {
      */
     public static boolean isLogin(Context context) {
         return TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "").toString()) ? false : true;
+    }
+
+    /**
+     * 设置状态栏高度
+     *
+     * @param statusBarHeight
+     */
+    public static void setStatusBarHeight(int statusBarHeight,View view) {
+
+        //如果sdk版本大于4.4则设置状态栏透明化 会导致首页状态栏减少
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //19 以上
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+            params.height = statusBarHeight;
+            view.setLayoutParams(params);
+        } else {
+            //19 以下
+            Log.e("eeeeee版本", "222");
+        }
+
+        Log.e("eeeeee版本", "" + Build.VERSION.SDK_INT + " " + Build.VERSION_CODES.KITKAT);
+
+
+
+
     }
 }

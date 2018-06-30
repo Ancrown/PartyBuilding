@@ -2,23 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/head_new" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#50000000">
+        android:background="@color/yellow1">
 
         <TextView
             android:id="@+id/answer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:drawableLeft="@drawable/clock_red"
+            android:drawablePadding="@dimen/dp5"
             android:padding="5dp"
             android:text="60s"
-            android:textColor="@color/black"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_14" />
 
         <TextView
@@ -29,9 +32,21 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp10"
             android:text="1/10"
-            android:textColor="@color/black"
+            android:textColor="@color/red"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/answer_recy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/white">
+
+    </android.support.v7.widget.RecyclerView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,50 +54,18 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/linearLayout"
-          >
+            android:layout_above="@+id/xian_view">
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--&lt;!&ndash;<Button&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/item_answer_single_pair"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:text="设置单选/双选: 单选中" />&ndash;&gt;-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/answer_subject"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!---->
-            <!--android:text="题目:XXXXXX"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textSize="@dimen/text_size_15" />-->
-
-            <!--<zhuri.com.partybuilding.util.NoSlideListView-->
-            <!--android:id="@+id/answer_listview"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/answer_explaination"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="Question Explaination"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textSize="@dimen/text_size_13"-->
-            <!--android:visibility="visible" />-->
-            <!--</LinearLayout>-->
             <include layout="@layout/item_answer" />
 
         </ScrollView>
+
+        <View
+            android:id="@+id/xian_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:layout_above="@+id/linearLayout"
+            android:background="@color/background" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -115,7 +98,6 @@
                 android:text="下一题" />
         </LinearLayout>
     </RelativeLayout>
-
 
 
 </LinearLayout>

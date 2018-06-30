@@ -22,7 +22,18 @@
         <activity
             android:name=".zbarcode.CaptureActivity"
             android:screenOrientation="portrait" />
+        <!--选择照片-->
+        <activity
+            android:name=".util.popupwindow.photoview.photopicker.PhotoPickerActivity"
+            android:label="相册"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.popupwindow.camera.CameraActivity"
+            android:label="相机"
+            android:screenOrientation="portrait" />
+
         <!--工具-->
+
 
         <activity
             android:name=".activity.LoginActivity"
@@ -45,6 +56,9 @@
         <activity
             android:name=".activity.AnswerResultActivity"
             android:label="答题结果页" />
+        <activity
+            android:name=".activity.AnswerNewsResultActivity"
+            android:label="新答题结果过度页" />
         <activity
             android:name=".activity.AnswerErrorActivity"
             android:label="错题集" />
@@ -76,10 +90,28 @@
         <activity
             android:name=".activity.VWishDetailActivity"
             android:label="微心愿 详情" />
+        <activity
+            android:name=".activity.MyInfoActivity"
+            android:label="个人信息" />
+        <activity
+            android:name=".activity.RecordIntegralActivity"
+            android:label="积分记录" />
+        <activity
+            android:name=".activity.RecordAnswerActivity"
+            android:label="考试记录" />
+        <activity
+            android:name=".activity.RecordStudyActivity"
+            android:label="学习记录" />
+
     </application>
 
+
+    <!--请求网络-->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--相机-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
 </manifest>

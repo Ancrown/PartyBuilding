@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Scroller;
 
 
 import java.util.ArrayList;
@@ -266,6 +267,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             mShouldScroll = true;
         }
     }
+
+
 
     /**
      * 子类重写实现自定义ViewHolder

@@ -7,26 +7,26 @@
 
     <include layout="@layout/head_new" />
 
-    <TextView
-        android:id="@+id/answer_score"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/white"
-        android:gravity="center"
+    <!--<TextView-->
+        <!--android:id="@+id/answer_score"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center"-->
 
-        android:text="sss"
-        android:textColor="@color/red"
-        android:textSize="@dimen/text_size_18" />
+        <!--android:text="sss"-->
+        <!--android:textColor="@color/red"-->
+        <!--android:textSize="@dimen/text_size_18" />-->
 
-    <TextView
-        android:id="@+id/answer_text"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/white"
-        android:gravity="left|center"
-        android:text="sss"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_18" />
+    <!--<TextView-->
+        <!--android:id="@+id/answer_text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="left|center"-->
+        <!--android:text="sss"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="@dimen/text_size_18" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"

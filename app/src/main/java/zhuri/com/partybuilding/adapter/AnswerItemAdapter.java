@@ -11,6 +11,7 @@ import android.widget.TextView;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.IOIBaseAdapter;
 import zhuri.com.partybuilding.bean.AnswerItemBean;
+import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.StringUtil;
 
 
@@ -42,8 +43,10 @@ public class AnswerItemAdapter extends IOIBaseAdapter<AnswerItemBean> {
         final AnswerItemBean bean = list.get(position);
         if (bean.getType() == 0) {
             holder.img.setImageDrawable(context.getResources().getDrawable(R.drawable.unchecked));
+            holder.ll.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.xian_light_gray));
         } else if (bean.getType() == 1) {
             holder.img.setImageDrawable(context.getResources().getDrawable(R.drawable.select));
+            holder.ll.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.xian_red));
         }
         holder.text.setText(StringUtil.getLetter()[position] + "." + bean.getText());
         //设置是否点击

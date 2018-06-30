@@ -51,7 +51,7 @@ public class ActivitiesThreeFragment extends BaseRecyclerFragment {
         super.initView();
         setupListView();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
-        params.setMargins(0, 10, 0, 0);
+        params.setMargins(0, SizeUtils.dip2px(2), 0, 0);
         recyclerView.setLayoutParams(params);
     }
 

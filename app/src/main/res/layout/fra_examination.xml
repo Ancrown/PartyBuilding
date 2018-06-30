@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp2"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10"
+        android:paddingTop="@dimen/dp5">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/xian_semicircle_left_orange">
+
+            <TextView
+                android:id="@+id/aty_examination_daikao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/fill_bg_semicircle_left_orange_5"
+
+                android:gravity="center"
+                android:text="待考"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/xian_semicircle_right_orange">
+
+            <TextView
+                android:id="@+id/aty_examination_yikao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="已考"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/background" />
+
+    <include layout="@layout/base_fresh_recy" />
+</LinearLayout>

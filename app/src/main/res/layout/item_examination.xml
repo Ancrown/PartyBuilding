@@ -6,126 +6,94 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="vertical">
 
-        android:orientation="horizontal">
-
-        <View
-            android:id="@+id/item_examination_view"
-            android:layout_width="@dimen/dp3.5"
-            android:layout_height="match_parent"
-            android:background="@color/orange" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp10"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/item_examination_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignBottom="@+id/item_examination_rl"
+                android:layout_toLeftOf="@+id/item_examination_rl"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="少时诵诗书所所所所所所所所所少时诵诗书所所所所所所所"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15" />
 
-                <TextView
-                    android:id="@+id/item_examination_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:maxEms="18"
-                    android:layout_centerVertical="true"
-                    android:maxLines="1"
-                    android:text="多久爱手机掉手机安静如确认确认多久爱手机掉手机安静如确认确认"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15" />
-
-                <TextView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/item_examination_news"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_toRightOf="@+id/item_examination_title"
-                    android:background="@drawable/fill_bg_red"
-                    android:paddingBottom="@dimen/dp1"
-                    android:paddingLeft="@dimen/dp3"
-                    android:paddingRight="@dimen/dp3"
-                    android:paddingTop="@dimen/dp1"
-                    android:text="最新"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_10"
-                    android:visibility="visible" />
-            </RelativeLayout>
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/item_examination_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/dp5"
+                >
+
 
                 <TextView
-                    android:id="@+id/item_examination_content"
+                    android:id="@+id/item_examination_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
-
-                    android:layout_marginTop="@dimen/dp6"
-                    android:layout_toLeftOf="@+id/item_examination_button"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="@dimen/dp2"
-                    android:maxLines="2"
-
-                    android:text="阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏阿刚狼阿里那个李康康狼了那看来东莞哪里看你的公开栏"
-                    android:textColor="@color/light_gray"
-                    android:textSize="@dimen/text_size_13" />
-
-                <Button
-                    android:id="@+id/item_examination_button"
-                    android:layout_width="@dimen/dp48"
-                    android:layout_height="@dimen/dp23"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp25"
-                    android:background="@color/orange"
-                    android:gravity="center"
+                    android:background="@drawable/fill_bg_red_4"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp4"
+                    android:paddingRight="@dimen/dp4"
+                    android:paddingTop="@dimen/dp2"
                     android:text="进行中"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_13" />
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="gone" />
 
-
+                <TextView
+                    android:id="@+id/item_examination_my_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="进行中"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="invisible" />
             </RelativeLayout>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/item_examination_endtime"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5">
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="2018-10-01 10:00 截止"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_size_13" />
 
-                <TextView
-                    android:id="@+id/item_examination_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="答题：2018-6-6 14:01"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_13" />
+            <TextView
+                android:id="@+id/item_examination_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="161参加"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/text_size_13" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/item_examination_start_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="90积分"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_13"
-                    android:visibility="visible" />
-            </RelativeLayout>
-        </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

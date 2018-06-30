@@ -198,7 +198,7 @@
                 android:layout_centerInParent="true"
                 android:drawablePadding="@dimen/dp15"
                 android:drawableTop="@drawable/contribution"
-                android:text="我的活跃度情况"
+                android:text="积分记录"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14" />
 

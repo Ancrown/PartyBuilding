@@ -7,6 +7,7 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:paddingTop="@dimen/dp2"
         android:id="@+id/study_two_subitem"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -23,7 +24,7 @@
         android:background="@color/white">
 
         <android.support.v7.widget.RecyclerView
-            android:paddingTop="@dimen/dp1"
+            android:paddingTop="@dimen/dp2"
             android:paddingBottom="@dimen/dp1"
             android:id="@+id/recycler"
             android:layout_width="match_parent"

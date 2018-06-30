@@ -45,7 +45,7 @@ public class StudyOneActivity extends BaseRecyclerActivity implements Translucen
         super.initView();
         setupListView();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
-        params.setMargins(0, 10, 0, 0);
+        params.setMargins(0, SizeUtils.dip2px(2), 0, 0);
         recyclerView.setLayoutParams(params);
 
         getTitleView().setData("十九大报告", 0, R.drawable.back, null, 0, null, this);

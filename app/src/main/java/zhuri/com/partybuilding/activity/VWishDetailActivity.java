@@ -1,38 +1,28 @@
 package zhuri.com.partybuilding.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
-import zhuri.com.partybuilding.activity.activities.ActivitiesOneActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesThreeActivity;
-import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
 import zhuri.com.partybuilding.adapter.VWishAdapter;
 import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.bean.VWishBean;
-import zhuri.com.partybuilding.dialog.StudyRuleDialog;
+import zhuri.com.partybuilding.dialog.RuleDialog;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.htmlutils.HtmlFormat;
-import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.NoScrollWebView;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
-import zhuri.com.partybuilding.zbarcode.CaptureActivity;
 
 /**
  * 创建人: Administrator
@@ -186,8 +176,28 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
 
                 break;
             case R.id.vwish_detail_rule:
-                StudyRuleDialog dialog = new StudyRuleDialog(this, R.style.custom_dialog);
-                dialog.setText("XXXXXXXXXXXXXXXX\nTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+                RuleDialog dialog = new RuleDialog(this, R.style.custom_dialog);
+                dialog.setTitle("积分获取");
+                dialog.setText("一、如何获得积分？\n" +
+                        "积分：会员通过团购或商城购物获得相应积分，并以积分享受不同程度的专属优惠券或实物礼品兑换（实物兑换后期上线）、抽奖及参与知我药妆网不定期举行的活动。\n" +
+                        "\n" +
+                        "\n" +
+                        "二、获得积分规则\n" +
+                        "登录商城购物 在商城或团购购物每消费1元，获得1积分，积分按实际消费取整后金额计算， 无封顶\n" +
+                        "\n" +
+                        "\n" +
+                        "三、如何查询积分？\n" +
+                        "在\"个人中心\"-\"我的积分\"里查看积分数值\n" +
+                        "\n" +
+                        "步骤：登陆知我药妆网—点击个人中心\n" +
+                        "\n" +
+                        "\n" +
+                        "四、何时获得积分？\n" +
+                        "购物获得积分：订单发货后，积分为冻结状态，新积分暂时不显示，确认收货后积分会自动充值到账户。\n" +
+                        "\n" +
+                        "\n" +
+                        "五、如何使用积分？\n" +
+                        "兑礼券 可享受各种优惠的红包或代金券，优惠券和红包自兑换起3天有效，不定期积分抽奖，只需手指轻轻一动，梦想大奖随时拿回家！");
                 dialog.show();
                 break;
             case R.id.vwish_detail_more:

@@ -48,10 +48,15 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             //最后一项需要right
             if (parent.getChildAdapterPosition(view) == layoutManager.getItemCount() - 1) {
-                outRect.right = leftRight;
+                outRect.right = 0;
             }
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.left = 0;
+            } else {
+                outRect.left = leftRight;
+            }
+
             outRect.top = topBottom;
-            outRect.left = leftRight;
             outRect.bottom = topBottom;
         }
     }

@@ -1,10 +1,19 @@
 package zhuri.com.partybuilding.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.squareup.okhttp.Request;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.entity.BaseEntity;
@@ -21,6 +30,17 @@ import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
  */
 
 public class LoginActivity extends BaseActivity {
+    @BindView(R.id.login_title)
+    TextView loginTitle;
+    @BindView(R.id.login_admin)
+    EditText loginAdmin;
+    @BindView(R.id.login_password)
+    EditText loginPassword;
+    @BindView(R.id.login_forget)
+    TextView loginForget;
+    @BindView(R.id.login_go)
+    TextView loginGo;
+
     @Override
     protected void initData() {
 
@@ -83,9 +103,26 @@ public class LoginActivity extends BaseActivity {
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.EMAIL, response.getData().getEmail());
                     //积分
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.INTEGRAL, response.getData().getIntegral());
+
+                    finishAllActivity();
+                    startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
                 }
             }
         }, map, "登陆中");
 
+    }
+
+
+    @OnClick({R.id.login_forget, R.id.login_go})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.login_forget:
+                break;
+            case R.id.login_go:
+                SharedPreferencesUtils.setParam(this, StaticVariables.USER_ID, "101");
+                finishAllActivity();
+                startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+                break;
+        }
     }
 }
