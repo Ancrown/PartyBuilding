@@ -85,6 +85,7 @@
         android:background="@color/background" />
 
     <RelativeLayout
+        android:id="@+id/record_integral_time_rl"
         android:layout_width="match_parent"
         android:layout_height="43dp">
 

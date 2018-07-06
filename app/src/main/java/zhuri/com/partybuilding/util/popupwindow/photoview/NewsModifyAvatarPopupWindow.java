@@ -146,6 +146,7 @@ public class NewsModifyAvatarPopupWindow extends PopupWindow implements View.OnC
                     intent.setSelectModel(SelectModel.MULTI);
                     intent.setMaxTotal(selectModel); // 最多选择照片数量，默认为9
                     intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
+//                 筛选
 //                ImageConfig config = new ImageConfig();
 //                config.minHeight = 400;
 //                config.minWidth = 400;

@@ -24,6 +24,7 @@ import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
@@ -57,24 +58,13 @@ public class ActivitiesThreeActivity extends BaseRecyclerActivity implements Tra
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 page = 1;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
                 page++;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("LoadMore");
-
-                    }
-                }, 1000);
+                getEntity("LoadMore");
 
 
             }
@@ -93,8 +83,8 @@ public class ActivitiesThreeActivity extends BaseRecyclerActivity implements Tra
         adapter = new VWishAdapter(this);
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
-
+        //  getdata();
+        getEntity(null);
     }
 
     public void getdata() {
@@ -230,23 +220,28 @@ public class ActivitiesThreeActivity extends BaseRecyclerActivity implements Tra
             public void onResponse(BaseEntity<VWishEntity> response) {
                 endRefresh(gesture);
 
-                if (page <= 1) {
-                    itemList.clear();
+                if (response.isStatus()) {
+                    if (page <= 1) {
+                        itemList.clear();
+                    }
+                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                        itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
+                                response.getData().getInfo().get(i).getTitle(),
+                                "",
+                                response.getData().getInfo().get(i).getDemo(),
+                                response.getData().getInfo().get(i).getStatus(),
+                                response.getData().getInfo().get(i).getStime(),
+                                response.getData().getInfo().get(i).getEtime(),
+                                "",
+                                response.getData().getInfo().get(i).getPurview(),
+                                response.getData().getInfo().get(i).getSignup(),
+                                response.getData().getInfo().get(i).getDname()));
+                    }
+                    adapter.setDataList(itemList);
+                } else {
+                    ToolUtils.showToast(ActivitiesThreeActivity.this, response.getMsg());
                 }
-                for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                    itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
-                            response.getData().getInfo().get(i).getTitle(),
-                            "",
-                            response.getData().getInfo().get(i).getDemo(),
-                            response.getData().getInfo().get(i).getStatus(),
-                            response.getData().getInfo().get(i).getAddtime(),
-                            response.getData().getInfo().get(i).getEndtime(),
-                            response.getData().getInfo().get(i).getIntegral(),
-                            response.getData().getInfo().get(i).getPurview(),
-                            response.getData().getInfo().get(i).getPeopleNum(),
-                            response.getData().getInfo().get(i).getSend()));
-                }
-                adapter.setDataList(itemList);
+
             }
         }, map, "", page);
     }

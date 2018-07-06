@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,8 @@ import java.util.Stack;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
@@ -59,6 +62,15 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected FrameLayout frameLayout;
+
+    //是否登录
+    public boolean isLogin;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, "") + "");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

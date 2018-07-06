@@ -26,6 +26,7 @@ import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 /**
@@ -36,7 +37,7 @@ import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 public class ActivitiesTwoFragment extends BaseRecyclerFragment {
 
-    private int page;
+    private int page=1;
 
     private ActivitiesAdapter adapter;
     private List<ActivitiesItemBean> itemList;
@@ -64,24 +65,13 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 page = 1;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
                 page++;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("LoadMore");
-
-                    }
-                }, 1000);
+                getEntity("LoadMore");
 
 
             }
@@ -91,10 +81,11 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
 
     private void setupListView() {
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new ActivitiesAdapter(getActivity(), "1");
+        adapter = new ActivitiesAdapter(getActivity(), "3");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
+        //   getdata();
+        getEntity(null);
 
     }
 
@@ -193,22 +184,27 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
             public void onResponse(BaseEntity<VVolunteerEntity> response) {
                 endRefresh(gesture);
 
-                if (page <= 1) {
-                    itemList.clear();
+                if (response.isStatus()) {
+                    if (page <= 1) {
+                        itemList.clear();
+                    }
+                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                        itemList.add(new ActivitiesItemBean(
+                                response.getData().getInfo().get(i).getId(),
+                                response.getData().getInfo().get(i).getTitle(),
+                                response.getData().getInfo().get(i).getImageurl(),
+                                response.getData().getInfo().get(i).getAddress(),
+                                response.getData().getInfo().get(i).getAddtime(),
+                                response.getData().getInfo().get(i).getPurview(),
+                                response.getData().getInfo().get(i).getFlag(),
+                                response.getData().getInfo().get(i).getStatus()
+                        ));
+                    }
+                    adapter.setDataList(itemList);
+                } else {
+                    ToolUtils.showToast(getActivity(), response.getMsg());
                 }
-                for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                    itemList.add(new ActivitiesItemBean(
-                            response.getData().getInfo().get(i).getId(),
-                            response.getData().getInfo().get(i).getTitle(),
-                            response.getData().getInfo().get(i).getImageurl(),
-                            response.getData().getInfo().get(i).getAddress(),
-                            response.getData().getInfo().get(i).getAddtime(),
-                            response.getData().getInfo().get(i).getPurview(),
-                            response.getData().getInfo().get(i).getFlag(),
-                            response.getData().getInfo().get(i).getStatus()
-                    ));
-                }
-                adapter.setDataList(itemList);
+
             }
         }, map, "", page);
     }

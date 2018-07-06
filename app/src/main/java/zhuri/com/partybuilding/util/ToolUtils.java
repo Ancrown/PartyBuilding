@@ -113,12 +113,6 @@ public class ToolUtils {
         }
     }
 
-    /**
-     * 判断是否登陆
-     */
-    public static boolean isLogin(Context context) {
-        return TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "").toString()) ? false : true;
-    }
 
     /**
      * 设置状态栏高度

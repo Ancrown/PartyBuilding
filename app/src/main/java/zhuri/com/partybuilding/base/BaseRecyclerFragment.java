@@ -67,7 +67,9 @@ public abstract class BaseRecyclerFragment extends BaseFragment {
 
 
     //根据手势 结束下拉上拉
-    public void endRefresh(String gesture) {
+    public void endRefresh(String gesture,TwinklingRefreshLayout refreshLayout) {
+        if (gesture == null)
+            return;
         switch (gesture) {
             case "":
                 break;
@@ -75,6 +77,21 @@ public abstract class BaseRecyclerFragment extends BaseFragment {
                 refreshLayout.finishRefreshing();
                 break;
             case "Loadmore":
+                refreshLayout.finishLoadmore();
+                break;
+        }
+    }
+    //根据手势 结束下拉上拉
+    public void endRefresh(String gesture) {
+        if (gesture == null)
+            return;
+        switch (gesture) {
+            case "":
+                break;
+            case "Refresh":
+                refreshLayout.finishRefreshing();
+                break;
+            case "LoadMore":
                 refreshLayout.finishLoadmore();
                 break;
         }

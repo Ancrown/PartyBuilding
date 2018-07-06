@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
@@ -38,7 +41,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected FrameLayout rootView;
     Unbinder mUnbinder;
-
+    //是否登录
+    public boolean isLogin;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
         initView();
 //        }
         refreshData();
-
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, "") + "");
         return rootView;
     }
 
@@ -93,6 +97,8 @@ public abstract class BaseFragment extends Fragment {
         showTitle();
         return actionBar;
     }
+
+
 
 
 

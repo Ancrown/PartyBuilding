@@ -4,7 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-
+import android.text.TextUtils;
 
 
 import butterknife.BindView;
@@ -68,13 +68,14 @@ public abstract class BaseRecyclerActivity extends BaseActivity {
 
     //根据手势 结束下拉上拉
     public void endRefresh(String gesture) {
+        if (TextUtils.isEmpty(gesture)) return;
         switch (gesture) {
             case "":
                 break;
             case "Refresh":
                 refreshLayout.finishRefreshing();
                 break;
-            case "Loadmore":
+            case "LoadMore":
                 refreshLayout.finishLoadmore();
                 break;
         }

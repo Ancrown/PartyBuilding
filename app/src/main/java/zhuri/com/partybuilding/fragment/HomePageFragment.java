@@ -25,7 +25,6 @@ import zhuri.com.partybuilding.activity.ExaminationActivity;
 import zhuri.com.partybuilding.activity.study.StudyOneActivity;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
-import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.HomeEntity;
@@ -37,7 +36,9 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
-import zhuri.com.partybuilding.view.BroadcastView;
+import zhuri.com.partybuilding.view.bannerview.BannerItem;
+import zhuri.com.partybuilding.view.bannerview.BannerView;
+import zhuri.com.partybuilding.view.bannerview.BannerViewFactory;
 
 /**
  * 首页
@@ -46,7 +47,7 @@ import zhuri.com.partybuilding.view.BroadcastView;
 public class HomePageFragment extends BaseRecyclerFragment {
     //轮播图
     // @BindView(R.id.fra_home_bro)
-    private BroadcastView bView;
+    private BannerView bView;
     //轮播文字
     //  @BindView(R.id.fra_home_marqueeview)
     private MarqueeView marqueeview;
@@ -76,11 +77,11 @@ public class HomePageFragment extends BaseRecyclerFragment {
 
     private HomePageAdapter adapter;
     private List<HomePageItemBean> itemList;
+    //轮播
+    private BannerItem bannerItem;
+    private List<BannerItem> brolist=new ArrayList<>();
+    private BannerViewFactory bannerViewFactory = new BannerViewFactory();
 
-    private BroadcastBean broadcastBean;
-    private List<String> broId;
-    private List<String> imageResIds;
-    private List<String> contentDescs;
 
     private List<String> info;
     private List<HomeEntity.VoteBean> voteBeanList;
@@ -159,10 +160,10 @@ public class HomePageFragment extends BaseRecyclerFragment {
         });
 
         //轮播图点击
-        bView.setOnImgClick(new BroadcastView.OnImgClick() {
+        bannerViewFactory.setOnClikImg(new BannerViewFactory.OnClikImg() {
             @Override
-            public void onItme(String id) {
-                Log.e("eeeee", "position:" + id);
+            public void onItemImg(int i) {
+                Log.e("eeeee", "position:" + brolist.get(i).getId());
             }
         });
 
@@ -177,29 +178,9 @@ public class HomePageFragment extends BaseRecyclerFragment {
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
                 page = 1;
-                //getEntity("Refresh");
+                getEntity("Refresh");
             }
-
-//            @Override
-//            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-//                Log.e("eeeee", "ListView" + "上拉");
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        refreshLayout.finishLoadmore();
-//                    }
-//                }, 1000);
-//       getEntity("Loadmore");
-//
-//            }
-
         });
     }
 
@@ -226,31 +207,49 @@ public class HomePageFragment extends BaseRecyclerFragment {
         adapter = new HomePageAdapter(true, getActivity());
         recyclerView.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
-        getdata();
+        //  getdata();
+        getEntity(null);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
     //数据
     public void getdata() {
 
-        //轮播图
-        imageResIds = new ArrayList<>();
-        imageResIds.add("http://new.syist.cn/public/home/images/sy.jpg");
-        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/92be28d16e4f46d88938f189c3681d5a.jpg");
-        imageResIds.add("http://www.nsxf.cn/upload/2018/0605/640be637218b42738664351f6a120a03.jpg");
-        imageResIds.add("http://www.nsxf.cn/upload/2018/0521/d845ed9eeb0d4672b8e62674ebf9fadc.jpg");
-        imageResIds.add("http://new.syist.cn/public/home/images/sy.jpg");
+        brolist = new ArrayList<>();
+        bannerItem = new BannerItem();
+        bannerItem.setId("101");
+        bannerItem.setTitle("党建网 - 中宣部主管全国性党建网站");
+        bannerItem.setImage("http://new.syist.cn/public/home/images/sy.jpg");
+        brolist.add(bannerItem);
 
-        contentDescs = new ArrayList<>();
-        contentDescs.add("党建网 - 中宣部主管全国性党建网站");
-        contentDescs.add("人民网·中国共产党新闻网主办的全国性党建频道,传播党的声音,密切党群关系,推动党的工作,展现党的形象。");
-        contentDescs.add("党的建设即马克思主义建党理论同党的建设实践的统一，马克思主义党的学说的应用");
-        contentDescs.add("光明网党建频道_报道最新党建工作,党建研究新闻");
-        contentDescs.add("党建工作有哪些方面");
+        bannerItem = new BannerItem();
+        bannerItem.setId("102");
+        bannerItem.setTitle("人民网·中国共产党新闻网主办的全国性党建频道,传播党的声音,密切党群关系,推动党的工作,展现党的形象。");
+        bannerItem.setImage("http://www.nsxf.cn/upload/2018/0605/92be28d16e4f46d88938f189c3681d5a.jpg");
+        brolist.add(bannerItem);
 
-        broadcastBean = new BroadcastBean(null, imageResIds, contentDescs);
-        bView.setData(broadcastBean);
+        bannerItem = new BannerItem();
+        bannerItem.setId("103");
+        bannerItem.setTitle("党的建设即马克思主义建党理论同党的建设实践的统一，马克思主义党的学说的应用");
+        bannerItem.setImage("http://www.nsxf.cn/upload/2018/0605/640be637218b42738664351f6a120a03.jpg");
+        brolist.add(bannerItem);
+
+        bannerItem = new BannerItem();
+        bannerItem.setId("104");
+        bannerItem.setTitle("光明网党建频道_报道最新党建工作,党建研究新闻");
+        bannerItem.setImage("http://www.nsxf.cn/upload/2018/0521/d845ed9eeb0d4672b8e62674ebf9fadc.jpg");
+        brolist.add(bannerItem);
+
+        bView.setViewFactory(bannerViewFactory);
+        bView.setDataList(brolist);
+        bView.start();
+
 
         //轮播文字
         info = new ArrayList<>();
@@ -301,24 +300,27 @@ public class HomePageFragment extends BaseRecyclerFragment {
         OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.HOME, new OkHttpUtil.ResultCallback<BaseEntity<HomeEntity>>() {
             @Override
             public void onError(Request request, Exception e) {
-                endRefresh(gesture);
+                endRefresh(gesture, refreshLayout);
             }
 
             @Override
             public void onResponse(BaseEntity<HomeEntity> response) {
-                endRefresh(gesture);
 
-                broId = new ArrayList<>();
-                imageResIds = new ArrayList<>();
-                contentDescs = new ArrayList<>();
-                for (int i = 0; i < response.getData().getSlide().size(); i++) {
-                    broId.add(response.getData().getSlide().get(i).getId());
-                    imageResIds.add(response.getData().getSlide().get(i).getImageurl());
-                    contentDescs.add(response.getData().getSlide().get(i).getTitle());
+
+                if (page <= 1) {
+                    brolist.clear();
+                    for (int i = 0; i < response.getData().getSlide().size(); i++) {
+                        bannerItem = new BannerItem(
+                                response.getData().getSlide().get(i).getImageurl(),
+                                response.getData().getSlide().get(i).getTitle(),
+                                response.getData().getSlide().get(i).getId());
+                        brolist.add(bannerItem);
+                    }
+                    bView.setViewFactory(bannerViewFactory);
+                    bView.setDataList(brolist);
+                    bView.start();
+
                 }
-                broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
-                bView.setData(broadcastBean);
-
 
                 //轮播文字
                 info = new ArrayList<>();
@@ -345,6 +347,7 @@ public class HomePageFragment extends BaseRecyclerFragment {
                 adapter.setDataList(itemList);
 
 
+                endRefresh(gesture, refreshLayout);
             }
         }, map, "加载中", page);
 

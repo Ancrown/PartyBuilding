@@ -6,7 +6,10 @@
     android:orientation="vertical">
 
     <include layout="@layout/head_new" />
-
+    <View
+        android:id="@+id/zhanwei"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <zhuri.com.partybuilding.view.ScrollViewExt
         android:id="@+id/activities_report_scrollviewext"
         android:layout_width="match_parent"
@@ -28,7 +31,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="台媒：美军B5211天内第3次进入南海空域"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_20" />
 
@@ -45,7 +48,7 @@
                     android:layout_alignBottom="@+id/linearLayout2"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="发布时间：2018-6-1 10:11 "
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_13" />
 
@@ -63,7 +66,7 @@
                         android:layout_centerVertical="true"
                         android:drawableLeft="@drawable/fabulous"
                         android:drawablePadding="@dimen/dp5"
-                        android:text="125"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/text_size_12" />
 
@@ -76,7 +79,7 @@
                         android:layout_marginRight="@dimen/dp12"
                         android:drawableLeft="@drawable/browse"
                         android:drawablePadding="@dimen/dp5"
-                        android:text="125"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/text_size_12" />
 
@@ -104,7 +107,7 @@
                     android:id="@+id/activities_report_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="地址：沈阳市和平区"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_13" />
 
@@ -113,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp10"
-                    android:text="活动时间：2018-6-20 -- 2018-9-1"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_13" />
 
@@ -128,7 +131,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="报名人数：20人"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/text_size_13" />
 
@@ -137,7 +140,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="举办者：沈阳市和平区"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/text_size_13" />
                 </LinearLayout>
@@ -169,7 +172,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp15"
-                android:text="上一篇：XXXXXXXXX"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14" />
 
@@ -181,7 +184,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp15"
-                android:text="下一篇：XXXXXXXXX"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_14" />
 

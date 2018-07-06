@@ -51,11 +51,11 @@ public class ActivitiesOneActivity extends BaseRecyclerActivity implements Trans
     private void setupListView() {
         getTitleView().setData("社区活动", 0, R.drawable.back, null, 0, null, this);
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new ActivitiesAdapter(this, "0");
+        adapter = new ActivitiesAdapter(this, "2");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
-
+        // getdata();
+        getEntity(null);
     }
 
     public void getdata() {
@@ -193,27 +193,17 @@ public class ActivitiesOneActivity extends BaseRecyclerActivity implements Trans
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 page = 1;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
                 page++;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("LoadMore");
-
-                    }
-                }, 1000);
+                getEntity("LoadMore");
 
 
             }
+
 
         });
     }

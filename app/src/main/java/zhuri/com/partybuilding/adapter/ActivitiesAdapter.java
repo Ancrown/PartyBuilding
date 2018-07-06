@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,6 +21,7 @@ import zhuri.com.partybuilding.bean.ActivitiesItemBean;
 import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 
@@ -45,7 +47,6 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
 
     @Override
     public CommonHolder<ActivitiesItemBean> setViewHolder(ViewGroup parent, int viewType) {
-        Log.e("eeeee", "viewType:  " + viewType);
         switch (viewType) {
             case 1:
                 return new Holder(parent.getContext(), parent, R.layout.item_activities);
@@ -61,15 +62,8 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("eeeeee", "getItemViewType viewType:" + getItemList().get(position).getType());
 
-//        if (getItemList().get(position).getType() == 1) {
-//
-//            return 1;
-//        } else {
-//            return BaseRecyclerAdapter.TYPE_CONTENT;
-//        }
-        return getItemList().get(position).getType();
+        return getItemList().get(position).getType() == 4 ? 1 : getItemList().get(position).getType();
     }
 
     @Override
@@ -79,7 +73,8 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
     }
 
     class Holder extends CommonHolder<ActivitiesItemBean> {
-
+        @BindView(R.id.relativeLayout)
+        RelativeLayout relativeLayout;
         @BindView(R.id.item_activities_img)
         ImageView itemActivitiesImg;
         @BindView(R.id.item_activities_type)
@@ -102,8 +97,12 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
         @Override
         public void bindData(final ActivitiesItemBean bean, final int i) {
 
-            GlideUtils.LoadImage(context, bean.getImageurl().split("#")[0], itemActivitiesImg);
-
+            if (bean.getType() == 4) {
+                relativeLayout.setVisibility(View.GONE);
+            } else {
+                relativeLayout.setVisibility(View.VISIBLE);
+                GlideUtils.LoadImage(context, bean.getImageurl().split("#")[0], itemActivitiesImg);
+            }
             itemActivitiesTitle.setText(bean.getTitle());
 
 
@@ -134,7 +133,7 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
             }
 
             itemActivitiesAddress.setText(bean.getAddress());
-            itemActivitiesTime.setText(bean.getAddtime());
+            itemActivitiesTime.setText(TimeUtil.stampToDate(bean.getAddtime(),"yyyy-MM-dd"));
 
             itemActivitiesLl.setOnClickListener(new View.OnClickListener() {
                 @Override

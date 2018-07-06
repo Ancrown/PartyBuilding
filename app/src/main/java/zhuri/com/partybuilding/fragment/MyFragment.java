@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import zhuri.com.partybuilding.activity.RecordStudyActivity;
 import zhuri.com.partybuilding.base.BaseFragment;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
@@ -76,7 +78,6 @@ public class MyFragment extends BaseFragment {
     ImageView myDayuhao;
 
 
-    private boolean isLogin;
 
     @Override
     public int getLayoutId() {
@@ -96,42 +97,45 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        isLogin = ToolUtils.isLogin(getActivity());
+
         if (isLogin) {
-            myLogin.setVisibility(View.GONE);
-            myRlInfo.setVisibility(View.VISIBLE);
-        } else {
             myLogin.setVisibility(View.VISIBLE);
             myRlInfo.setVisibility(View.GONE);
+        } else {
+            getEntity();
+            myLogin.setVisibility(View.GONE);
+            myRlInfo.setVisibility(View.VISIBLE);
+
         }
+
     }
 
     @OnClick({R.id.my_info, R.id.my_activity_record, R.id.my_learning_records, R.id.my_examination_records, R.id.my_contribution, R.id.my_login, R.id.my_rl_info, R.id.my_examination_error})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_info:
-                if (isLogin) {
-                startActivity(new Intent(getActivity(), MyInfoActivity.class));
+                if (!isLogin) {
+                    startActivity(new Intent(getActivity(), MyInfoActivity.class));
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_activity_record:
-                if (isLogin) {
+                if (!isLogin) {
 
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_learning_records:
-                if (isLogin) {
+                if (!isLogin) {
                     startActivity(new Intent(getActivity(), RecordStudyActivity.class));
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_examination_records:
-                if (isLogin) {
+                if (!isLogin) {
                     startActivity(new Intent(getActivity(), RecordAnswerActivity.class));
 
                 } else {
@@ -139,15 +143,15 @@ public class MyFragment extends BaseFragment {
                 }
                 break;
             case R.id.my_contribution:
-                if (isLogin) {
-                   startActivity(new Intent(getActivity(), RecordIntegralActivity.class));
+                if (!isLogin) {
+                    startActivity(new Intent(getActivity(), RecordIntegralActivity.class));
                 } else {
                     goLogin();
                 }
                 break;
             case R.id.my_examination_error:
-                if (isLogin) {
-                   startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
+                if (!isLogin) {
+                    startActivity(new Intent(getActivity(), AnswerErrorActivity.class));
                 } else {
                     goLogin();
                 }
@@ -156,22 +160,33 @@ public class MyFragment extends BaseFragment {
                 goLogin();
                 break;
             case R.id.my_rl_info:
-
+                if (!isLogin) {
+                    startActivity(new Intent(getActivity(), MyInfoActivity.class));
+                } else {
+                    goLogin();
+                }
                 break;
         }
     }
 
     public void getEntity() {
-        if (!isLogin) return;
-        //编号
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.CODES, "");
+
+
         //名字
         myName.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NAME, "") + "");
         //头像
-        GlideUtils.LoadImage(getActivity(), SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_HEAD_IMG, "") + "", img);
+        GlideUtils.LoadCircleImage(getActivity(), SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_HEAD_IMG, "") + "", img);
         //积分
         myIntegral.setText("当前积分：" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.INTEGRAL, "") + "分");
 
+        myLabel.setText( SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "")+"");
+
+        myPosition.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "") + "");
+
+        myAccumulative.setText("已加入党"+TimeUtil.differentDays(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "") + "")
+                +"天    累计学习"+23+"次");
+
+        Log.e("eeeeee 入党时间", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "")+"");
 
         //昵称
         SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "");
@@ -194,7 +209,7 @@ public class MyFragment extends BaseFragment {
     }
 
     public void goLogin() {
-       startActivity(new Intent(getActivity(), LoginActivity.class));
+        startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 }

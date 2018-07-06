@@ -348,17 +348,8 @@ public class TipLoadDialog {
         loadText.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
         return this;
     }
-//
-//    /**
-//     * 设置加载一次文字的动画时间
-//     *
-//     * @param duration
-//     * @return
-//     */
-//    public TipLoadDialog setLoadingTime(int duration) {
-//        loadText.setDuration(duration);
-//        return this;
-//    }
+
+
 
     /**
      * 设置tip提示框时间
@@ -403,22 +394,12 @@ public class TipLoadDialog {
      */
     public void show() {
         dialog.show();
-//        if (loadText.getVisibility() == View.VISIBLE) {
-//            loadText.startLoading();
-//        }
-//        if (loadText2.getVisibility() == View.VISIBLE) {
-//            loadText2.startFadeInAnimation();
-//        }
+
         //移除所有的message和callback,
         // 防止返回键dismiss后,callback没移除
         sHandler.removeCallbacksAndMessages(null);
         if (this.currentType != ICON_TYPE_LOADING && this.currentType != ICON_TYPE_LOADING2) {
-//            if (loadText2.isLoading()) {
-//                loadText2.stopFadeInAnimation();
-//            }
-//            if (loadText.isLoading()) {
-//                loadText.stopLoading();
-//            }
+
             sHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -433,12 +414,6 @@ public class TipLoadDialog {
      */
     public void dismiss() {
         dialog.dismiss();
-//        if (loadText.isLoading()) {
-//            loadText.stopLoading();
-//        }
-//        if (loadText2.isLoading()) {
-//            loadText2.stopFadeInAnimation();
-//        }
         if (listener != null) {
             listener.onDimissListener();
         }
@@ -455,12 +430,7 @@ public class TipLoadDialog {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 //拦截back键,防止loadview的内存泄漏
                 dialog.dismiss();
-//                if (loadText.isLoading()) {
-//                    loadText.stopLoading();
-//                }
-//                if (loadText2.isLoading()) {
-//                    loadText2.stopFadeInAnimation();
-//                }
+
             }
             return super.onKeyDown(keyCode, event);
         }

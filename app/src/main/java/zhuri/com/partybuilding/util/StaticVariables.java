@@ -37,4 +37,12 @@ public class StaticVariables {
     public static final String DID = "did";
     //所在支部名字
     public static final String D_NAME = "dname";
+    //证件号
+    public static final String IDCARD = "idcard";
+    //证件类型
+    public static final String IDTYPE = "idtype";
+    //入党时间
+    public static final String JOINTIME = "jointime";
+    //注册时间
+    public static final String REGTIME = "regtime";
 }

@@ -21,6 +21,7 @@ import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.TextViewUitl;
+import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 
 /**
@@ -67,7 +68,8 @@ public class VWishAdapter extends BaseRecyclerAdapter<VWishBean> {
         public void bindData(final VWishBean bean, int i) {
             itemVWishTitle.setText(bean.getTitle());
 
-            itemVWishTime.setText(bean.getTime() + " -- " + bean.getEndtime());
+            itemVWishTime.setText(TimeUtil.stampToDate(bean.getTime(),"yyyy-mm-dd") + " ~ " +
+                    TimeUtil.stampToDate(bean.getEndtime(),"yyyy-mm-dd"));
             String num = bean.getPeopleNum() + "人";
             TextViewUitl.toStringChangeColor("人数：" + num, num, "#d5605f", itemVWishNum);
             itemVWishSend.setText("发布者：" + bean.getSend());

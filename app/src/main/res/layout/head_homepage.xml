@@ -6,14 +6,19 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <zhuri.com.partybuilding.view.BroadcastView
+    <zhuri.com.partybuilding.view.bannerview.BannerView
         android:id="@+id/fra_home_bro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:circular_point="@drawable/selector_bg_point"
-        app:show_title="true"
-        app:title_color="#ffffff"
-        app:title_size="@dimen/text_size_13"></zhuri.com.partybuilding.view.BroadcastView>
+        android:background="@android:color/white"
+        app:bvAspectRatio="0.5"
+        app:bvBarColor="#66000000"
+        app:bvIndicatorColor="#ffffff"
+        app:bvIndicatorColorSelected="@color/red"
+        app:bvTitleVisible="true">
+
+
+    </zhuri.com.partybuilding.view.bannerview.BannerView>
 
     <RelativeLayout
         android:layout_width="match_parent"

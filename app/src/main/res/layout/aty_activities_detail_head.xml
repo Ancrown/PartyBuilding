@@ -7,10 +7,16 @@
 
     <include layout="@layout/head_new" />
 
+    <View
+        android:id="@+id/zhanwei"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <zhuri.com.partybuilding.view.ScrollViewExt
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +30,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_20" />
 
@@ -35,7 +41,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="发布时间：2018-6-15 14:12"
+                android:text=""
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/text_size_13" />
 
@@ -61,7 +67,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="活动时间：2018-6-15 14:12"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_13" />
 
@@ -74,7 +80,7 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:drawablePadding="@dimen/dp5"
                 android:drawableRight="@drawable/address"
-                android:text="地址：沈阳市和平区XXXXXXXXXXXX"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_13" />
 
@@ -85,7 +91,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="报名截止时间：2018-6-15"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_13" />
 
@@ -96,18 +102,20 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="报名人数：15"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_13" />
 
             <TextView
                 android:id="@+id/activities_detail_signup"
-                android:layout_width="wrap_content"
-
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/fill_bg_red"
+                android:gravity="center"
                 android:paddingBottom="@dimen/dp5"
                 android:paddingLeft="@dimen/dp7"
                 android:paddingRight="@dimen/dp7"
@@ -115,6 +123,22 @@
                 android:text="我要报名"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
+
+            <!--<TextView-->
+            <!---->
+            <!--android:layout_width="match_parent"-->
+
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="@dimen/dp20"-->
+            <!--android:background="@drawable/fill_bg_red"-->
+            <!--android:paddingBottom="@dimen/dp5"-->
+            <!--android:paddingLeft="@dimen/dp7"-->
+            <!--android:paddingRight="@dimen/dp7"-->
+            <!--android:paddingTop="@dimen/dp5"-->
+            <!--android:text="我要报名"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/text_size_16" />-->
 
             <View
                 android:layout_width="match_parent"
@@ -155,10 +179,10 @@
                 android:background="@color/background" />
 
             <android.support.v7.widget.RecyclerView
-                android:background="@color/background"
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/background">
 
             </android.support.v7.widget.RecyclerView>
 

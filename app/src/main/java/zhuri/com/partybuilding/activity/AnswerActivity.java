@@ -555,9 +555,9 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
         map.put("id", id);
         map.put("score", score);
-        map.put("allanswer", score);
-        map.put("errorid", score);
-        map.put("erroranswer", score);
+        map.put("allanswer", allanswer);
+        map.put("errorid", errorid);
+        map.put("erroranswer", erroranswer);
         map.put("usetime", usetime);
 
         OkHttpUtil.getInstance(this).doPost(AddressRequest.UP_EXAMINATION, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {

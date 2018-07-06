@@ -21,7 +21,8 @@
             android:id="@+id/relativeLayout"
             android:layout_width="@dimen/dp100"
             android:layout_height="@dimen/dp75"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/item_activities_img"
@@ -48,9 +49,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@+id/relativeLayout"
-            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_height="@dimen/dp75"
+
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="@dimen/dp3"
             android:layout_marginLeft="@dimen/dp10"

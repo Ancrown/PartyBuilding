@@ -19,6 +19,7 @@ import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 
@@ -89,7 +90,7 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
             }
             itemHomePageTitle.setText(homePageItemBean.getTitle());
             itemHomePageText.setText(homePageItemBean.getText());
-            itemHomePageTime.setText(homePageItemBean.getTime());
+            itemHomePageTime.setText(TimeUtil.stampToDate(homePageItemBean.getTime(),"yyyy-MM-dd"));
             itemHomePageFabulousNum.setText(homePageItemBean.getFabulousNum());
             itemHomePageSeeNum.setText(homePageItemBean.getSeeNum());
             itemHomePageLl.setOnClickListener(new View.OnClickListener() {

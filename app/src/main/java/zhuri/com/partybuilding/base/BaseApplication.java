@@ -2,15 +2,34 @@ package zhuri.com.partybuilding.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.RemoteViews;
+import android.widget.Toast;
 
+
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
+import com.umeng.socialize.PlatformConfig;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import cat.ereza.customactivityoncrash.config.CaocConfig;
+import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.CustomErrorActivity;
+import zhuri.com.partybuilding.activity.SplashActivity;
 
 
 /**
@@ -81,6 +100,7 @@ public class BaseApplication extends Application {
 
         instance = this;
 
+
         //初始化集合
         appData = new HashMap<>();
 
@@ -96,145 +116,181 @@ public class BaseApplication extends Application {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
-//        /**
-//         * 初始化common库
-//         * 参数1:上下文，不能为空
-//         * 参数2:【友盟+】 AppKey
-//         * 参数3:【友盟+】 Channel
-//         * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
-//         * 参数5:Push推送业务的secret
-//         */
-//        UMConfigure.init(this, "5ae1c104b27b0a566f000282", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "910c073bd538d6a46a4c4ad72c057b51");
-//        PushAgent mPushAgent = PushAgent.getInstance(this);
-//        //注册推送服务，每次调用register方法都会回调该接口
-//        mPushAgent.register(new IUmengRegisterCallback() {
-//            @Override
-//            public void onSuccess(String deviceToken) {
-//                //注册成功会返回device token
-//                token = deviceToken;
-//                Log.i("xxx", token);
-//            }
-//
-//            @Override
-//            public void onFailure(String s, String s1) {
-//                token = s1 + "So文件不存在";
-//                Log.i("xxxx", token);
-//            }
-//        });
+        appError();
+        UMConfigure.init(this, "5b2c4ce7f43e487250000092", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
+                "");
+        initUmeng();
 
 
-//        //初始化imageloader
-//        initImageLoader();
+    }
+
+    //崩溃设置
+    public void appError() {
+        //整个配置属性，可以设置一个或多个，也可以一个都不设置
+        CaocConfig.Builder.create()
+                //程序在后台时，发生崩溃的三种处理方式
+                //BackgroundMode.BACKGROUND_MODE_SHOW_CUSTOM: //当应用程序处于后台时崩溃，也会启动错误页面，
+                //BackgroundMode.BACKGROUND_MODE_CRASH:      //当应用程序处于后台崩溃时显示默认系统错误（一个系统提示的错误对话框），
+                //BackgroundMode.BACKGROUND_MODE_SILENT:     //当应用程序处于后台时崩溃，默默地关闭程序！
+                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
+                .enabled(true)     //false表示对崩溃的拦截阻止。用它来禁用customactivityoncrash框架
+                .showErrorDetails(false) //这将隐藏错误活动中的“错误详细信息”按钮，从而隐藏堆栈跟踪,—》针对框架自带程序崩溃后显示的页面有用(DefaultErrorActivity)。。
+                .showRestartButton(false)    //是否可以重启页面,针对框架自带程序崩溃后显示的页面有用(DefaultErrorActivity)。
+                .trackActivities(true)     //错误页面中显示错误详细信息；针对框架自带程序崩溃后显示的页面有用(DefaultErrorActivity)。
+                .minTimeBetweenCrashesMs(2000)      //定义应用程序崩溃之间的最短时间，以确定我们不在崩溃循环中。比如：在规定的时间内再次崩溃，框架将不处理，让系统处理！
+                .errorDrawable(R.mipmap.ic_launcher)     //崩溃页面显示的图标
+                .restartActivity(SplashActivity.class)      //重新启动后的页面
+                .errorActivity(CustomErrorActivity.class) //程序崩溃后显示的页面
+                .eventListener(new CustomEventListener())//设置监听
+                .apply();
+        //如果没有任何配置，程序崩溃显示的是默认的设置
+        CustomActivityOnCrash.install(this);
+    }
+
+    /**
+     * 监听程序崩溃/重启
+     */
+    private static class CustomEventListener implements CustomActivityOnCrash.EventListener {
+        //程序崩溃回调
+        @Override
+        public void onLaunchErrorActivity() {
+            Log.e(TAG, "onLaunchErrorActivity()");
+        }
+
+        //重启程序时回调
+        @Override
+        public void onRestartAppFromErrorActivity() {
+            Log.e(TAG, "onRestartAppFromErrorActivity()");
+        }
+
+        //在崩溃提示页面关闭程序时回调
+        @Override
+        public void onCloseAppFromErrorActivity() {
+            Log.e(TAG, "onCloseAppFromErrorActivity()");
+        }
+
+    }
+
+    private void initUmeng() {
+        UMConfigure.setLogEnabled(true);
+
+        PushAgent mPushAgent = PushAgent.getInstance(this);
 
 
-//        PushAgent mPushAgent = PushAgent.getInstance(this);
-//        mPushAgent.setDebugMode(true);
-//        handler = new Handler();
+        /**
+         *  通知的展示及提醒
+         自定义通知打开动作
+         开发者可自定义用户点击通知栏时的后续动作。自定义行为的数据放在UMessage.custom字段。
+         在【友盟+】后台或通过API发送消息时，在“后续动作”中的“自定义行为”中输入相应的值或代码即可实现。
+         若开发者需要处理自定义行为，则可以重写方法dealWithCustomAction()。
+         其中自定义行为的内容，存放在UMessage.custom中。请在自定义Application类中添加以下代码：
+         */
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+            @Override
+            public void dealWithCustomAction(Context context, UMessage msg) {
+
+
+//                UmengMsgBean bean = new Gson().fromJson(msg.getRaw().toString(), UmengMsgBean.class);
 //
-//        //sdk开启通知声音
-//        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
-//        // sdk关闭通知声音
-////		mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);
-//        // 通知声音由服务端控制
-////		mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER);
+//                Log.e("eeeeee", "dealWithCustomAction:" + bean.getPayload().getBody().getCustom() + " #######               " + msg.getRaw().toString());
 //
-////		mPushAgent.setNotificationPlayLights(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);
-////		mPushAgent.setNotificationPlayVibrate(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);
-//
-//
-//        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-//            /**
-//             * 自定义消息的回调方法
-//             * */
-//            @Override
-//            public void dealWithCustomMessage(final Context context, final UMessage msg) {
-//
-//                handler.post(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        // TODO Auto-generated method stub
-//                        // 对自定义消息的处理方式，点击或者忽略
-//                        boolean isClickOrDismissed = true;
-//                        if (isClickOrDismissed) {
-//                            //自定义消息的点击统计
-//                            UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
-//                        } else {
-//                            //自定义消息的忽略统计
-//                            UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
-//                        }
-//                        Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//            }
-//
-//            /**
-//             * 自定义通知栏样式的回调方法
-//             * */
-//            @Override
-//            public Notification getNotification(Context context, UMessage msg) {
-//                switch (msg.builder_id) {
-//                    case 1:
-//                        Notification.Builder builder = new Notification.Builder(context);
-//                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.notification_view);
-//                        myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-//                        myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-//                        myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
-//                        myNotificationView.setImageViewResource(R.id.notification_small_icon, getSmallIconId(context, msg));
-//                        builder.setContent(myNotificationView)
-//                                .setSmallIcon(getSmallIconId(context, msg))
-//                                .setTicker(msg.ticker)
-//                                .setAutoCancel(true);
-//
-//                        return builder.getNotification();
-//                    default:
-//                        //默认为0，若填写的builder_id并不存在，也使用默认。
-//                        return super.getNotification(context, msg);
-//                }
-//            }
-//        };
-//        mPushAgent.setMessageHandler(messageHandler);
-//
-//        /**
-//         * 自定义行为的回调处理，参考文档：高级功能-通知的展示及提醒-自定义通知打开动作
-//         * UmengNotificationClickHandler是在BroadcastReceiver中被调用，故
-//         * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
-//         * */
-//        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
-//            @Override
-//            public void dealWithCustomAction(Context context, UMessage msg) {
-//                Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-//            }
-//        };
-//        //使用自定义的NotificationHandler，来结合友盟统计处理消息通知，参考http://bbs.umeng.com/thread-11112-1-1.html
-//        //CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
-//        mPushAgent.setNotificationClickHandler(notificationClickHandler);
-//
-//        Log.e(TAG, "start");
-//        //注册推送服务 每次调用register都会回调该接口
-//        mPushAgent.register(new IUmengRegisterCallback() {
-//            @Override
-//            public void onSuccess(String deviceToken) {
-//                Log.e(TAG, "device token: 22222" + deviceToken);
-//                //存取token
-//                SharedPreferences preferences = getSharedPreferences("UMeng", MODE_PRIVATE);
-//                preferences.edit().putString("token", deviceToken).commit();
-//                StaticVariables.TOKEN = deviceToken;
-//                sendBroadcast(new Intent(UPDATE_STATUS_ACTION));
-//            }
-//
-//            @Override
-//            public void onFailure(String s, String s1) {
-//                Log.e(TAG, "register failed: 222" + s + " " + s1);
-//                sendBroadcast(new Intent(UPDATE_STATUS_ACTION));
-//            }
-//        });
-//        //此处是完全自定义处理设置，两个例子，任选一种即可
-////        mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
-//        mPushAgent.setPushIntentServiceClass(UmengNotificationService.class);
-//
-//        //ShareSDK短信
-//        MobSDK.init(this, this.a(), this.b());
+//                Log.e("eeeeee", "dealWithCustomAction:" + msg.custom + "    " + bean.toString());
+
+                Log.e("eeeeee", "dealWithCustomAction:" + msg.custom);
+            }
+        };
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+
+
+        //自定义通知栏样式
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+            /**
+             * 通知的回调方法（通知送达时会回调）
+             */
+            @Override
+            public void dealWithNotificationMessage(Context context, UMessage msg) {
+                //调用super，会展示通知，不调用super，则不展示通知。
+                super.dealWithNotificationMessage(context, msg);
+
+
+                Log.e("eeeeee", "dealWithNotificationMessage:" + msg.custom);
+            }
+
+            /**
+             * 自定义消息的回调方法
+             */
+            @Override
+            public void dealWithCustomMessage(final Context context, final UMessage msg) {
+
+                handler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        // 对自定义消息的处理方式，点击或者忽略
+                        boolean isClickOrDismissed = true;
+                        if (isClickOrDismissed) {
+                            //自定义消息的点击统计
+                            UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
+                        } else {
+                            //自定义消息的忽略统计
+                            UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
+                        }
+                        Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            /**
+             * 自定义通知栏样式的回调方法
+             */
+            @Override
+            public Notification getNotification(Context context, UMessage msg) {
+                switch (msg.builder_id) {
+                    case 1:
+                        Notification.Builder builder = new Notification.Builder(context);
+                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
+                                R.layout.notification_view);
+                        myNotificationView.setTextViewText(R.id.notification_title, msg.title);
+                        myNotificationView.setTextViewText(R.id.notification_text, msg.text);
+                        myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
+                        myNotificationView.setImageViewResource(R.id.notification_small_icon,
+                                getSmallIconId(context, msg));
+                        builder.setContent(myNotificationView)
+                                .setSmallIcon(getSmallIconId(context, msg))
+                                .setTicker(msg.ticker)
+                                .setAutoCancel(true);
+
+                        return builder.getNotification();
+                    default:
+                        //默认为0，若填写的builder_id并不存在，也使用默认。
+                        return super.getNotification(context, msg);
+                }
+            }
+        };
+        mPushAgent.setMessageHandler(messageHandler);
+
+        //mPushAgent.setPushIntentServiceClass
+
+
+        //sdk开启通知声音
+        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
+        //  mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATIONPLAYSERVER);
+
+        //注册推送服务 每次调用register都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String deviceToken) {
+                Log.i(TAG, "device token: " + deviceToken);
+
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.i(TAG, "register failed: " + s + " " + s1);
+
+            }
+        });
     }
 
 
@@ -303,4 +359,12 @@ public class BaseApplication extends Application {
         super.onTrimMemory(level);
     }
 
+
+    {
+        //微信
+        PlatformConfig.setWeixin("wxf5795f97fb05cb6e", "233f0ab09e84cc267948d3f1fa600edf");
+        //qq
+        PlatformConfig.setQQZone("1106988350", "5dS59TyeosacpZ88");
+
+    }
 }

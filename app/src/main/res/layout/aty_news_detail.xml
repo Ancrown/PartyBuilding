@@ -21,9 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp10">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/news_details_title"
@@ -31,29 +29,35 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp10"
                     android:layout_marginTop="@dimen/dp10"
-                    android:text="台媒：美军B5211天内第3次进入南海空域"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_20" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/news_details_time_in"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="2018-6-1 10:11  来源：人民网"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
+                        android:id="@+id/news_details_zan_dian_zhuan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/news_details_fabulous"
@@ -62,7 +66,7 @@
                             android:layout_centerVertical="true"
                             android:drawableLeft="@drawable/fabulous"
                             android:drawablePadding="@dimen/dp5"
-                            android:text="125"
+                            android:text=""
                             android:textColor="@color/gray"
                             android:textSize="@dimen/text_size_11" />
 
@@ -75,7 +79,7 @@
                             android:layout_marginRight="@dimen/dp12"
                             android:drawableLeft="@drawable/browse"
                             android:drawablePadding="@dimen/dp5"
-                            android:text="125"
+                            android:text=""
                             android:textColor="@color/gray"
                             android:textSize="@dimen/text_size_11" />
 
@@ -86,7 +90,7 @@
                             android:layout_centerVertical="true"
                             android:drawableLeft="@drawable/forward"
                             android:drawablePadding="@dimen/dp5"
-                            android:text="3"
+                            android:text=""
                             android:textColor="@color/gray"
                             android:textSize="@dimen/text_size_11" />
 
@@ -102,30 +106,33 @@
 
                 </WebView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp20"
-                    android:background="@drawable/red_half_round_angle"
-                    android:drawableLeft="@drawable/fabulous_no"
-                    android:drawablePadding="@dimen/dp5"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/dp10"
-                    android:paddingLeft="@dimen/dp15"
-                    android:paddingRight="@dimen/dp15"
-                    android:paddingTop="@dimen/dp10"
-                    android:text="12人点赞"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_15" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="@dimen/dp20"-->
+                <!--android:background="@drawable/red_half_round_angle"-->
+                <!--android:drawableLeft="@drawable/fabulous_no"-->
+                <!--android:drawablePadding="@dimen/dp5"-->
+                <!--android:gravity="center"-->
+                <!--android:paddingBottom="@dimen/dp10"-->
+                <!--android:paddingLeft="@dimen/dp15"-->
+                <!--android:paddingRight="@dimen/dp15"-->
+                <!--android:paddingTop="@dimen/dp10"-->
+                <!--android:text=""-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/text_size_15" />-->
 
                 <LinearLayout
+                    android:id="@+id/news_details_zhuan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp10"
-                    android:layout_marginTop="@dimen/dp10">
+                    android:layout_marginTop="@dimen/dp10"
+                    android:visibility="gone">
 
                     <RelativeLayout
+                        android:id="@+id/news_details_wechat"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="@dimen/dp20"
@@ -144,6 +151,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/news_details_wechat_pengyouquan"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="15dp"
@@ -163,6 +171,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/news_details_qq"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_marginRight="@dimen/dp20"
@@ -173,9 +182,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:drawableLeft="@drawable/xinlang"
+                            android:drawableLeft="@drawable/iconqq"
                             android:drawablePadding="@dimen/dp3"
-                            android:text="微博"
+                            android:text="QQ"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_13" />
                     </RelativeLayout>

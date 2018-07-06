@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
     ImageView recordIntegralImg;
     //    @BindView(R.id.record_integral_integral)
     TextView recordIntegralIntegral;
+
+    RelativeLayout recordIntegralIntegralRL;
     //   @BindView(R.id.record_integral_ranking)
     TextView recordIntegralRanking;
     //   @BindView(R.id.record_integral_time)
@@ -77,16 +80,16 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
     protected void initListener() {
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
-//            @Override
-//            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-//                page = 1;
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        endRefresh("Refresh");
-//                    }
-//                }, 1000);
-//            }
+            @Override
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+                page = 1;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        endRefresh("Refresh");
+                    }
+                }, 1000);
+            }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
@@ -107,7 +110,7 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
         recordIntegralTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectTimePopupWindow = new SelectTimePopupWindow(RecordIntegralActivity.this,"选择日期",false);
+                selectTimePopupWindow = new SelectTimePopupWindow(RecordIntegralActivity.this, "选择日期", false);
 
                 selectTimePopupWindow.setOnSelectTimeListener(new SelectTimePopupWindow.OnSelectTimeListener() {
                     @Override
@@ -137,16 +140,18 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
         recordIntegralPosition = view.findViewById(R.id.record_integral_position);
         recordIntegralImg = view.findViewById(R.id.record_integral_img);
         recordIntegralIntegral = view.findViewById(R.id.record_integral_integral);
+        recordIntegralIntegralRL = view.findViewById(R.id.record_integral_time_rl);
         recordIntegralRanking = view.findViewById(R.id.record_integral_ranking);
         recordIntegralTime = view.findViewById(R.id.record_integral_time);
 
+      //  refreshLayout.addFixedExHeader(view);
 
         //是否允许越界时显示刷新控件（setOverScrollTopShow,setOverScrollBottomShow统一设置方法）
         refreshLayout.setOverScrollRefreshShow(false);
         //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
         refreshLayout.setFloatRefresh(true);
         //禁止下拉
-        refreshLayout.setEnableRefresh(false);
+    //    refreshLayout.setEnableRefresh(false);
         //listview 效果
         lmr = new LinearLayoutManager(this);
         //设置为垂直布局，这也是默认的

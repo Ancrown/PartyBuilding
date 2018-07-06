@@ -14,7 +14,7 @@ public class VWishEntity {
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"心愿ID","title":"标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","integral":"获得积分","status":"心愿状态","addtime":"发布时间","endtime":"结束时间","purview":"是否登陆可看","peopleNum":"参加人数","send":"发布者"}]
+     * info : [{"id":"活动ID","title":"活动标题","imageurl":"首图|首图","demo":"摘要","stime":"开始时间","etime":"结束时间","status":"认领状态","dname":"发布单位","signup":"报名人数","address":"地点","addtime":"发布时间","purview":"是否登陆可看","flag":"置顶2|推荐1|正常0"}]
      */
 
     private String page;
@@ -47,36 +47,34 @@ public class VWishEntity {
 
     public static class InfoBean {
         /**
-         * id : 心愿ID
-         * title : 标题
-         * imageurl : 首图
+         * id : 活动ID
+         * title : 活动标题
+         * imageurl : 首图|首图
          * demo : 摘要
-         * ilike : 点赞数
-         * share : 分享数
-         * hits : 点击数
-         * integral : 获得积分
-         * status : 心愿状态
+         * stime : 开始时间
+         * etime : 结束时间
+         * status : 认领状态
+         * dname : 发布单位
+         * signup : 报名人数
+         * address : 地点
          * addtime : 发布时间
-         * endtime : 结束时间
          * purview : 是否登陆可看
-         * peopleNum : 参加人数
-         * send : 发布者
+         * flag : 置顶2|推荐1|正常0
          */
 
         private String id;
         private String title;
         private String imageurl;
         private String demo;
-        private String ilike;
-        private String share;
-        private String hits;
-        private String integral;
+        private String stime;
+        private String etime;
         private String status;
+        private String dname;
+        private String signup;
+        private String address;
         private String addtime;
-        private String endtime;
         private String purview;
-        private String peopleNum;
-        private String send;
+        private String flag;
 
         public String getId() {
             return id;
@@ -110,36 +108,20 @@ public class VWishEntity {
             this.demo = demo;
         }
 
-        public String getIlike() {
-            return ilike;
+        public String getStime() {
+            return stime;
         }
 
-        public void setIlike(String ilike) {
-            this.ilike = ilike;
+        public void setStime(String stime) {
+            this.stime = stime;
         }
 
-        public String getShare() {
-            return share;
+        public String getEtime() {
+            return etime;
         }
 
-        public void setShare(String share) {
-            this.share = share;
-        }
-
-        public String getHits() {
-            return hits;
-        }
-
-        public void setHits(String hits) {
-            this.hits = hits;
-        }
-
-        public String getIntegral() {
-            return integral;
-        }
-
-        public void setIntegral(String integral) {
-            this.integral = integral;
+        public void setEtime(String etime) {
+            this.etime = etime;
         }
 
         public String getStatus() {
@@ -150,20 +132,36 @@ public class VWishEntity {
             this.status = status;
         }
 
+        public String getDname() {
+            return dname;
+        }
+
+        public void setDname(String dname) {
+            this.dname = dname;
+        }
+
+        public String getSignup() {
+            return signup;
+        }
+
+        public void setSignup(String signup) {
+            this.signup = signup;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
         public String getAddtime() {
             return addtime;
         }
 
         public void setAddtime(String addtime) {
             this.addtime = addtime;
-        }
-
-        public String getEndtime() {
-            return endtime;
-        }
-
-        public void setEndtime(String endtime) {
-            this.endtime = endtime;
         }
 
         public String getPurview() {
@@ -174,20 +172,12 @@ public class VWishEntity {
             this.purview = purview;
         }
 
-        public String getPeopleNum() {
-            return peopleNum;
+        public String getFlag() {
+            return flag;
         }
 
-        public void setPeopleNum(String peopleNum) {
-            this.peopleNum = peopleNum;
-        }
-
-        public String getSend() {
-            return send;
-        }
-
-        public void setSend(String send) {
-            this.send = send;
+        public void setFlag(String flag) {
+            this.flag = flag;
         }
     }
 }

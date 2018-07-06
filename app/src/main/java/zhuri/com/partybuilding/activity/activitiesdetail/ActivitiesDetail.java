@@ -1,5 +1,6 @@
 package zhuri.com.partybuilding.activity.activitiesdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,21 +13,36 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Request;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.Function;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesOneActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesTwoActivity;
 import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
 import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.entity.activities.ActivitiesCVDetailsEntity;
+import zhuri.com.partybuilding.util.AddressRequest;
+import zhuri.com.partybuilding.util.AppUtils;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
+import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.htmlutils.HtmlFormat;
+import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.NoScrollWebView;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
@@ -45,6 +61,7 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
     TextView activitiesDetailSendtime;
     @BindView(R.id.activities_detail_webview)
     NoScrollWebView activitiesDetailWebview;
+
     @BindView(R.id.activities_detail_time)
     TextView activitiesDetailTime;
     @BindView(R.id.activities_detail_address)
@@ -53,10 +70,20 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
     TextView activitiesDetailSignendtime;
     @BindView(R.id.activities_detail_peoplenum)
     TextView activitiesDetailPeoplenum;
+
+
     @BindView(R.id.activities_detail_signup)
     TextView activitiesDetailSignup;
+    @BindView(R.id.zhanwei)
+    View zhanwei;
+
+    //是否报名了
+    private boolean isJoin;
+
     @BindView(R.id.activities_detail_more)
     TextView activitiesDetailMore;
+
+
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
@@ -90,10 +117,10 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
         id = intent.getStringExtra("id");
         String title = null;
         switch (type) {
-            case "0":
+            case "2":
                 title = "社区活动";
                 break;
-            case "1":
+            case "3":
                 title = "微志愿";
                 break;
 
@@ -101,7 +128,7 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
         getTitleView().setData(title, 0, R.drawable.back, null, R.drawable.saoyisao, null, this);
 
 
-        activitiesDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
+        //  activitiesDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
 
 
         //listview 效果
@@ -123,7 +150,8 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
 
         recycler.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
+
+        getEntity();
     }
 
     @Override
@@ -189,10 +217,15 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
 
     @Override
     public void onRightClick() {
-        if (PermissionManager.permissionApplication(this, PermissionManager.Camera(), PermissionManager.PERMISSION)) {
-            Intent intent2 = new Intent(this, CaptureActivity.class);
-            startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+        if (isJoin) {
+            if (PermissionManager.permissionApplication(this, PermissionManager.Camera(), PermissionManager.PERMISSION)) {
+                Intent intent2 = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent2, CaptureActivity.MY_PERMISSIONS_REQUEST_CAMERA);
+            }
+        } else {
+            ToolUtils.showToast(this, "请先点击我要报名！");
         }
+
 
     }
 
@@ -204,7 +237,13 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
             if (null == data) return;
             Bundle b = data.getExtras();
             String result = b.getString(CaptureActivity.EXTRA_STRING);
-            Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
+            //      Toast.makeText(this, result + "", Toast.LENGTH_SHORT).show();
+            if (result.split("#")[1].equals(id)) {
+                Function.signIn(isLogin, this, result.split("#")[0], result.split("#")[1]);
+            } else {
+                ToolUtils.showToast(this, "二维码不属于当前活动签到！");
+            }
+
         }
     }
 
@@ -239,9 +278,13 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
         switch (view.getId()) {
             case R.id.activities_detail_signup:
 
+
+                signUp(isLogin, this, id, activitiesDetailSignup, type);
+
+
                 break;
             case R.id.activities_detail_more:
-                if ("0".equals(type)) {
+                if ("2".equals(type)) {
                     startActivity(new Intent(this, ActivitiesOneActivity.class));
                 } else {
                     startActivity(new Intent(this, ActivitiesTwoActivity.class));
@@ -249,4 +292,109 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
                 break;
         }
     }
+
+    public void getEntity() {
+        Map map = new HashMap();
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("id", id);
+        OkHttpUtil.getInstance(this).doPost(type.equals("2") ? AddressRequest.ACTIVITIES_C_DETAILS : AddressRequest.ACTIVITIES_V_DETAILS, new OkHttpUtil.ResultCallback<BaseEntity<ActivitiesCVDetailsEntity>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(BaseEntity<ActivitiesCVDetailsEntity> response) {
+                if (response.isStatus()) {
+                    activitiesDetailTitle.setText(response.getData().getMain().getTitle());
+                    activitiesDetailSendtime.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
+
+
+                    text = response.getData().getMain().getContent();
+                    activitiesDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
+                    Log.e("eeeeee", response.getData().getMain().getStime() + "   " + response.getData().getMain().getEtime());
+                    activitiesDetailTime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~"
+                            + TimeUtil.stampToDate((response.getData().getMain().getEtime()), "yyyy-mm-dd"));
+
+
+                    activitiesDetailAddress.setText("地址：" + response.getData().getMain().getAddress());
+                    activitiesDetailSignendtime.setText("报名截止时间：" + TimeUtil.stampToDate(response.getData().getMain().getEtime(), "yyyy-mm-dd"));
+                    activitiesDetailPeoplenum.setText("报名人数：" + response.getData().getMain().getSignup());
+
+                    isJoin = response.getData().getMain().getIsjoin().equals("1");
+                    if (!isJoin) {
+                        activitiesDetailSignup.setText("我要报名");
+                        activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red));
+
+                    } else {
+                        activitiesDetailSignup.setText("我已报名");
+                        activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
+
+                    }
+                    itemList.clear();
+                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                        itemList.add(new ActivitiesItemBean(
+                                response.getData().getInfo().get(i).getId(),
+                                response.getData().getInfo().get(i).getTitle(),
+                                response.getData().getInfo().get(i).getImageurl(),
+                                response.getData().getInfo().get(i).getAddress(),
+                                response.getData().getInfo().get(i).getAddtime(),
+                                response.getData().getInfo().get(i).getPurview(),
+                                response.getData().getInfo().get(i).getFlag(),
+                                response.getData().getInfo().get(i).getStatus()));
+                    }
+                    adapter.setDataList(itemList);
+
+                    //隐藏展位图
+                    zhanwei.setVisibility(View.GONE);
+                } else {
+                    ToolUtils.showToast(ActivitiesDetail.this, response.getMsg());
+                }
+            }
+        }, map, "");
+    }
+
+    /**
+     * 报名
+     *
+     * @param isLogin
+     * @param context
+     * @param id
+     * @param textView
+     * @param type
+     */
+    public void signUp(Boolean isLogin, final Context context, String id, final TextView textView, String type) {
+        if (isLogin) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        } else {
+            Map map = new HashMap();
+            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
+            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("id", id);
+            OkHttpUtil.getInstance(context).doPost(type.equals("2") ? AddressRequest.ACTIVITIES_C_SING_UP : AddressRequest.ACTIVITIES_V_SING_UP, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {
+                @Override
+                public void onError(Request request, Exception e) {
+
+                }
+
+                @Override
+                public void onResponse(BaseEntity<String> response) {
+                    if (response.isStatus()) {
+
+                        textView.setText("我已报名");
+                        textView.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
+
+                        isJoin = true;
+                        ToolUtils.showToast(context, response.getMsg());
+                    } else {
+                        ToolUtils.showToast(context, response.getMsg());
+
+                    }
+                }
+            }, map);
+        }
+    }
+
+
 }

@@ -21,6 +21,7 @@ import zhuri.com.partybuilding.entity.LogInEntity;
 import zhuri.com.partybuilding.util.AddressRequest;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 /**
@@ -63,8 +64,8 @@ public class LoginActivity extends BaseActivity {
 
     public void login() {
         Map map = new HashMap();
-        map.put("uname", "");
-        map.put("upass", "");
+        map.put("uname", loginAdmin.getText().toString().trim());
+        map.put("upass", loginPassword.getText().toString().trim());
         map.put("source", "android");
         OkHttpUtil.getInstance(this).doPost(AddressRequest.LOGIN, new OkHttpUtil.ResultCallback<BaseEntity<LogInEntity>>() {
             @Override
@@ -75,7 +76,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(BaseEntity<LogInEntity> response) {
                 if (response.isStatus()) {
-                    //id
+                    //idaaa
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_ID, response.getData().getId());
                     //token
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.TOKEN, response.getData().getToken());
@@ -83,12 +84,13 @@ public class LoginActivity extends BaseActivity {
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.CODES, response.getData().getCodes());
                     //名字
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NAME, response.getData().getName());
-                    //头像
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_HEAD_IMG, response.getData().getImg());
                     //昵称
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NICK_NAME, response.getData().getNickname());
+                    //头像
+                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_HEAD_IMG, response.getData().getAvatar());
+
                     //性别
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.SEX, response.getData().getSex());
+                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.SEX, response.getData().getSex().equals("0") ? "女" : "男");
                     //年龄
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.AGE, response.getData().getAge());
                     //生日
@@ -103,6 +105,15 @@ public class LoginActivity extends BaseActivity {
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.EMAIL, response.getData().getEmail());
                     //积分
                     SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.INTEGRAL, response.getData().getIntegral());
+                    //证件号"
+                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDCARD, response.getData().getIdcard());
+                    //证件类型
+                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDTYPE, response.getData().getIdcard());
+                    //入党时间
+                    SharedPreferencesUtils.setParam(LoginActivity.this,StaticVariables.JOINTIME, TimeUtil.stampToDate(response.getData().getJointime(),"yyyy-mm-dd HH:mm:ss"));
+                    //注册时间
+                    SharedPreferencesUtils.setParam(LoginActivity.this,StaticVariables.REGTIME, TimeUtil.stampToDate(response.getData().getRegtime(),"yyyy-mm-dd HH:mm:ss"));
+
 
                     finishAllActivity();
                     startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
@@ -119,9 +130,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_forget:
                 break;
             case R.id.login_go:
-                SharedPreferencesUtils.setParam(this, StaticVariables.USER_ID, "101");
-                finishAllActivity();
-                startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+                login();
+
                 break;
         }
     }

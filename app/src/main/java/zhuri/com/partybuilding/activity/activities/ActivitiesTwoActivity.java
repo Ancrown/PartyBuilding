@@ -34,11 +34,12 @@ import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
  * 描述:
  */
 
-public class ActivitiesTwoActivity extends  BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
+public class ActivitiesTwoActivity extends BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
     private int page;
 
     private ActivitiesAdapter adapter;
     private List<ActivitiesItemBean> itemList;
+
     @Override
     public void initView() {
         super.initView();
@@ -47,15 +48,17 @@ public class ActivitiesTwoActivity extends  BaseRecyclerActivity implements Tran
         params.setMargins(0, SizeUtils.dip2px(2), 0, 0);
         recyclerView.setLayoutParams(params);
     }
+
     private void setupListView() {
         getTitleView().setData("微志愿", 0, R.drawable.back, null, 0, null, this);
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new ActivitiesAdapter(this,"1");
+        adapter = new ActivitiesAdapter(this, "3");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
-
+        //  getdata();
+        getEntity(null);
     }
+
     public void getdata() {
 
         itemList.add(new ActivitiesItemBean(
@@ -170,6 +173,7 @@ public class ActivitiesTwoActivity extends  BaseRecyclerActivity implements Tran
             }
         }, map, "", page);
     }
+
     @Override
     protected void initData() {
         //下拉上拉
@@ -177,27 +181,17 @@ public class ActivitiesTwoActivity extends  BaseRecyclerActivity implements Tran
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
                 page = 1;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
                 page++;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        endRefresh("LoadMore");
-
-                    }
-                }, 1000);
+                getEntity("LoadMore");
 
 
             }
+
 
         });
     }

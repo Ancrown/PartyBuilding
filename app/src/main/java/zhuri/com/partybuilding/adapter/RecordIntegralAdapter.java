@@ -92,11 +92,11 @@ public class RecordIntegralAdapter extends BaseRecyclerAdapter<RecordIntegralBea
                     switch (bean.getType()) {
                         case "0":
                             //活动
-                            context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("id", bean.getId()).putExtra("type", bean.getActivitiesTyep()));
+                            context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
                             break;
                         case "1":
                             //学习
-                            context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("id", bean.getId()).putExtra("type", bean.getActivitiesTyep()));
+                            context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
                             break;
                         case "2":
                             //考试

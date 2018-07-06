@@ -90,10 +90,5 @@ public class AnswerConfirmActivity extends BaseActivity implements TranslucentAc
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

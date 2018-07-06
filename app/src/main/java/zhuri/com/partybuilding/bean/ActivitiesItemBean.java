@@ -1,5 +1,6 @@
 package zhuri.com.partybuilding.bean;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -42,8 +43,8 @@ public class ActivitiesItemBean {
         this.purview = purview;
         this.flag = flag;
         this.status = status;
-        this.type = imageurl.split("#").length > 3 ? 3 : imageurl.split("#").length % 4;
-        Log.e("eeeeee", "type type type" + type +"  "+imageurl.split("#").length);
+        this.type = TextUtils.isEmpty(imageurl) ? 4 : imageurl.split("#").length > 3 ? 3 : imageurl.split("#").length % 4;
+//        Log.e("eeeeee", "type type type" + type + "  " + imageurl.split("#").length);
     }
 
     public int getType() {

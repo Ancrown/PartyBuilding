@@ -10,11 +10,12 @@ import java.util.List;
 
 public class ConsultationEntity {
 
+
     /**
      * page : 当前页数
      * totalpage : 总页数
      * slide : [{"id":"幻灯ID","title":"幻灯图标题","imageurl":"幻灯图片URL"},{"id":"幻灯ID","title":"幻灯图标题","imageurl":"幻灯图片URL"}]
-     * info : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","addtime":"发布时间","purview":"是否登陆可看"},{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","addtime":"发布时间","purview":"是否登陆可看"}]
+     * info : [{"id":"文章ID","title":"文章标题","imageurl":"首图|首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","addtime":"发布时间","purview":"是否登陆可看"},{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","ilike":"点赞数","share":"分享数","hits":"点击数","addtime":"发布时间","purview":"是否登陆可看"}]
      */
 
     private String page;
@@ -94,7 +95,7 @@ public class ConsultationEntity {
         /**
          * id : 文章ID
          * title : 文章标题
-         * imageurl : 首图
+         * imageurl : 首图|首图
          * demo : 摘要
          * ilike : 点赞数
          * share : 分享数

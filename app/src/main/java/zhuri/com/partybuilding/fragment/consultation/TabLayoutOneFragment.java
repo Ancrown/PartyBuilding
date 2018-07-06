@@ -28,7 +28,6 @@ import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseFragment;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
-import zhuri.com.partybuilding.bean.BroadcastBean;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.ConsultationEntity;
@@ -42,7 +41,9 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
-import zhuri.com.partybuilding.view.BroadcastView;
+import zhuri.com.partybuilding.view.bannerview.BannerItem;
+import zhuri.com.partybuilding.view.bannerview.BannerView;
+import zhuri.com.partybuilding.view.bannerview.BannerViewFactory;
 
 /**
  * 党建要闻
@@ -50,18 +51,18 @@ import zhuri.com.partybuilding.view.BroadcastView;
 
 public class TabLayoutOneFragment extends BaseRecyclerFragment {
 
-    //  @BindView(R.id.fra_consultation_one_bro)
-    BroadcastView bView;
+    private BannerView bView;
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.refreshlayout)
     TwinklingRefreshLayout refreshLayout;
 
-    private BroadcastBean broadcastBean;
-    private List<String> broId;
-    private List<String> imageResIds;
-    private List<String> contentDescs;
+    //轮播
+    private BannerItem bannerItem;
+    private List<BannerItem> brolist=new ArrayList<>();
+    private BannerViewFactory bannerViewFactory = new BannerViewFactory();
+
 
     private HomePageAdapter adapter;
     private List<HomePageItemBean> itemList;
@@ -81,10 +82,10 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
     @Override
     public void refreshData() {
         //轮播图点击
-        bView.setOnImgClick(new BroadcastView.OnImgClick() {
+        bannerViewFactory.setOnClikImg(new BannerViewFactory.OnClikImg() {
             @Override
-            public void onItme(String id) {
-                Log.e("eeeee", "position:" + id);
+            public void onItemImg(int i) {
+                Log.e("eeeee", "position:" + brolist.get(i).getId());
             }
         });
 
@@ -93,32 +94,18 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        // getEntity("Refresh");
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                page = 1;
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page++;
-                        // getEntity("Loadmore");
-                        endRefresh("Loadmore");
-                    }
-                }, 1000);
+                page++;
+                getEntity("LoadMore");
 
 
             }
+
 
         });
     }
@@ -143,31 +130,49 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
         adapter.setHeadHolder(exHeader);
         //初始化数据对象
         itemList = new ArrayList<>();
-        getdata();
-
+        // getdata();
+        getEntity(null);
 
     }
 
     //数据
     public void getdata() {
-        //轮播图
-        imageResIds = new ArrayList<>();
-        imageResIds.add("http://cpc.people.com.cn/NMediaFile/2018/0209/MAIN201802091111178353313115393.jpg");
-        imageResIds.add("http://cpc.people.com.cn/NMediaFile/2018/0124/MAIN201801240917552212259573131.jpg");
-        imageResIds.add("http://cpc.people.com.cn/NMediaFile/2017/1218/MAIN201712181515344682939898196.jpg");
-        imageResIds.add("http://cpc.people.com.cn/NMediaFile/2017/1113/MAIN201711131714403760613030737.jpg");
-        imageResIds.add("http://cpc.people.com.cn/NMediaFile/2017/1120/MAIN201711201041470238663765644.jpg");
+        brolist = new ArrayList<>();
+        bannerItem = new BannerItem();
+        bannerItem.setId("101");
+        bannerItem.setTitle("独家视频：新时代来啦！");
+        bannerItem.setImage("http://cpc.people.com.cn/NMediaFile/2017/1113/MAIN201711131714403760613030737.jpg");
+        brolist.add(bannerItem);
 
-        contentDescs = new ArrayList<>();
-        contentDescs.add("河北宣讲十九大：燕赵大地起春雷 高质发展显活力");
-        contentDescs.add("十九大报告的十个为什么");
-        contentDescs.add("九个字带您感知十九大报告的民生温度");
-        contentDescs.add("独家视频：新时代来啦！");
-        contentDescs.add("十九大专题报道");
+        bannerItem = new BannerItem();
+        bannerItem.setId("102");
+        bannerItem.setTitle("九个字带您感知十九大报告的民生温度");
+        bannerItem.setImage("http://cpc.people.com.cn/NMediaFile/2017/1218/MAIN201712181515344682939898196.jpg");
+        brolist.add(bannerItem);
+
+        bannerItem = new BannerItem();
+        bannerItem.setId("103");
+        bannerItem.setTitle("十九大报告的十个为什么");
+        bannerItem.setImage("http://cpc.people.com.cn/NMediaFile/2018/0124/MAIN201801240917552212259573131.jpg");
+        brolist.add(bannerItem);
+
+        bannerItem = new BannerItem();
+        bannerItem.setId("104");
+        bannerItem.setTitle("河北宣讲十九大：燕赵大地起春雷 高质发展显活力");
+        bannerItem.setImage("http://cpc.people.com.cn/NMediaFile/2018/0209/MAIN201802091111178353313115393.jpg");
+        brolist.add(bannerItem);
+
+        bannerItem = new BannerItem();
+        bannerItem.setId("104");
+        bannerItem.setTitle("十九大专题报道");
+        bannerItem.setImage("http://cpc.people.com.cn/NMediaFile/2017/1120/MAIN201711201041470238663765644.jpg");
+        brolist.add(bannerItem);
+
+        bView.setViewFactory(bannerViewFactory);
+        bView.setDataList(brolist);
+        bView.start();
 
 
-        broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
-        bView.setData(broadcastBean);
 
 
         //item数据
@@ -177,50 +182,50 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
                 , "http://dangjian.people.com.cn/NMediaFile/2018/0614/MAIN201806141508000274770352147.png"
                 , "", "中华龙舟如何奋楫争先？习近平这些话要牢记。"
                 , ""
-                , "2018-5-24", "11", "56", 0 % 2 + ""));
+                , "1530068828", "11", "56", 0 % 2 + ""));
         itemList.add(new HomePageItemBean(1 + ""
                 , "http://cpc.people.com.cn/NMediaFile/2018/0212/MAIN201802120901276824665637665.jpg"
                 , "党中央", "党的十八以来,以习近平同志为核心的党中央聚焦作风建设,以“永远在路上”的执着把全面从严治党引向深入,开创全面从严治党新局面。"
                 , "2017年12月13日，中共中央总书记、国家主席、中央军委主席习近平到第71集团军视察。这是习近平同“王杰班”战士合影。"
-                , "2017-6-23", "60", "52", 1 % 2 + ""));
+                , "1530068828", "60", "52", 1 % 2 + ""));
         itemList.add(new HomePageItemBean(1 + ""
                 , "http://app2.sznews.com/shenzhen/Public/Attachment/2018/06/17/20180617085001_264.jpg"
                 , "", "“党的作风就是党的形象,关系人心向背,关系党的生死存亡。我们党作为一个在中国长期执政的马克思主义政党,对作风问题任何时候都不能掉以轻心。"
                 , ""
-                , "2017-6-30,", "5", "23", 2 % 2 + ""));
+                , "1530068828,", "5", "23", 2 % 2 + ""));
         itemList.add(new HomePageItemBean(1 + ""
                 , "http://dingyue.nosdn.127.net/4yFUrG5HJZtSFmSUBmYV63UjrGijaY7lXcxilWpFMK==X1529370288898transferflag.png"
                 , "", "要让文物说话，让历史说话，让文化说话。要加强文物保护和利用，加强历史研究和传承，使中华优秀传统文化不断发扬光大。"
                 , ""
-                , "2018-06-18", "56", "899", 3 % 2 + ""));
+                , "1530068828", "56", "899", 3 % 2 + ""));
 
         itemList.add(new HomePageItemBean(1 + ""
                 , "http://dangjian.people.com.cn/NMediaFile/2018/0614/MAIN201806141508000274770352147.png"
                 , "", "为庆祝人民日报创刊70周年，人民网·中国共产党新闻网依托“人民党建云”平台，从即日起开展“我和党报党网有个约会”在线征集活动。"
                 , ""
-                , "2017-6-14", "5", "100", 1 + ""));
+                , "1530068828", "5", "100", 1 + ""));
         itemList.add(new HomePageItemBean(1 + ""
                 , "http://dangjian.people.com.cn/NMediaFile/2018/0615/MAIN201806150944175481595913948.jpg"
                 , "", "几千年奴隶社会和封建社会史、几百年资本主义发展史，写满了极少数人为满足自身利益而残酷压迫绝大多数人的斑斑血泪，正所谓“一篇读罢头飞雪”。"
                 , ""
-                , "2018-06-15", "80", "86", 1 + ""));
+                , "1530068828", "80", "86", 1 + ""));
 
         adapter.setDataList(itemList);
 
     }
 
     //页码
-    private int page = 0;
+    private int page = 1;
 
     //网络数据
     public void getEntity(final String gesture) {
         Map map = new HashMap();
         map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
         map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
-        map.put("cid", "");
+        map.put("cid", "15");
         map.put("page", page == 0 ? 1 : page);
 
-        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.CONSULTATION, new OkHttpUtil.ResultCallback<BaseEntity<ConsultationEntity>>() {
+        OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.HOME, new OkHttpUtil.ResultCallback<BaseEntity<ConsultationEntity>>() {
             @Override
             public void onError(Request request, Exception e) {
                 endRefresh(gesture);
@@ -231,18 +236,18 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
                 endRefresh(gesture);
 
                 if (page <= 1) {
-                    broId = new ArrayList<>();
-                    imageResIds = new ArrayList<>();
-                    contentDescs = new ArrayList<>();
+                    brolist.clear();
                     for (int i = 0; i < response.getData().getSlide().size(); i++) {
-                        broId.add(response.getData().getSlide().get(i).getId());
-                        imageResIds.add(response.getData().getSlide().get(i).getImageurl());
-                        contentDescs.add(response.getData().getSlide().get(i).getTitle());
+                        bannerItem = new BannerItem(
+                                response.getData().getSlide().get(i).getImageurl(),
+                                response.getData().getSlide().get(i).getTitle(),
+                                response.getData().getSlide().get(i).getId());
+                        brolist.add(bannerItem);
                     }
-                    broadcastBean = new BroadcastBean(broId, imageResIds, contentDescs);
-                    bView.setData(broadcastBean);
+                    bView.setViewFactory(bannerViewFactory);
+                    bView.setDataList(brolist);
+                    bView.start();
 
-                    itemList.clear();
                 }
 
 
@@ -268,5 +273,15 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
     }
 
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
