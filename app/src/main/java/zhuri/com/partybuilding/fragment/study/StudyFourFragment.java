@@ -1,8 +1,9 @@
 package zhuri.com.partybuilding.fragment.study;
 
-import android.os.Handler;
-import android.util.Log;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,8 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.adapter.ExaminationAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.ExaminationBean;
@@ -44,11 +48,14 @@ public class StudyFourFragment extends BaseRecyclerFragment {
     TextView atyExaminationDaikao;
     @BindView(R.id.aty_examination_yikao)
     TextView atyExaminationYikao;
+    @BindView(R.id.aty_examination_go_login)
+    TextView atyExaminationGoLogin;
+
 
     private ExaminationAdapter adapter;
     private List<ExaminationBean> list;
 
-    private int page;
+    private int page = 1;
 
     //分类 0 代考 1 自考
     private String cid = "0";
@@ -61,7 +68,6 @@ public class StudyFourFragment extends BaseRecyclerFragment {
     @Override
     public void initView() {
         super.initView();
-
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) recyclerView.getLayoutParams();
         params.setMargins(0, SizeUtils.dip2px(2), 0, 0);
         recyclerView.setLayoutParams(params);
@@ -70,36 +76,47 @@ public class StudyFourFragment extends BaseRecyclerFragment {
         adapter = new ExaminationAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
-        getdata();
+        // getdata();
+//        if (isLogin) {
+//            startActivity(getActivity(), LoginActivity.class);
+//        } else
+//            getEntity(null);
+
 
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.finishRefreshing();
-                    }
-                }, 1000);
+                page = 1;
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.finishLoadmore();
-                    }
-                }, 1000);
 
-
+                page++;
+                getEntity("LoadMore");
             }
 
         });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isLogin) {
+            //没登录
+//            ToolUtils.showToast(getActivity(), "游客不可看，请先登陆");
+//            startActivity(new Intent(getActivity(), LoginActivity.class));
+            atyExaminationGoLogin.setVisibility(View.VISIBLE);
+
+        } else {
+            atyExaminationGoLogin.setVisibility(View.GONE);
+            getEntity(null);
+        }
+
 
     }
 
@@ -122,7 +139,7 @@ public class StudyFourFragment extends BaseRecyclerFragment {
                     !cid.equals("0") ? "9" + i : "",
                     cid.equals("0") ? "0" : "1",
                     "0",
-                    i % 2 + "")
+                    i % 2 + "", "")
             );
         }
         adapter.setDataList(list);
@@ -132,8 +149,8 @@ public class StudyFourFragment extends BaseRecyclerFragment {
         Map map = new HashMap();
         map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
         map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
-        map.put("keyword", "");
-        map.put("page", page == 0 ? 1 : page);
+        map.put("page", page);
+        map.put("cid", cid);
 
 
         OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.EXAMINATION_LIST, new OkHttpUtil.ResultCallback<BaseEntity<ExaminationEntity>>() {
@@ -158,10 +175,11 @@ public class StudyFourFragment extends BaseRecyclerFragment {
                             response.getData().getInfo().get(i).getTimes(),
                             response.getData().getInfo().get(i).getStime(),
                             response.getData().getInfo().get(i).getEtime(),
-                            response.getData().getInfo().get(i).getMyscore(),
-                            response.getData().getInfo().get(i).getIsjoin(),
-                            response.getData().getInfo().get(i).getPurview(),
-                            response.getData().getInfo().get(i).getStatus()
+                            response.getData().getInfo().get(i).getScore(),
+                            cid,
+                            "1",
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getAddtime()
 
                     ));
                 }
@@ -172,7 +190,7 @@ public class StudyFourFragment extends BaseRecyclerFragment {
     }
 
 
-    @OnClick({R.id.aty_examination_daikao, R.id.aty_examination_yikao})
+    @OnClick({R.id.aty_examination_daikao, R.id.aty_examination_yikao, R.id.aty_examination_go_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aty_examination_daikao:
@@ -180,16 +198,24 @@ public class StudyFourFragment extends BaseRecyclerFragment {
                 atyExaminationYikao.setBackground(null);
                 cid = "0";
                 list.clear();
-                getdata();
+                //getdata();
+                page = 1;
+                getEntity(null);
                 break;
             case R.id.aty_examination_yikao:
                 atyExaminationYikao.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_semicircle_right_orange_5));
                 atyExaminationDaikao.setBackground(null);
                 cid = "1";
                 list.clear();
-                getdata();
+                //getdata();
+                page = 1;
+                getEntity(null);
+                break;
+            case R.id.aty_examination_go_login:
+                startActivity(getActivity(), LoginActivity.class);
                 break;
         }
     }
+
 
 }

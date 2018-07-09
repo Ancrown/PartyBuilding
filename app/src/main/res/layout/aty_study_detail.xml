@@ -6,7 +6,11 @@
     android:orientation="vertical">
 
     <include layout="@layout/head_new" />
-
+    <View
+        android:id="@+id/zhanwei"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       />
     <zhuri.com.partybuilding.view.ScrollViewExt
         android:id="@+id/study_details_scrollviewext"
         android:layout_width="match_parent"

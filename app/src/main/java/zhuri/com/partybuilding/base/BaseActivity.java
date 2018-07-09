@@ -69,7 +69,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, "") + "");
+
     }
 
     @Override
@@ -84,6 +84,9 @@ public abstract class BaseActivity extends Activity {
 
         //初始化注解
         ButterKnife.bind(this);
+
+        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, "") + "");
+
         initView();
 
 

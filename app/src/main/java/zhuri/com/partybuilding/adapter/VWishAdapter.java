@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.StudyDetailActivity;
 import zhuri.com.partybuilding.activity.VWishDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
@@ -102,7 +103,8 @@ public class VWishAdapter extends BaseRecyclerAdapter<VWishBean> {
                 //游客可看
                 context.startActivity(new Intent(context,VWishDetailActivity.class).putExtra("id",id));
             } else {
-                ToolUtils.showToast(context, "游客不可看");
+                ToolUtils.showToast(context, "游客不可看，请先登陆");
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         } else
             context.startActivity(new Intent(context,VWishDetailActivity.class).putExtra("id",id));

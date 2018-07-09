@@ -17,12 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 import zhuri.com.partybuilding.R;
-import zhuri.com.partybuilding.activity.study.StudyActivity;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesOneActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesThreeActivity;
 import zhuri.com.partybuilding.activity.activities.ActivitiesTwoActivity;
 import zhuri.com.partybuilding.activity.ExaminationActivity;
 import zhuri.com.partybuilding.activity.study.StudyOneActivity;
+import zhuri.com.partybuilding.activity.study.StudyTwoActivity;
 import zhuri.com.partybuilding.adapter.HomePageAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
 import zhuri.com.partybuilding.bean.HomePageItemBean;
@@ -35,6 +36,7 @@ import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 import zhuri.com.partybuilding.view.bannerview.BannerItem;
 import zhuri.com.partybuilding.view.bannerview.BannerView;
@@ -79,7 +81,7 @@ public class HomePageFragment extends BaseRecyclerFragment {
     private List<HomePageItemBean> itemList;
     //轮播
     private BannerItem bannerItem;
-    private List<BannerItem> brolist=new ArrayList<>();
+    private List<BannerItem> brolist = new ArrayList<>();
     private BannerViewFactory bannerViewFactory = new BannerViewFactory();
 
 
@@ -134,28 +136,34 @@ public class HomePageFragment extends BaseRecyclerFragment {
         onlineAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ExaminationActivity.class));
+                if (isLogin) {
+                    ToolUtils.showToast(getActivity(), "游客不可看，请先登陆");
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), ExaminationActivity.class));
+                }
+
             }
         });
         //两学一做
         twoOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "1"));
+                startActivity(new Intent(getActivity(), StudyTwoActivity.class));
             }
         });
         //十九大精神
         nineteen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), StudyOneActivity.class));
+                startActivity(new Intent(getActivity(), StudyOneActivity.class).putExtra("cid", "0"));
             }
         });
         //党务工作
         workGuidance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), StudyActivity.class).putExtra("cid", "2"));
+                startActivity(new Intent(getActivity(), StudyOneActivity.class).putExtra("cid", "2"));
             }
         });
 
@@ -204,7 +212,7 @@ public class HomePageFragment extends BaseRecyclerFragment {
         refreshLayout.setEnableLoadmore(false);
         //设置间距
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new HomePageAdapter(true, getActivity());
+        adapter = new HomePageAdapter(true, getActivity(), "新闻推荐");
         recyclerView.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
         //  getdata();

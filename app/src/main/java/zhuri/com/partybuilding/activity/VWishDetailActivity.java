@@ -191,50 +191,47 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
 
             @Override
             public void onResponse(BaseEntity<VWishDetailEntity> response) {
-                if (response.isStatus()) {
 
-                    vwishDetailTitle.setText(response.getData().getMain().getTitle());
-                    vwishDetailSendtime.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
-                    text = response.getData().getMain().getContent();
-                    vwishDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
+                vwishDetailTitle.setText(response.getData().getMain().getTitle());
+                vwishDetailSendtime.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
+                text = response.getData().getMain().getContent();
+                vwishDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
 
 
-                    vwishDetailTime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~"
-                            + TimeUtil.stampToDate((response.getData().getMain().getEtime()), "yyyy-mm-dd"));
+                vwishDetailTime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~"
+                        + TimeUtil.stampToDate((response.getData().getMain().getEtime()), "yyyy-mm-dd"));
 
-                    vwishDetailAddress.setText("地址：" + response.getData().getMain().getAddress());
-                    vwishDetailSignendtime.setText("领取截止日期：" + response.getData().getMain().getEtime());
-                    vwishDetailPeoplenum.setText("领取人数：" + response.getData().getMain().getSignup());
+                vwishDetailAddress.setText("地址：" + response.getData().getMain().getAddress());
+                vwishDetailSignendtime.setText("领取截止日期：" + response.getData().getMain().getEtime());
+                vwishDetailPeoplenum.setText("领取人数：" + response.getData().getMain().getSignup());
 
-                    isJoin = response.getData().getMain().getIsjoin().equals("1");
-                    if (!isJoin) {
-                        vwishDetailSignup.setText("领取任务");
-                        vwishDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red));
+                isJoin = response.getData().getMain().getIsjoin().equals("1");
+                if (!isJoin) {
+                    vwishDetailSignup.setText("领取任务");
+                    vwishDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red));
 
-                    } else {
-                        vwishDetailSignup.setText("已经领取,待选择中");
-                        vwishDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
-                    }
-
-                    itemList.clear();
-                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                        itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
-                                response.getData().getInfo().get(i).getTitle(),
-                                "",
-                                response.getData().getInfo().get(i).getDemo(),
-                                response.getData().getInfo().get(i).getStatus(),
-                                response.getData().getInfo().get(i).getStime(),
-                                response.getData().getInfo().get(i).getEtime(),
-                                "",
-                                response.getData().getInfo().get(i).getPurview(),
-                                response.getData().getInfo().get(i).getSignup(),
-                                response.getData().getInfo().get(i).getDname()));
-                    }
-                    adapter.setDataList(itemList);
-                    zhanwei.setVisibility(View.GONE);
                 } else {
-                    ToolUtils.showToast(VWishDetailActivity.this, response.getMsg());
+                    vwishDetailSignup.setText("已经领取,待选择中");
+                    vwishDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
                 }
+
+                itemList.clear();
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            "",
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getStime(),
+                            response.getData().getInfo().get(i).getEtime(),
+                            "",
+                            response.getData().getInfo().get(i).getPurview(),
+                            response.getData().getInfo().get(i).getSignup(),
+                            response.getData().getInfo().get(i).getDname()));
+                }
+                adapter.setDataList(itemList);
+                zhanwei.setVisibility(View.GONE);
+
             }
         }, map, "");
 

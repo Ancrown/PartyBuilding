@@ -7,6 +7,13 @@
 
     <include layout="@layout/head_new" />
 
+    <View
+        android:id="@+id/zhanwei"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,11 +46,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/answer_recy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp25"
+
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
         android:layout_marginTop="@dimen/dp10"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="visible"
+        >
 
     </android.support.v7.widget.RecyclerView>
 

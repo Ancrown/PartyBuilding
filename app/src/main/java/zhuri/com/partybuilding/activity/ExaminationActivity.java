@@ -1,5 +1,6 @@
 package zhuri.com.partybuilding.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +76,7 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
     @Override
     protected void initView() {
         super.initView();
+
         //设置标题
         getTitleView().setData(getResources().getString(R.string.online_answer), 0, R.drawable.back, null, 0, null, this);
 
@@ -83,33 +85,21 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
         adapter = new ExaminationAdapter(this);
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
-        getdata();
-
+        // getdata();
+        getEntity(null);
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.finishRefreshing();
-                    }
-                }, 1000);
+                page = 1;
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.finishLoadmore();
-                    }
-                }, 1000);
 
-
+                page++;
+                getEntity("LoadMore");
             }
 
         });
@@ -130,7 +120,8 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
                     !cid.equals("0") ? "9" + i : "",
                     cid.equals("0") ? "0" : "1",
                     "0",
-                    i % 2 + "")
+                    i % 2 + "",
+                    "  ")
             );
         }
         adapter.setDataList(list);
@@ -166,10 +157,11 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
                             response.getData().getInfo().get(i).getTimes(),
                             response.getData().getInfo().get(i).getStime(),
                             response.getData().getInfo().get(i).getEtime(),
-                            response.getData().getInfo().get(i).getMyscore(),
-                            response.getData().getInfo().get(i).getIsjoin(),
-                            response.getData().getInfo().get(i).getPurview(),
-                            response.getData().getInfo().get(i).getStatus()
+                            response.getData().getInfo().get(i).getScore(),
+                            cid,
+                            "1",
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getAddtime()
 
                     ));
                 }
@@ -198,15 +190,19 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
                 atyExaminationDaikao.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_semicircle_left_orange_5));
                 atyExaminationYikao.setBackground(null);
                 cid = "0";
+                page = 1;
                 list.clear();
-                getdata();
+                //  getdata();
+                getEntity(null);
                 break;
             case R.id.aty_examination_yikao:
                 atyExaminationYikao.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_semicircle_right_orange_5));
                 atyExaminationDaikao.setBackground(null);
                 cid = "1";
+                page = 1;
                 list.clear();
-                getdata();
+                // getdata();
+                getEntity(null);
                 break;
         }
     }

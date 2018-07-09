@@ -125,7 +125,7 @@ public class TabLayoutOneFragment extends BaseRecyclerFragment {
 
 
         recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new HomePageAdapter(true, getActivity());
+        adapter = new HomePageAdapter(true, getActivity(),"新闻要闻");
         recycler.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
         //初始化数据对象

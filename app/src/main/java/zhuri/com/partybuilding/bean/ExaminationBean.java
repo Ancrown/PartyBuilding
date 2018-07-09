@@ -8,20 +8,6 @@ package zhuri.com.partybuilding.bean;
 
 public class ExaminationBean {
 
-    public ExaminationBean(String id, String title, String demo, String amount, String score, String times, String stime, String etime, String myscore, String isjoin, String purview, String status) {
-        this.id = id;
-        this.title = title;
-        this.demo = demo;
-        this.amount = amount;
-        this.score = score;
-        this.times = times;
-        this.stime = stime;
-        this.etime = etime;
-        this.myscore = myscore;
-        this.isjoin = isjoin;
-        this.purview = purview;
-        this.status = status;
-    }
 
     /**
      * id : 试卷ID
@@ -50,6 +36,7 @@ public class ExaminationBean {
     private String isjoin;
     private String purview;
     private String status;
+    private String addTime;
 
     public String getId() {
         return id;
@@ -145,5 +132,30 @@ public class ExaminationBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
+    public ExaminationBean(String id, String title, String demo, String amount, String score, String times, String stime, String etime, String myscore, String isjoin, String purview, String status, String addTime) {
+
+        this.id = id;
+        this.title = title;
+        this.demo = demo;
+        this.amount = amount;
+        this.score = score;
+        this.times = times;
+        this.stime = stime;
+        this.etime = etime;
+        this.myscore = myscore;
+        this.isjoin = isjoin;
+        this.purview = purview;
+        this.status = status;
+        this.addTime = addTime;
     }
 }

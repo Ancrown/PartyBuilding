@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="@dimen/dp2"
-            android:text="题目:十八大党章指出，中国共产党以（）作为自己的行动指南。"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15"
             android:textStyle="bold" />

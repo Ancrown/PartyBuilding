@@ -32,7 +32,6 @@ public class CustomErrorActivity extends BaseActivity {
     CaocConfig config;//配置对象
 
 
-
     @Override
     protected void initData() {
 
@@ -53,7 +52,7 @@ public class CustomErrorActivity extends BaseActivity {
         String allString = CustomActivityOnCrash.getAllErrorDetailsFromIntent(this, getIntent());// 获取所有的信息
         config = CustomActivityOnCrash.getConfigFromIntent(getIntent());//获得配置信息,比如设置的程序崩溃显示的页面和重新启动显示的页面等等信息
 
-        errorText.setText("@@@@@@@@@@@   " + allString + "   @@@@@@@@@@@");
+        errorText.setText("*********************\n" + allString + "\n*********************");
 
 
     }

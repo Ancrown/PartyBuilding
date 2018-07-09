@@ -13,7 +13,7 @@ public class AddressRequest {
     //点赞
     public static final String FABULOUS = URL + "/Api/Tool/ilike";
     //分享
-    public static final String FORWARD =URL+"/Api/Tool/share" ;
+    public static final String FORWARD = URL + "/Api/Tool/share";
 
 
     //首页
@@ -45,31 +45,33 @@ public class AddressRequest {
     //活动-微心愿
     public static final String ACTIVITIES_V_WISH = URL + "/Api/Activity/getwish";
     //活动-微心愿详情
-    public static final String ACTIVITIES_W_DETAILS=URL + "/Api/Activity/getwishinfo";
+    public static final String ACTIVITIES_W_DETAILS = URL + "/Api/Activity/getwishinfo";
     //活动-微心愿领取
-    public static final String ACTIVITIES_W_SING_UP=URL + "/Api/Activity/savewishsignup";
-
+    public static final String ACTIVITIES_W_SING_UP = URL + "/Api/Activity/savewishsignup";
 
 
     public static final String STUDY = URL + "";
     //学习 19大
-    public static final String STUDY_ONE = URL + "";
+    public static final String STUDY_ONE = URL + "/Api/Learn/getstudy";
     //学习 两学一做
-    public static final String STUDY_TWO = URL + "";
+    public static final String STUDY_TWO = URL + "/Api/Learn/getstudytwoone";
     //学习 党务工作
     public static final String STUDY_THREE = URL + "";
+    //学习详情
+    public static final String STUDY_DETAILES = URL + "/Api/Learn/getstudyinfo";
+    //	保存查看学习记录文章
+    public static final String STUDY_UPLOG = URL + "/Api/Learn/savestudy";
 
 
     //考试列表
-    public static final String EXAMINATION_LIST = URL + "";
+    public static final String EXAMINATION_LIST = URL + "/Api/Learn/getexam";
     //试卷
-    public static final String GET_EXAMINATION = URL + "";
+    public static final String GET_EXAMINATION = URL + "/Api/Learn/getexaminfo";
     //交卷
     public static final String UP_EXAMINATION = URL + "";
 
     //错题集
     public static final String ERROR_ANSWER = URL + "";
-
 
 
 }

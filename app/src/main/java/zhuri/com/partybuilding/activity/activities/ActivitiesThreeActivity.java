@@ -219,28 +219,24 @@ public class ActivitiesThreeActivity extends BaseRecyclerActivity implements Tra
             @Override
             public void onResponse(BaseEntity<VWishEntity> response) {
                 endRefresh(gesture);
-
-                if (response.isStatus()) {
-                    if (page <= 1) {
-                        itemList.clear();
-                    }
-                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                        itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
-                                response.getData().getInfo().get(i).getTitle(),
-                                "",
-                                response.getData().getInfo().get(i).getDemo(),
-                                response.getData().getInfo().get(i).getStatus(),
-                                response.getData().getInfo().get(i).getStime(),
-                                response.getData().getInfo().get(i).getEtime(),
-                                "",
-                                response.getData().getInfo().get(i).getPurview(),
-                                response.getData().getInfo().get(i).getSignup(),
-                                response.getData().getInfo().get(i).getDname()));
-                    }
-                    adapter.setDataList(itemList);
-                } else {
-                    ToolUtils.showToast(ActivitiesThreeActivity.this, response.getMsg());
+                if (page <= 1) {
+                    itemList.clear();
                 }
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new VWishBean(response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            "",
+                            response.getData().getInfo().get(i).getDemo(),
+                            response.getData().getInfo().get(i).getStatus(),
+                            response.getData().getInfo().get(i).getStime(),
+                            response.getData().getInfo().get(i).getEtime(),
+                            "",
+                            response.getData().getInfo().get(i).getPurview(),
+                            response.getData().getInfo().get(i).getSignup(),
+                            response.getData().getInfo().get(i).getDname()));
+                }
+                adapter.setDataList(itemList);
+
 
             }
         }, map, "", page);

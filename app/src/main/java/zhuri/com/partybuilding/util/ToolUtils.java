@@ -2,6 +2,8 @@ package zhuri.com.partybuilding.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
@@ -119,7 +121,7 @@ public class ToolUtils {
      *
      * @param statusBarHeight
      */
-    public static void setStatusBarHeight(int statusBarHeight,View view) {
+    public static void setStatusBarHeight(int statusBarHeight, View view) {
 
         //如果sdk版本大于4.4则设置状态栏透明化 会导致首页状态栏减少
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -134,8 +136,47 @@ public class ToolUtils {
 
         Log.e("eeeeee版本", "" + Build.VERSION.SDK_INT + " " + Build.VERSION_CODES.KITKAT);
 
+    }
 
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public static String getVersion(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "获取版本信息失败";
+        }
+    }
 
+    public static String unicodeToUTF_8(String src) {
+        if (null == src) {
+            return null;
+        }
+        System.out.println("src: " + src);
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < src.length();) {
+            char c = src.charAt(i);
+            if (i + 6 < src.length() && c == '\\' && src.charAt(i + 1) == 'u') {
+                String hex = src.substring(i + 2, i + 6);
+                try {
+                    out.append((char) Integer.parseInt(hex, 16));
+                } catch (NumberFormatException nfe) {
+                    nfe.fillInStackTrace();
+                }
+                i = i + 6;
+            } else {
+                out.append(src.charAt(i));
+                ++i;
+            }
+        }
+        return out.toString();
 
     }
 }

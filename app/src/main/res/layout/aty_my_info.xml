@@ -253,13 +253,13 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_15" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:src="@drawable/dayuhao_light_gray" />
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="@dimen/dp10"-->
+                    <!--android:src="@drawable/dayuhao_light_gray" />-->
             </RelativeLayout>
 
             <TextView

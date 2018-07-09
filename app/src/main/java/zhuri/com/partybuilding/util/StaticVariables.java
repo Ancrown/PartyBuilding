@@ -45,4 +45,6 @@ public class StaticVariables {
     public static final String JOINTIME = "jointime";
     //注册时间
     public static final String REGTIME = "regtime";
+    //累计学习次数
+    public static String STUDY_COUNT = "studycount";
 }

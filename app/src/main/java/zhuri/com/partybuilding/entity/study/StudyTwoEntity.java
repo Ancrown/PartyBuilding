@@ -10,159 +10,124 @@ import java.util.List;
 
 public class StudyTwoEntity {
 
+
     /**
-     * page : 当前页数
-     * totalpage : 总页数
-     * info : [{"subitemid":"子项id","subitemtext":"子项名","subitem":[{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","isstudy":"是否学过 0为学习 1已学习","isvideo":"是否有视频 0没有 1有","amount":"参加人数","purview":"是否登陆可看"}]}]
+     * id : 子项id
+     * name : 子项名
+     * item : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","isstudy":"是否学过 0为学习 1已学习","isvideo":"是否有视频 0没有 1有","amount":"参加人数","purview":"是否登陆可看"}]
      */
 
-    private String page;
-    private String totalpage;
-    private List<InfoBean> info;
+    private String id;
+    private String name;
+    private List<ItemBean> item;
 
-    public String getPage() {
-        return page;
+    public String getId() {
+        return id;
     }
 
-    public void setPage(String page) {
-        this.page = page;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTotalpage() {
-        return totalpage;
+    public String getName() {
+        return name;
     }
 
-    public void setTotalpage(String totalpage) {
-        this.totalpage = totalpage;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<InfoBean> getInfo() {
-        return info;
+    public List<ItemBean> getItem() {
+        return item;
     }
 
-    public void setInfo(List<InfoBean> info) {
-        this.info = info;
+    public void setItem(List<ItemBean> item) {
+        this.item = item;
     }
 
-    public static class InfoBean {
+    public static class ItemBean {
         /**
-         * subitemid : 子项id
-         * subitemtext : 子项名
-         * subitem : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","isstudy":"是否学过 0为学习 1已学习","isvideo":"是否有视频 0没有 1有","amount":"参加人数","purview":"是否登陆可看"}]
+         * id : 文章ID
+         * title : 文章标题
+         * imageurl : 首图
+         * demo : 摘要
+         * isstudy : 是否学过 0为学习 1已学习
+         * isvideo : 是否有视频 0没有 1有
+         * amount : 参加人数
+         * purview : 是否登陆可看
          */
 
-        private String subitemid;
-        private String subitemtext;
-        private List<SubitemBean> subitem;
+        private String id;
+        private String title;
+        private String imageurl;
+        private String demo;
+        private String isstudy;
+        private String isvideo;
+        private String amount;
+        private String purview;
 
-        public String getSubitemid() {
-            return subitemid;
+        public String getId() {
+            return id;
         }
 
-        public void setSubitemid(String subitemid) {
-            this.subitemid = subitemid;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getSubitemtext() {
-            return subitemtext;
+        public String getTitle() {
+            return title;
         }
 
-        public void setSubitemtext(String subitemtext) {
-            this.subitemtext = subitemtext;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public List<SubitemBean> getSubitem() {
-            return subitem;
+        public String getImageurl() {
+            return imageurl;
         }
 
-        public void setSubitem(List<SubitemBean> subitem) {
-            this.subitem = subitem;
+        public void setImageurl(String imageurl) {
+            this.imageurl = imageurl;
         }
 
-        public static class SubitemBean {
-            /**
-             * id : 文章ID
-             * title : 文章标题
-             * imageurl : 首图
-             * demo : 摘要
-             * isstudy : 是否学过 0为学习 1已学习
-             * isvideo : 是否有视频 0没有 1有
-             * amount : 参加人数
-             * purview : 是否登陆可看
-             */
+        public String getDemo() {
+            return demo;
+        }
 
-            private String id;
-            private String title;
-            private String imageurl;
-            private String demo;
-            private String isstudy;
-            private String isvideo;
-            private String amount;
-            private String purview;
+        public void setDemo(String demo) {
+            this.demo = demo;
+        }
 
-            public String getId() {
-                return id;
-            }
+        public String getIsstudy() {
+            return isstudy;
+        }
 
-            public void setId(String id) {
-                this.id = id;
-            }
+        public void setIsstudy(String isstudy) {
+            this.isstudy = isstudy;
+        }
 
-            public String getTitle() {
-                return title;
-            }
+        public String getIsvideo() {
+            return isvideo;
+        }
 
-            public void setTitle(String title) {
-                this.title = title;
-            }
+        public void setIsvideo(String isvideo) {
+            this.isvideo = isvideo;
+        }
 
-            public String getImageurl() {
-                return imageurl;
-            }
+        public String getAmount() {
+            return amount;
+        }
 
-            public void setImageurl(String imageurl) {
-                this.imageurl = imageurl;
-            }
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
 
-            public String getDemo() {
-                return demo;
-            }
+        public String getPurview() {
+            return purview;
+        }
 
-            public void setDemo(String demo) {
-                this.demo = demo;
-            }
-
-            public String getIsstudy() {
-                return isstudy;
-            }
-
-            public void setIsstudy(String isstudy) {
-                this.isstudy = isstudy;
-            }
-
-            public String getIsvideo() {
-                return isvideo;
-            }
-
-            public void setIsvideo(String isvideo) {
-                this.isvideo = isvideo;
-            }
-
-            public String getAmount() {
-                return amount;
-            }
-
-            public void setAmount(String amount) {
-                this.amount = amount;
-            }
-
-            public String getPurview() {
-                return purview;
-            }
-
-            public void setPurview(String purview) {
-                this.purview = purview;
-            }
+        public void setPurview(String purview) {
+            this.purview = purview;
         }
     }
 }

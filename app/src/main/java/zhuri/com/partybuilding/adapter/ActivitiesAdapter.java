@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.activitiesdetail.ActivitiesDetail;
 import zhuri.com.partybuilding.activity.activitiesdetail.ActivitiesReportDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
@@ -278,7 +279,8 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
                     context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("type", this.type).putExtra("id", id));
                 }
             } else {
-                ToolUtils.showToast(context, "游客不可");
+                ToolUtils.showToast(context, "游客不可看，请先登陆");
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         } else {
             //登陆了

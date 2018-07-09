@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -75,49 +76,50 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onResponse(BaseEntity<LogInEntity> response) {
-                if (response.isStatus()) {
-                    //idaaa
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_ID, response.getData().getId());
-                    //token
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.TOKEN, response.getData().getToken());
-                    //编号
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.CODES, response.getData().getCodes());
-                    //名字
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NAME, response.getData().getName());
-                    //昵称
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NICK_NAME, response.getData().getNickname());
-                    //头像
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_HEAD_IMG, response.getData().getAvatar());
 
-                    //性别
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.SEX, response.getData().getSex().equals("0") ? "女" : "男");
-                    //年龄
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.AGE, response.getData().getAge());
-                    //生日
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.BIRTHDAY, response.getData().getBirthday());
-                    //所在支部ID
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.DID, response.getData().getDid());
-                    //所在支部名称
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.D_NAME, response.getData().getDname());
-                    //电话
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.TEL, response.getData().getTel());
-                    //邮箱
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.EMAIL, response.getData().getEmail());
-                    //积分
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.INTEGRAL, response.getData().getIntegral());
-                    //证件号"
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDCARD, response.getData().getIdcard());
-                    //证件类型
-                    SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDTYPE, response.getData().getIdcard());
-                    //入党时间
-                    SharedPreferencesUtils.setParam(LoginActivity.this,StaticVariables.JOINTIME, TimeUtil.stampToDate(response.getData().getJointime(),"yyyy-mm-dd HH:mm:ss"));
-                    //注册时间
-                    SharedPreferencesUtils.setParam(LoginActivity.this,StaticVariables.REGTIME, TimeUtil.stampToDate(response.getData().getRegtime(),"yyyy-mm-dd HH:mm:ss"));
+                //idaaa
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_ID, response.getData().getId());
+                //token
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.TOKEN, response.getData().getToken());
+                //编号
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.CODES, response.getData().getCodes());
+                //名字
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NAME, response.getData().getName());
+                //昵称
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_NICK_NAME, response.getData().getNickname());
+                //头像
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.USER_HEAD_IMG, response.getData().getAvatar());
 
+                //性别
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.SEX, response.getData().getSex().equals("0") ? "女" : "男");
+                //年龄
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.AGE, response.getData().getAge());
+                //生日
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.BIRTHDAY, response.getData().getBirthday());
+                //所在支部ID
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.DID, response.getData().getDid());
+                //所在支部名称
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.D_NAME, response.getData().getDname());
+                //电话
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.TEL, response.getData().getTel());
+                //邮箱
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.EMAIL, response.getData().getEmail());
+                //积分
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.INTEGRAL, response.getData().getIntegral());
+                //证件号"
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDCARD, response.getData().getIdcard());
+                //证件类型
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.IDTYPE, response.getData().getIdcard());
+                //入党时间
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.JOINTIME, TimeUtil.stampToDate(response.getData().getJointime(), "yyyy-mm-dd HH:mm:ss"));
+                //注册时间
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.REGTIME, TimeUtil.stampToDate(response.getData().getRegtime(), "yyyy-mm-dd HH:mm:ss"));
+                //累计学习次数
+                SharedPreferencesUtils.setParam(LoginActivity.this, StaticVariables.STUDY_COUNT, response.getData().getStudycount());
 
-                    finishAllActivity();
-                    startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
-                }
+                finishAllActivity();
+                startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+
             }
         }, map, "登陆中");
 

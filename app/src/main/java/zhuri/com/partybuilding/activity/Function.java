@@ -66,18 +66,16 @@ public class Function {
 
                 @Override
                 public void onResponse(BaseEntity<String> response) {
-                    if (response.isStatus()) {
-                        if (response.getData().equals("0")) {
-                            textView.setCompoundDrawables(fabulousYes, null, null, null);
 
-                            textView.setText((Integer.parseInt(textView.getText().toString()) + 1) + "");
-                        } else {
-                            textView.setCompoundDrawables(fabulousNo, null, null, null);
-                            textView.setText((Integer.parseInt(textView.getText().toString()) - 1) + "");
-                        }
+                    if (response.getData().equals("0")) {
+                        textView.setCompoundDrawables(fabulousYes, null, null, null);
+
+                        textView.setText((Integer.parseInt(textView.getText().toString()) + 1) + "");
                     } else {
-                        ToolUtils.showToast(context, response.getMsg());
+                        textView.setCompoundDrawables(fabulousNo, null, null, null);
+                        textView.setText((Integer.parseInt(textView.getText().toString()) - 1) + "");
                     }
+
                 }
             }, map);
         }
@@ -109,11 +107,8 @@ public class Function {
 
                 @Override
                 public void onResponse(BaseEntity<String> response) {
-                    if (response.isStatus()) {
-                        textView.setText((Integer.parseInt(textView.getText().toString()) + 1) + "");
-                    } else {
-                        ToolUtils.showToast(context, response.getMsg());
-                    }
+                    textView.setText((Integer.parseInt(textView.getText().toString()) + 1) + "");
+
                 }
             }, map);
 
@@ -123,11 +118,12 @@ public class Function {
 
     /**
      * 活动签到
+     *
      * @param isLogin
      * @param context
      * @param id
      */
-    public static void signIn(Boolean isLogin, final Context context,String url, String id) {
+    public static void signIn(Boolean isLogin, final Context context, String url, String id) {
 
         if (isLogin) {
             context.startActivity(new Intent(context, LoginActivity.class));

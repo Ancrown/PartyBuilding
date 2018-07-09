@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
+import zhuri.com.partybuilding.util.SharedPreferencesUtils;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.date.SelectDateDialog;
@@ -56,7 +58,7 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
 
     @Override
     protected void initData() {
-
+        getEntity();
     }
 
     @Override
@@ -70,6 +72,12 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     protected int getLayout() {
         return R.layout.aty_my_info;
     }
@@ -79,7 +87,7 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
         switch (view.getId()) {
             case R.id.my_info_img:
                 if (PermissionManager.permissionApplication(this, PermissionManager.ImgPermission(), 1000)) {
-                    CameraUtil.getNewsPopupWindow( this, -1);
+                    CameraUtil.getNewsPopupWindow(this, -1);
                 }
                 break;
             case R.id.my_info_name_rl:
@@ -119,26 +127,26 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
                 });
                 break;
             case R.id.my_info_party_rl:
-                SelectDateDialog dialog1 = new SelectDateDialog(this, R.style.custom_dialog);
-                dialog1.setTitleStr("入党时间");
-                dialog1.show();
-                dialog1.setOnSelectTimeListener(new SelectDateDialog.OnSelectTimeListener() {
-                    @Override
-                    public void cancel() {
-
-                    }
-
-                    @Override
-                    public void confirm(String year, String month, String day, boolean past) {
-                        if (past) {
-                            myInfoPartyTextview.setText(year + "-" + month + "-" + day);
-
-                        } else {
-                            ToolUtils.showToast(MyInfoActivity.this, "您选择的有误！");
-                        }
-
-                    }
-                });
+//                SelectDateDialog dialog1 = new SelectDateDialog(this, R.style.custom_dialog);
+//                dialog1.setTitleStr("入党时间");
+//                dialog1.show();
+//                dialog1.setOnSelectTimeListener(new SelectDateDialog.OnSelectTimeListener() {
+//                    @Override
+//                    public void cancel() {
+//
+//                    }
+//
+//                    @Override
+//                    public void confirm(String year, String month, String day, boolean past) {
+//                        if (past) {
+//                            myInfoPartyTextview.setText(year + "-" + month + "-" + day);
+//
+//                        } else {
+//                            ToolUtils.showToast(MyInfoActivity.this, "您选择的有误！");
+//                        }
+//
+//                    }
+//                });
                 break;
             case R.id.my_info_preservation:
                 break;
@@ -158,7 +166,7 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
 
         if (count == grantResults.length) {
             if (requestCode == 1000) {
-                CameraUtil.getNewsPopupWindow( this, -1);
+                CameraUtil.getNewsPopupWindow(this, -1);
             }
         } else {
             if (requestCode == 1000) {
@@ -178,7 +186,6 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("ssssssssssss", requestCode + "  +  " + resultCode);
 
         if (requestCode == 11) {
             if (resultCode == RESULT_OK) {
@@ -195,6 +202,19 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
 
     @Override
     public void onRightClick() {
+
+    }
+
+    //显示数据
+    private void getEntity() {
+        GlideUtils.LoadCircleImage(this, SharedPreferencesUtils.getParam(this, StaticVariables.USER_HEAD_IMG, "") + "", myInfoImg);
+        myInfoNameEdit.setText(SharedPreferencesUtils.getParam(this, StaticVariables.USER_NAME, "") + "");
+        myInfoAgeTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.AGE, "") + "");
+        myInfoSexTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.SEX, "") + "");
+        myInfoPhoneTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.TEL, "") + "");
+        myInfoBirthdayTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.BIRTHDAY, "") + "");
+        myInfoPartyTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.JOINTIME, "") + "");
+
 
     }
 }

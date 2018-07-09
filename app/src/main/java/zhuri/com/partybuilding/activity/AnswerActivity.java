@@ -87,6 +87,8 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     //解释
     @BindView(R.id.answer_explaination)
     TextView explaination;
+    @BindView(R.id.zhanwei)
+    View zhanwei;
     //题
     private List<AnswerBean> answerBeanList;
     private List<AnswerItemBean> answerItemBeanList;
@@ -118,7 +120,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     //用时
     private long usetime;
     //答题时间
-    private long lengthTime = 1000 * 60 * 1;
+    private long lengthTime;
 
 
     //提示框
@@ -128,8 +130,8 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     @Override
     protected void initData() {
 
-        getData();
-
+        //    getData();
+        getexaminfo();
 
     }
 
@@ -161,25 +163,9 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         answerItemBeanList3.add(new AnswerItemBean("3", "5+5"));
         answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
 
-        answerBeanList.add(new AnswerBean("1000", "1.题目:十八大党章指出，中国共产党以（）作为自己的行动指南。", "0", answerItemBeanList0, "这个题应该选C", "2", "25"));
-        answerBeanList.add(new AnswerBean("1001", "2.谁最高", "1", answerItemBeanList1, "刘晓伟最高", "1", "25"));
-        answerBeanList.add(new AnswerBean("1002", "3.下列王朝中统治时间最短的是： ", "0", answerItemBeanList2, "秦朝最短！！！", "0", "25"));
-        answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
-        answerBeanList.add(new AnswerBean("1000", "1.题目:十八大党章指出，中国共产党以（）作为自己的行动指南。", "0", answerItemBeanList0, "这个题应该选C", "2", "25"));
-        answerBeanList.add(new AnswerBean("1001", "2.谁最高", "1", answerItemBeanList1, "刘晓伟最高", "1", "25"));
-        answerBeanList.add(new AnswerBean("1002", "3.下列王朝中统治时间最短的是： ", "0", answerItemBeanList2, "秦朝最短！！！", "0", "25"));
-        answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
-        answerBeanList.add(new AnswerBean("1000", "1.题目:十八大党章指出，中国共产党以（）作为自己的行动指南。", "0", answerItemBeanList0, "这个题应该选C", "2", "25"));
-        answerBeanList.add(new AnswerBean("1001", "2.谁最高", "1", answerItemBeanList1, "刘晓伟最高", "1", "25"));
-        answerBeanList.add(new AnswerBean("1002", "3.下列王朝中统治时间最短的是： ", "0", answerItemBeanList2, "秦朝最短！！！", "0", "25"));
-        answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
-        answerBeanList.add(new AnswerBean("1000", "1.题目:十八大党章指出，中国共产党以（）作为自己的行动指南。", "0", answerItemBeanList0, "这个题应该选C", "2", "25"));
-        answerBeanList.add(new AnswerBean("1001", "2.谁最高", "1", answerItemBeanList1, "刘晓伟最高", "1", "25"));
-        answerBeanList.add(new AnswerBean("1002", "3.下列王朝中统治时间最短的是： ", "0", answerItemBeanList2, "秦朝最短！！！", "0", "25"));
-        answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
-
 
         setData();
+        zhanwei.setVisibility(View.GONE);
     }
 
 
@@ -249,55 +235,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         builderOne = new AlertDialog.Builder(AnswerActivity.this);
         builderTwo = new AlertDialog.Builder(AnswerActivity.this);
 
-        mTimer = new CountDownTimerSupport(1000 * 10 * 1, 1000);
-        mTimer.start();
 
-        mTimer.setOnCountDownTimerListener(new OnCountDownTimerListener() {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (!AnswerActivity.this.isFinishing()) {
-                    //  time.setText("剩余时间：" + (millisUntilFinished / 1000) / 60 + "分" + (millisUntilFinished / 1000) % 60 + "秒");
-                    time.setText("剩余时间：" + TimeUtil.millisecond2String(mTimer.getMillisUntilFinished(), "mm分ss秒"));
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (!AnswerActivity.this.isFinishing()) {
-                    time.setText("剩余时间：" + "00分00秒");
-
-                    if (!aBoolean) {
-
-                        //操作 到时间了 交卷
-
-                        //在这显示是否提交~！
-                        builderTwo.setTitle("提示").setMessage("时间已到 确认交卷！").setCancelable(false)
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //计时结束
-                                        mTimer.stop();
-                                        usetime = lengthTime - mTimer.getMillisUntilFinished();
-                                        Log.e("eeeeee", "用时  " + TimeUtil.millisecond2String(usetime, "mm:ss"));
-                                        contrastiveProblem();
-
-
-                                        Intent intent = new Intent();
-                                        intent.setClass(AnswerActivity.this, AnswerNewsResultActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("list", (Serializable) answerBeanList);//序列化,要注意转化(Serializable)
-                                        intent.putExtras(bundle);//发送数据
-                                        intent.putExtra("amountError", errorNum + "");
-                                        intent.putExtra("score", score + "");
-                                        startActivity(intent);//启动intent
-                                        onBack();
-                                    }
-                                })
-                                .show();
-                    }
-                }
-            }
-        });
         lmr = new LinearLayoutManager(this);
         lmr.setOrientation(LinearLayoutManager.HORIZONTAL);
         answerRecy.setLayoutManager(lmr);
@@ -317,7 +255,6 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_previous:
-
 
 
                 Log.e("eeeee", "I qian :" + current + "   " + answerBeanList.size());
@@ -388,6 +325,58 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         }
     }
 
+    //计时
+    private void byTime() {
+        mTimer = new CountDownTimerSupport(lengthTime, 1000);
+        mTimer.start();
+
+        mTimer.setOnCountDownTimerListener(new OnCountDownTimerListener() {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (!AnswerActivity.this.isFinishing()) {
+                    //  time.setText("剩余时间：" + (millisUntilFinished / 1000) / 60 + "分" + (millisUntilFinished / 1000) % 60 + "秒");
+                    time.setText("剩余时间：" + TimeUtil.millisecond2String(mTimer.getMillisUntilFinished(), "mm分ss秒"));
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if (!AnswerActivity.this.isFinishing()) {
+                    time.setText("剩余时间：" + "00分00秒");
+
+                    if (!aBoolean) {
+
+                        //操作 到时间了 交卷
+
+                        //在这显示是否提交~！
+                        builderTwo.setTitle("提示").setMessage("时间已到 确认交卷！").setCancelable(false)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //计时结束
+                                        mTimer.stop();
+                                        usetime = lengthTime - mTimer.getMillisUntilFinished();
+                                        Log.e("eeeeee", "用时  " + TimeUtil.millisecond2String(usetime, "mm:ss"));
+                                        contrastiveProblem();
+
+
+                                        Intent intent = new Intent();
+                                        intent.setClass(AnswerActivity.this, AnswerNewsResultActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("list", (Serializable) answerBeanList);//序列化,要注意转化(Serializable)
+                                        intent.putExtras(bundle);//发送数据
+                                        intent.putExtra("amountError", errorNum + "");
+                                        intent.putExtra("score", score + "");
+                                        startActivity(intent);//启动intent
+                                        onBack();
+                                    }
+                                })
+                                .show();
+                    }
+                }
+            }
+        });
+    }
 
     //比对标记
     private void comparison() {
@@ -423,12 +412,13 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
 
     //题数据
     private void setData() {
+        Log.e("eeeee", answerBeanList.size() + "   ^^^^^^^^^^^^^^^^^^^^^^^");
         answerRecy.smoothScrollToPosition(current);
-       // answerIndexAdapter.smoothMoveToPosition(answerRecy, current);
+        // answerIndexAdapter.smoothMoveToPosition(answerRecy, current);
         answerIndexAdapter.setDataList(answerBeanList);
 
         //  singlePair.setText("当前: " + current);
-        String ttt = "（" + (answerBeanList.get(current).getSinglePair().equals("0") ? "单选题" : "多选题") + answerBeanList.get(current).getScore() + "）";
+        String ttt = "（" + (answerBeanList.get(current).getSinglePair().equals("0") ? "单选题" : "多选题") + answerBeanList.get(current).getScore() + "分）";
         subject.setText(answerBeanList.get(current).getTitle() + ttt);
 
 
@@ -436,6 +426,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
 
         explaination.setVisibility(View.INVISIBLE);
         answerAdapter.setRefreshList(answerBeanList.get(current).getOptionList());
+
 
         showIndex();
     }
@@ -507,6 +498,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
 
     }
 
+
     //获得试卷
     public void getexaminfo() {
         Map map = new HashMap();
@@ -522,28 +514,31 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
 
             @Override
             public void onResponse(BaseEntity<ExaminationInfoEntity> response) {
-                if (response.isStatus()) {
-                    answerBeanList = new ArrayList<>();
-                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                        answerItemBeanList = new ArrayList<>();
-                        String[] options = response.getData().getInfo().get(i).getOptions().split("#");
-                        for (int j = 0; j < options.length; j++) {
-                            answerItemBeanList.add(new AnswerItemBean("" + j, options[j]));
-                        }
-                        answerBeanList.add(new AnswerBean(response.getData().getInfo().get(i).getId(),
-                                response.getData().getInfo().get(i).getTitle(),
-                                response.getData().getInfo().get(i).getCtype(),
-                                answerItemBeanList,
-                                response.getData().getInfo().get(i).getTips(),
-                                response.getData().getInfo().get(i).getAnswer(),
-                                response.getData().getInfo().get(i).getScore()
-                        ));
+
+                answerBeanList = new ArrayList<>();
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    answerItemBeanList = new ArrayList<>();
+                    String[] options = response.getData().getInfo().get(i).getOptions().split("##");
+                    for (int j = 0; j < options.length; j++) {
+                        answerItemBeanList.add(new AnswerItemBean("" + j, options[j]));
                     }
-                    setData();
+                    answerBeanList.add(new AnswerBean(response.getData().getInfo().get(i).getId(),
+                            (i + 1) + "、" + response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getCtype(),
+                            answerItemBeanList,
+                            response.getData().getInfo().get(i).getTips(),
+                            response.getData().getInfo().get(i).getAnswer(),
+                            response.getData().getInfo().get(i).getScore()
+                    ));
                 }
 
+
+                lengthTime = Long.parseLong(response.getData().getMain().getTimes()) * 60 * 1000;
+                byTime();
+                setData();
+                zhanwei.setVisibility(View.GONE);
             }
-        }, map, "");
+        }, map, "获取考题中");
     }
 
     //交卷
@@ -586,10 +581,5 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         }, map, "交卷中");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

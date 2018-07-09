@@ -163,7 +163,7 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
 
             @Override
             public void onResponse(BaseEntity<ActivitiesCVDetailsEntity> response) {
-                if (response.isStatus()) {
+
                     activitiesReportTitle.setText(response.getData().getMain().getTitle());
                     activitiesReportTimeIn.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(),"yyyy-mm-dd HH:mm:ss"));
 
@@ -190,11 +190,9 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
                     activitiesReportUp.setText("上一篇："+response.getData().getPerv().getTitle());
 
                     reportDownId = response.getData().getNext().getId();
-                    activitiesReportDown.setText("上一篇："+response.getData().getNext().getTitle());
+                    activitiesReportDown.setText("上一篇:"+response.getData().getNext().getTitle());
                     zhanwei.setVisibility(View.GONE);
-                } else {
-                    ToolUtils.showToast(ActivitiesReportDetailActivity.this, response.getMsg());
-                }
+
             }
         }, map, "");
     }

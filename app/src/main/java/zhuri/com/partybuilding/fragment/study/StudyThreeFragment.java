@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import zhuri.com.partybuilding.R;
-import zhuri.com.partybuilding.adapter.StudyAdapter;
 import zhuri.com.partybuilding.adapter.study.StudyOneAdapter;
 import zhuri.com.partybuilding.base.BaseRecyclerFragment;
-import zhuri.com.partybuilding.bean.study.StudyBean;
 import zhuri.com.partybuilding.bean.study.StudyOneBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.study.StudyEntity;
@@ -37,7 +35,7 @@ import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 public class StudyThreeFragment extends BaseRecyclerFragment {
 
-    private int page;
+    private int page = 1;
     private StudyOneAdapter adapter;
     private List<StudyOneBean> itemList;
 
@@ -64,39 +62,24 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
 
 
         recyclerView.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new StudyOneAdapter(getActivity(), "0");
+        adapter = new StudyOneAdapter(getActivity(), "2");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
-
+        // getdata();
+        getEntity(null);
 
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        // getEntity("Refresh");
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                page = 1;
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page++;
-                        // getEntity("Loadmore");
-                        endRefresh("Loadmore");
-                    }
-                }, 1000);
+                page++;
+                getEntity("LoadMore");
 
 
             }
@@ -126,7 +109,7 @@ public class StudyThreeFragment extends BaseRecyclerFragment {
         Map map = new HashMap();
         map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
         map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
-        map.put("cid", "");
+        map.put("cid", "11");
         map.put("page", page == 0 ? 1 : page);
 
         OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.STUDY_ONE, new OkHttpUtil.ResultCallback<BaseEntity<StudyOneEntity>>() {

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_new" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/my_set_sign_out"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/my_set_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical"
+                    android:text="修改密码"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:src="@drawable/dayuhao_light_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_set_clear"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp1"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+
+                <TextView
+                    android:id="@+id/my_set_clear_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical"
+                    android:text="清除缓存"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:src="@drawable/dayuhao_light_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_set_version"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp1"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+
+                <TextView
+                    android:id="@+id/my_set_version_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/my_info_sex_text"
+                    android:gravity="center_vertical"
+                    android:text="当前版本"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_set_examine"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp1"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+
+                <TextView
+                    android:id="@+id/my_set_examine_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/my_info_sex_text"
+                    android:gravity="center_vertical"
+                    android:text="检查更新"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:src="@drawable/dayuhao_light_gray" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/my_set_sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp10"
+            android:background="@drawable/fill_bg_light_gray"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+</LinearLayout>

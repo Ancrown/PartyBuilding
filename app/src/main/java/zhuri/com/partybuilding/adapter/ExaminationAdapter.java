@@ -69,16 +69,18 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<ExaminationBean> {
                     itemExaminationLabel.setText("已过期");
                     itemExaminationLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray_4));
                 }
-
+                itemExaminationEndtime.setText(bean.getEtime() + " 截止");
+                itemExaminationJoin.setVisibility(View.VISIBLE);
+                itemExaminationJoin.setText(bean.getAmount() + "人参与");
             } else {
                 itemExaminationLabel.setVisibility(View.INVISIBLE);
                 itemExaminationMyS.setVisibility(View.VISIBLE);
 
-
+                itemExaminationEndtime.setText("参加时间：" + bean.getAddTime());
                 TextViewUitl.toStringChangeSizeAndColor(bean.getMyscore() + "分", bean.getMyscore(), 20, "#d5605f", itemExaminationMyS);
+                itemExaminationJoin.setVisibility(View.GONE);
             }
-            itemExaminationEndtime.setText(bean.getEtime() + " 截止");
-            itemExaminationJoin.setText(bean.getAmount() + "人参与");
+
 
             itemExaminationLl.setOnClickListener(new View.OnClickListener() {
                 @Override

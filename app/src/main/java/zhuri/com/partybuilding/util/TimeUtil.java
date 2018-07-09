@@ -263,7 +263,7 @@ public class TimeUtil {
      * @return
      */
     public static int differentDays(String d2) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             Date date1 = new java.sql.Date(new Date().getTime());

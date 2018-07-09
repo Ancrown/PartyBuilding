@@ -370,11 +370,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
                 } else {
 
-                    if (response.isStatus()) {
+
                         Glide.with(SplashActivity.this).load(response.getData().get(0))
                                 .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mIvSplash);
-                        Log.e("eeeeee", "图片地址： " + response.getData().get(0));
-                    }
+
 
 
                 }

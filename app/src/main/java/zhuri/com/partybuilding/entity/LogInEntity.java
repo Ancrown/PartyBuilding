@@ -17,19 +17,21 @@ public class LogInEntity {
      * idcard : 201000000000000001
      * name : 6d4b8bd5
      * nickname : 6d4b8bd5
-     * avatar : /Public/Admin/img/system/profile_small_dj.jpg /&gt;						&lt;input type=
+     * avatar : http://sydj.196tuan.com/Public/Home/images/img.jpg
      * age : 18
      * sex : 1
      * birthday : 2018-01-01
      * tel : 13988886666
      * email : test@wetb.com
-     * jointime : 1530547200
+     * jointime : 2018-07-03 00:00:00
      * did : 9
      * dname : 548c5e73515a7ec47ec7
-     * integral : 1
-     * regtime : 1530547200
+     * integral : 5
+     * regtime : 2018-07-03 00:00:00
      * status : 1
      * token : 3983A6D2F80E46AF484EAB10372735BA
+     * studycount : 3
+     * days : 3
      */
 
     private String id;
@@ -52,6 +54,8 @@ public class LogInEntity {
     private String regtime;
     private String status;
     private String token;
+    private String studycount;
+    private int days;
 
     public String getId() {
         return id;
@@ -211,5 +215,21 @@ public class LogInEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getStudycount() {
+        return studycount;
+    }
+
+    public void setStudycount(String studycount) {
+        this.studycount = studycount;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 }

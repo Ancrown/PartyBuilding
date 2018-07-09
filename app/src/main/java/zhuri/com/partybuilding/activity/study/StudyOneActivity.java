@@ -30,7 +30,7 @@ import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 /**
  * 创建人: Administrator
  * 创建时间: 2018/6/27
- * 描述:
+ * 描述:  19大
  */
 
 public class StudyOneActivity extends BaseRecyclerActivity implements TranslucentActionBar.ActionBarClickListener {
@@ -48,7 +48,8 @@ public class StudyOneActivity extends BaseRecyclerActivity implements Translucen
         params.setMargins(0, SizeUtils.dip2px(2), 0, 0);
         recyclerView.setLayoutParams(params);
 
-        getTitleView().setData("十九大报告", 0, R.drawable.back, null, 0, null, this);
+
+        getTitleView().setData(getIntent().getStringExtra("cid").equals("0") ? "十九大报告" : "党务工作", 0, R.drawable.back, null, 0, null, this);
     }
 
     private void setupListView() {
@@ -58,41 +59,8 @@ public class StudyOneActivity extends BaseRecyclerActivity implements Translucen
         adapter = new StudyOneAdapter(this, "0");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
-
-
-        //下拉上拉
-        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        // getEntity("Refresh");
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
-            }
-
-            @Override
-            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page++;
-                        // getEntity("Loadmore");
-                        endRefresh("Loadmore");
-                    }
-                }, 1000);
-
-
-            }
-
-        });
+        //  getdata();
+        getEntity(null);
 
     }
 
@@ -117,7 +85,7 @@ public class StudyOneActivity extends BaseRecyclerActivity implements Translucen
         Map map = new HashMap();
         map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
         map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
-        map.put("cid", "");
+        map.put("cid", "9");
         map.put("page", page == 0 ? 1 : page);
 
         OkHttpUtil.getInstance(this).doPostList(AddressRequest.STUDY_ONE, new OkHttpUtil.ResultCallback<BaseEntity<StudyOneEntity>>() {
@@ -155,7 +123,23 @@ public class StudyOneActivity extends BaseRecyclerActivity implements Translucen
 
     @Override
     protected void initListener() {
+        //下拉上拉
+        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
 
+                page = 1;
+                getEntity("Refresh");
+            }
+
+            @Override
+            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
+
+                page++;
+                getEntity("LoadMore");
+            }
+
+        });
     }
 
     @Override

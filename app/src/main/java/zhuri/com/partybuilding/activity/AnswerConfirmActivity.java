@@ -60,8 +60,8 @@ public class AnswerConfirmActivity extends BaseActivity implements TranslucentAc
 
         TextViewUitl.toStringChangeColor("考卷总分：" + intent.getStringExtra("score") + "分", "考卷总分：", "#535353", answerScore);
         TextViewUitl.toStringChangeColor("考题数量：" + intent.getStringExtra("amount") + "题", "考题数量：", "#535353", answerNum);
-        TextViewUitl.toStringChangeColor("考卷时长：" + intent.getStringExtra("times") + "分", "考卷时长：", "#535353", answerTimeLong);
-        TextViewUitl.toStringChangeColor("考试时间：" + intent.getStringExtra("stime") + "至" + intent.getStringExtra("etime"), "考试时间：", "#535353", answerTime);
+        TextViewUitl.toStringChangeColor("考卷时长：" + intent.getStringExtra("times") + "分钟", "考卷时长：", "#535353", answerTimeLong);
+        TextViewUitl.toStringChangeColor("考试时间：" + intent.getStringExtra("stime") + " ~ " + intent.getStringExtra("etime"), "考试时间：", "#535353", answerTime);
 
 
         answerContent.setText(intent.getStringExtra("demo"));

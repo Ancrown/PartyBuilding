@@ -1,5 +1,6 @@
 package zhuri.com.partybuilding.view.bannerview;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ public class BannerViewFactory implements BannerView.ViewFactory<BannerItem> {
                 }
             }
         });
+        Log.e("eeeeeeeee", item.image);
         GlideUtils.LoadImage(container.getContext().getApplicationContext(), item.image, iv);
         return iv;
     }
@@ -37,7 +39,7 @@ public class BannerViewFactory implements BannerView.ViewFactory<BannerItem> {
         this.onClikImg = onClikImg;
     }
 
-    public  interface OnClikImg {
+    public interface OnClikImg {
         void onItemImg(int i);
     }
 }

@@ -24,6 +24,7 @@ import zhuri.com.partybuilding.activity.MyInfoActivity;
 import zhuri.com.partybuilding.activity.RecordAnswerActivity;
 import zhuri.com.partybuilding.activity.RecordIntegralActivity;
 import zhuri.com.partybuilding.activity.RecordStudyActivity;
+import zhuri.com.partybuilding.activity.SetActivity;
 import zhuri.com.partybuilding.base.BaseFragment;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
@@ -31,6 +32,7 @@ import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
+import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
  * 我的
@@ -78,7 +80,6 @@ public class MyFragment extends BaseFragment {
     ImageView myDayuhao;
 
 
-
     @Override
     public int getLayoutId() {
         return R.layout.fra_my;
@@ -86,7 +87,21 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        getTitleView().setData(getResources().getString(R.string.my), 0, 0, null, 0, null, null);
+        getTitleView().setData(getResources().getString(R.string.my), 0, 0, null, 0, "设置", new TranslucentActionBar.ActionBarClickListener() {
+            @Override
+            public void onLeftClick() {
+
+            }
+
+            @Override
+            public void onRightClick() {
+                if (!isLogin) {
+                    startActivity(new Intent(getActivity(), SetActivity.class));
+                } else {
+                    goLogin();
+                }
+            }
+        });
     }
 
     @Override
@@ -110,7 +125,7 @@ public class MyFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.my_info, R.id.my_activity_record, R.id.my_learning_records, R.id.my_examination_records, R.id.my_contribution, R.id.my_login, R.id.my_rl_info, R.id.my_examination_error})
+    @OnClick({R.id.my_info, R.id.my_activity_record, R.id.my_learning_records, R.id.my_examination_records, R.id.my_contribution, R.id.my_login, R.id.my_rl_info, R.id.my_examination_error, R.id.my_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.my_info:
@@ -166,6 +181,9 @@ public class MyFragment extends BaseFragment {
                     goLogin();
                 }
                 break;
+            case R.id.my_set:
+
+                break;
         }
     }
 
@@ -179,31 +197,30 @@ public class MyFragment extends BaseFragment {
         //积分
         myIntegral.setText("当前积分：" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.INTEGRAL, "") + "分");
 
-        myLabel.setText( SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "")+"");
+        myLabel.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "") + "");
 
         myPosition.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "") + "");
 
-        myAccumulative.setText("已加入党"+TimeUtil.differentDays(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "") + "")
-                +"天    累计学习"+23+"次");
+        myAccumulative.setText("已加入党" + TimeUtil.differentDays(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "") + "")
+                + "天    累计学习" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.STUDY_COUNT, "") + "次");
 
-        Log.e("eeeeee 入党时间", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "")+"");
-
-        //昵称
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "");
-        //性别
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.SEX, "");
-        //年龄
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.AGE, "");
-        //生日
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.BIRTHDAY, "");
-        //所在支部ID
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.DID, "");
-        //所在支部名称
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "");
-        //电话
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TEL, "");
-        //邮箱
-        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.EMAIL, "");
+//
+//        //昵称
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "");
+//        //性别
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.SEX, "");
+//        //年龄
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.AGE, "");
+//        //生日
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.BIRTHDAY, "");
+//        //所在支部ID
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.DID, "");
+//        //所在支部名称
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "");
+//        //电话
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TEL, "");
+//        //邮箱
+//        SharedPreferencesUtils.getParam(getActivity(), StaticVariables.EMAIL, "");
 
 
     }

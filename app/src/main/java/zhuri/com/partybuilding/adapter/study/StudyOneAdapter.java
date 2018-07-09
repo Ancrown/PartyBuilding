@@ -3,6 +3,8 @@ package zhuri.com.partybuilding.adapter.study;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.StudyDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
@@ -65,7 +68,7 @@ public class StudyOneAdapter extends BaseRecyclerAdapter<StudyOneBean> {
         public void bindData(final StudyOneBean bean, final int i) {
             GlideUtils.LoadImage(context, bean.getImageurl(), itemStudyOneImg);
 
-            if (bean.getIsvideo().equals("0")) {
+            if (bean.getIsvideo().equals("1")) {
                 itemStudyOneTitle.setCompoundDrawables(video, null, null, null);
                 itemStudyOneTitle.setCompoundDrawablePadding(SizeUtils.dip2px(5));
             } else {
@@ -79,11 +82,12 @@ public class StudyOneAdapter extends BaseRecyclerAdapter<StudyOneBean> {
                 itemStudyOneIstop.setText("已学习");
                 itemStudyOneIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray_4));
             }
-            itemStudyOneContent.setText(bean.getDemo());
+            itemStudyOneContent.setText(TextUtils.isEmpty(bean.getDemo()) ? bean.getDemo() : bean.getDemo().trim());
             itemStudyOneJoin.setText(bean.getAmount() + "人已学习");
             itemStudyOneLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("eeeeee", "点击：：：：" + bean.getId() + "  " + bean.getTitle());
                     look(isLogin, bean.getPurview().equals("0"), bean.getId());
                 }
             });
@@ -99,7 +103,8 @@ public class StudyOneAdapter extends BaseRecyclerAdapter<StudyOneBean> {
                 //游客可看
                 context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));
             } else {
-                ToolUtils.showToast(context, "游客不可看");
+                ToolUtils.showToast(context, "游客不可看，请先登陆");
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         } else {
             context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));

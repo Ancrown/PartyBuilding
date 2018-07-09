@@ -90,7 +90,7 @@ public class RecordAnswerActivity extends BaseRecyclerActivity implements Transl
                     !cid.equals("0") ? "9" + i : "",
                     cid.equals("0") ? "0" : "1",
                     "0",
-                    i % 2 + "")
+                    i % 2 + "","")
             );
         }
         adapter.setDataList(list);

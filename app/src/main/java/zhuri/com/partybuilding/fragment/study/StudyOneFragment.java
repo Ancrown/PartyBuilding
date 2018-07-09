@@ -35,7 +35,7 @@ import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
 
 public class StudyOneFragment extends BaseRecyclerFragment {
 
-    private int page;
+    private int page=1;
     private StudyOneAdapter adapter;
     private List<StudyOneBean> itemList;
 
@@ -65,38 +65,24 @@ public class StudyOneFragment extends BaseRecyclerFragment {
         adapter = new StudyOneAdapter(getActivity(), "0");
         recyclerView.setAdapter(adapter);
         itemList = new ArrayList<>();
-        getdata();
+        //  getdata();
+        getEntity(null);
 
 
         //下拉上拉
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "下拉");
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        // getEntity("Refresh");
-                        endRefresh("Refresh");
-                    }
-                }, 1000);
+                page = 1;
+                getEntity("Refresh");
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-                Log.e("eeeee", "ListView" + "上拉");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page++;
-                        // getEntity("Loadmore");
-                        endRefresh("Loadmore");
-                    }
-                }, 1000);
 
-
+                page++;
+                getEntity("LoadMore");
             }
 
         });
@@ -124,7 +110,7 @@ public class StudyOneFragment extends BaseRecyclerFragment {
         Map map = new HashMap();
         map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
         map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
-        map.put("cid", "");
+        map.put("cid", "9");
         map.put("page", page == 0 ? 1 : page);
 
         OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.STUDY_ONE, new OkHttpUtil.ResultCallback<BaseEntity<StudyOneEntity>>() {

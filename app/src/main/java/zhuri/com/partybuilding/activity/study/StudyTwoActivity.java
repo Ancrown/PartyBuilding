@@ -1,15 +1,8 @@
-package zhuri.com.partybuilding.fragment.study;
+package zhuri.com.partybuilding.activity.study;
 
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.squareup.okhttp.Request;
 
@@ -19,13 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.study.StudyTwoAdapter;
 import zhuri.com.partybuilding.adapter.study.StudyTwoSubitemAdapter;
-import zhuri.com.partybuilding.base.BaseFragment;
-import zhuri.com.partybuilding.bean.study.StudyOneBean;
+import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.bean.study.StudyTwoBean;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.study.StudyOneEntity;
@@ -38,16 +28,15 @@ import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.okhttp.OkHttpUtil;
+import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
  * 创建人: Administrator
- * 创建时间: 2018/6/5
- * 描述:两学一做
+ * 创建时间: 2018/7/7
+ * 描述: 两学一座
  */
 
-public class StudyTwoFragment extends BaseFragment {
-
-
+public class StudyTwoActivity extends BaseActivity implements TranslucentActionBar.ActionBarClickListener {
     @BindView(R.id.study_two_subitem)
     RecyclerView studyTwoSubitem;
 
@@ -76,13 +65,10 @@ public class StudyTwoFragment extends BaseFragment {
     //当前页
     private int index;
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.fra_study_two;
-    }
 
     @Override
     public void initView() {
+        getTitleView().setData("两学一做", 0, R.drawable.back, null, 0, null, this);
 
 
         //是否允许越界时显示刷新控件（setOverScrollTopShow,setOverScrollBottomShow统一设置方法）
@@ -91,14 +77,14 @@ public class StudyTwoFragment extends BaseFragment {
         refreshlayout.setFloatRefresh(true);
 
 
-        lmr1 = new LinearLayoutManager(getActivity()) {
+        lmr1 = new LinearLayoutManager(this) {
 
         };
         //设置为垂直布局，这也是默认的
         lmr1.setOrientation(OrientationHelper.VERTICAL);
 
         //listview 效果
-        lmr = new LinearLayoutManager(getActivity());
+        lmr = new LinearLayoutManager(this);
         //设置为垂直布局，这也是默认的
         lmr.setOrientation(OrientationHelper.VERTICAL);
 
@@ -108,8 +94,8 @@ public class StudyTwoFragment extends BaseFragment {
 
         recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
 
-        subitemAdapter = new StudyTwoSubitemAdapter(getActivity());
-        adapter = new StudyTwoAdapter(getActivity(), "1");
+        subitemAdapter = new StudyTwoSubitemAdapter(this);
+        adapter = new StudyTwoAdapter(this, "1");
 
         studyTwoSubitem.setAdapter(subitemAdapter);
         recycler.setAdapter(adapter);
@@ -119,30 +105,13 @@ public class StudyTwoFragment extends BaseFragment {
         getEntity();
     }
 
-    public void getdata() {
-        for (int i = 0; i < 3; i++) {
-            subitemList = new ArrayList<>();
-            for (int j = 0; j < i + 3; j++) {
-                StudyTwoBean.SubitemBean itemBean = new StudyTwoBean.SubitemBean();
-                itemBean.setId(j + "" + j);
-                //  itemBean.setImageurl("http://jjxmt.cn/d/file/p/2018-06-26/ec063c9665dce18d33d25ef349661388.jpg");
-                itemBean.setTitle("九江三中第五党支部召开“两学一做”专题学习会议");
-                itemBean.setIsstudy(j % 2 + "");
-                itemBean.setDemo("九江三中第五支部在党员活动室召开了“两学一做”专题学习会议，与会人员有：校党委委员、副校长黄玉华，支部书记方少俊，组织委员郭慧慧，宣传委员邹红爱以及第五支部全体党员。本次会议由支部书记方少俊支持。");
-                itemBean.setPurview("0");
-                subitemList.add(itemBean);
-            }
+    @Override
+    protected void initData() {
 
-
-            bean = new StudyTwoBean(i == 0 ? "0" : "1", i + "", "做合格党员", subitemList);
-            itemList.add(bean);
-        }
-        subitemAdapter.setDataList(itemList);
-        adapter.setDataList(itemList.get(0).getSubitem());
     }
 
     @Override
-    public void refreshData() {
+    protected void initListener() {
         subitemAdapter.setOnClickItem(new StudyTwoSubitemAdapter.OnClickItem() {
             @Override
             public void onItem(int i) {
@@ -200,6 +169,35 @@ public class StudyTwoFragment extends BaseFragment {
     }
 
 
+    @Override
+    protected int getLayout() {
+        return R.layout.aty_study_two;
+    }
+
+
+    public void getdata() {
+        for (int i = 0; i < 3; i++) {
+            subitemList = new ArrayList<>();
+            for (int j = 0; j < i + 3; j++) {
+                StudyTwoBean.SubitemBean itemBean = new StudyTwoBean.SubitemBean();
+                itemBean.setId(j + "" + j);
+                //  itemBean.setImageurl("http://jjxmt.cn/d/file/p/2018-06-26/ec063c9665dce18d33d25ef349661388.jpg");
+                itemBean.setTitle("九江三中第五党支部召开“两学一做”专题学习会议");
+                itemBean.setIsstudy(j % 2 + "");
+                itemBean.setDemo("九江三中第五支部在党员活动室召开了“两学一做”专题学习会议，与会人员有：校党委委员、副校长黄玉华，支部书记方少俊，组织委员郭慧慧，宣传委员邹红爱以及第五支部全体党员。本次会议由支部书记方少俊支持。");
+                itemBean.setPurview("0");
+                subitemList.add(itemBean);
+            }
+
+
+            bean = new StudyTwoBean(i == 0 ? "0" : "1", i + "", "做合格党员", subitemList);
+            itemList.add(bean);
+        }
+        subitemAdapter.setDataList(itemList);
+        adapter.setDataList(itemList.get(0).getSubitem());
+    }
+
+
     //根据手势 结束下拉上拉
     public void endRefresh(String gesture) {
         switch (gesture) {
@@ -220,11 +218,11 @@ public class StudyTwoFragment extends BaseFragment {
      */
     public void getEntity() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
 
         //  map.put("page", itemList.get(index).page);
-        OkHttpUtil.getInstance(getActivity()).doPost(AddressRequest.STUDY_TWO, new OkHttpUtil.ResultCallback<BaseEntity<List<StudyTwoEntity>>>() {
+        OkHttpUtil.getInstance(this).doPost(AddressRequest.STUDY_TWO, new OkHttpUtil.ResultCallback<BaseEntity<List<StudyTwoEntity>>>() {
             @Override
             public void onError(Request request, Exception e) {
 
@@ -267,12 +265,12 @@ public class StudyTwoFragment extends BaseFragment {
 
     private void getEntityFL(final String gesture, final String indexId) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
+        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
         map.put("cid", indexId);
         map.put("page", itemList.get(index).page);
 
-        OkHttpUtil.getInstance(getActivity()).doPost(AddressRequest.STUDY_ONE, new OkHttpUtil.ResultCallback<BaseEntity<StudyOneEntity>>() {
+        OkHttpUtil.getInstance(this).doPost(AddressRequest.STUDY_ONE, new OkHttpUtil.ResultCallback<BaseEntity<StudyOneEntity>>() {
             @Override
             public void onError(Request request, Exception e) {
                 endRefresh(gesture);
@@ -301,4 +299,15 @@ public class StudyTwoFragment extends BaseFragment {
             }
         }, map);
     }
+
+    @Override
+    public void onLeftClick() {
+        onBack();
+    }
+
+    @Override
+    public void onRightClick() {
+
+    }
 }
+

@@ -15,7 +15,7 @@ public class StudyTwoBean {
      * subitemtext : 子项名
      * subitem : [{"id":"文章ID","title":"文章标题","imageurl":"首图","demo":"摘要","isstudy":"是否学过 0为学习 1已学习","isvideo":"是否有视频 0没有 1有","amount":"参加人数","purview":"是否登陆可看"}]
      */
-
+    public int page = 1;
     private String type;
     private String subitemid;
     private String subitemtext;

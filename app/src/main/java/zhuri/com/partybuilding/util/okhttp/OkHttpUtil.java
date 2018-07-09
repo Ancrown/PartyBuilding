@@ -43,6 +43,8 @@ import java.util.Map;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseApplication;
 import zhuri.com.partybuilding.dialog.load.TipLoadDialog;
+import zhuri.com.partybuilding.entity.BaseEntity;
+import zhuri.com.partybuilding.util.ToolUtils;
 
 
 /**
@@ -76,7 +78,7 @@ public class OkHttpUtil {
         }
         tipLoadDialogYes = new TipLoadDialog(context).setNoShadowTheme();
 
-        tipLoadDialogNo = new TipLoadDialog(context).setNoShadowTheme().setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
+        tipLoadDialogNo = new TipLoadDialog(context).setNoShadowTheme();
 
 
         return mInstance;
@@ -301,6 +303,7 @@ public class OkHttpUtil {
                     public void run() {
                         if (tipLoadDialogYes.isShowing())
                             tipLoadDialogYes.dismiss();
+                        tipLoadDialogNo.setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
                         tipLoadDialogNo.show();
                         callback.onError(request, e);
                     }
@@ -310,20 +313,36 @@ public class OkHttpUtil {
             @Override
             public void onResponse(Response response) {
                 String json = null;
+                final boolean status;
+                final String msg;
+
                 try {
                     json = response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.e(TAG, json);
+                Log.e(TAG, ToolUtils.unicodeToUTF_8(json));
                 final Object o = g.fromJson(json, callback.mType);
+
+                status = ((BaseEntity<Object>) o).isStatus();
+                msg = ((BaseEntity<Object>) o).getMsg();
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //结束加载框
-                        tipLoadDialogYes.dismiss();
+                        if (tipLoadDialogYes.isShowing())
+                            tipLoadDialogYes.dismiss();
 
-                        callback.onResponse(o);
+                        if (status) {
+                            callback.onResponse(o);
+                        } else {
+                            tipLoadDialogNo.setMsgAndType(msg, TipLoadDialog.ICON_TYPE_FAIL);
+                            tipLoadDialogNo.show();
+
+                        }
+
+
                     }
                 }, 2000);
             }
@@ -353,6 +372,7 @@ public class OkHttpUtil {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        tipLoadDialogNo.setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
                         tipLoadDialogNo.show();
                         callback.onError(request, e);
                     }
@@ -362,17 +382,29 @@ public class OkHttpUtil {
             @Override
             public void onResponse(Response response) {
                 String json = null;
+                final boolean status;
+                final String msg;
+
                 try {
                     json = response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.e(TAG, json);
+                Log.e(TAG, ToolUtils.unicodeToUTF_8(json));
                 final Object o = g.fromJson(json, callback.mType);
+                status = ((BaseEntity<Object>) o).isStatus();
+                msg = ((BaseEntity<Object>) o).getMsg();
+
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onResponse(o);
+                        if (status) {
+                            callback.onResponse(o);
+                        } else {
+                            tipLoadDialogNo.setMsgAndType(msg, TipLoadDialog.ICON_TYPE_FAIL);
+                            tipLoadDialogNo.show();
+
+                        }
                     }
                 });
             }

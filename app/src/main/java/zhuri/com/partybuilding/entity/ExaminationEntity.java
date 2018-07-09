@@ -14,7 +14,7 @@ public class ExaminationEntity {
     /**
      * page : 当前页数
      * totalpage : 总页数
-     * info : [{"id":"试卷ID","title":"试卷名称","demo":"摘要","amount":"总题数","score":"总分数","times":"答卷时长","stime":"开始时间","etime":"结束时间","myscore":" 我的考卷的分 isjoin=1的时候","isjoin":"是否答过","purview":"是否登陆可看","status":"状态"}]
+     * info : [{"id":"试卷ID","title":"试卷名称","demo":"摘要","amount":"总题数","score":"总分数","times":"答卷时长","stime":"开始时间","etime":"结束时间","usecount":"参加人数","status":"状态","addtime":"考试时间"}]
      */
 
     private String page;
@@ -55,10 +55,9 @@ public class ExaminationEntity {
          * times : 答卷时长
          * stime : 开始时间
          * etime : 结束时间
-         * myscore :  我的考卷的分 isjoin=1的时候
-         * isjoin : 是否答过
-         * purview : 是否登陆可看
+         * usecount : 参加人数
          * status : 状态
+         * addtime : 考试时间
          */
 
         private String id;
@@ -69,10 +68,9 @@ public class ExaminationEntity {
         private String times;
         private String stime;
         private String etime;
-        private String myscore;
-        private String isjoin;
-        private String purview;
+        private String usecount;
         private String status;
+        private String addtime;
 
         public String getId() {
             return id;
@@ -138,28 +136,12 @@ public class ExaminationEntity {
             this.etime = etime;
         }
 
-        public String getMyscore() {
-            return myscore;
+        public String getUsecount() {
+            return usecount;
         }
 
-        public void setMyscore(String myscore) {
-            this.myscore = myscore;
-        }
-
-        public String getIsjoin() {
-            return isjoin;
-        }
-
-        public void setIsjoin(String isjoin) {
-            this.isjoin = isjoin;
-        }
-
-        public String getPurview() {
-            return purview;
-        }
-
-        public void setPurview(String purview) {
-            this.purview = purview;
+        public void setUsecount(String usecount) {
+            this.usecount = usecount;
         }
 
         public String getStatus() {
@@ -168,6 +150,14 @@ public class ExaminationEntity {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+        public String getAddtime() {
+            return addtime;
+        }
+
+        public void setAddtime(String addtime) {
+            this.addtime = addtime;
         }
     }
 }

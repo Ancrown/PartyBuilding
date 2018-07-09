@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.NewsDetailActivity;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
@@ -32,7 +33,8 @@ import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
     public boolean showLabel;
 
-    public boolean isLogin;
+
+    public String title;
 
     public HomePageAdapter(Context context) {
         super(context);
@@ -40,11 +42,10 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
 
     }
 
-    public HomePageAdapter(boolean showLabel, Context context) {
+    public HomePageAdapter(boolean showLabel, Context context, String title) {
         super(context);
         this.showLabel = showLabel;
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
-
+        this.title = title;
     }
 
     @Override
@@ -90,7 +91,7 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
             }
             itemHomePageTitle.setText(homePageItemBean.getTitle());
             itemHomePageText.setText(homePageItemBean.getText());
-            itemHomePageTime.setText(TimeUtil.stampToDate(homePageItemBean.getTime(),"yyyy-MM-dd"));
+            itemHomePageTime.setText(TimeUtil.stampToDate(homePageItemBean.getTime(), "yyyy-MM-dd"));
             itemHomePageFabulousNum.setText(homePageItemBean.getFabulousNum());
             itemHomePageSeeNum.setText(homePageItemBean.getSeeNum());
             itemHomePageLl.setOnClickListener(new View.OnClickListener() {
@@ -116,12 +117,13 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
             //没登录
             if (purview) {
                 //游客可看
-                context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id)));
+                context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id).putExtra("title",title)));
             } else {
-                ToolUtils.showToast(context, "游客不可看");
+                ToolUtils.showToast(context, "游客不可看，请先登陆");
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         } else
-            context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id)));
+            context.startActivity(new Intent(new Intent(context, NewsDetailActivity.class).putExtra("id", id).putExtra("title",title)));
 
     }
 

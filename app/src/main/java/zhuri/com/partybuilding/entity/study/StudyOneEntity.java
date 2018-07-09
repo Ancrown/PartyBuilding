@@ -10,6 +10,7 @@ import java.util.List;
 
 public class StudyOneEntity {
 
+
     /**
      * page : 当前页数
      * totalpage : 总页数

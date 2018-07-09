@@ -306,51 +306,49 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
 
             @Override
             public void onResponse(BaseEntity<ActivitiesCVDetailsEntity> response) {
-                if (response.isStatus()) {
-                    activitiesDetailTitle.setText(response.getData().getMain().getTitle());
-                    activitiesDetailSendtime.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
+
+                activitiesDetailTitle.setText(response.getData().getMain().getTitle());
+                activitiesDetailSendtime.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
 
 
-                    text = response.getData().getMain().getContent();
-                    activitiesDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
-                    Log.e("eeeeee", response.getData().getMain().getStime() + "   " + response.getData().getMain().getEtime());
-                    activitiesDetailTime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~"
-                            + TimeUtil.stampToDate((response.getData().getMain().getEtime()), "yyyy-mm-dd"));
+                text = response.getData().getMain().getContent();
+                activitiesDetailWebview.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
+                Log.e("eeeeee", response.getData().getMain().getStime() + "   " + response.getData().getMain().getEtime());
+                activitiesDetailTime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~"
+                        + TimeUtil.stampToDate((response.getData().getMain().getEtime()), "yyyy-mm-dd"));
 
 
-                    activitiesDetailAddress.setText("地址：" + response.getData().getMain().getAddress());
-                    activitiesDetailSignendtime.setText("报名截止时间：" + TimeUtil.stampToDate(response.getData().getMain().getEtime(), "yyyy-mm-dd"));
-                    activitiesDetailPeoplenum.setText("报名人数：" + response.getData().getMain().getSignup());
+                activitiesDetailAddress.setText("地址：" + response.getData().getMain().getAddress());
+                activitiesDetailSignendtime.setText("报名截止时间：" + TimeUtil.stampToDate(response.getData().getMain().getEtime(), "yyyy-mm-dd"));
+                activitiesDetailPeoplenum.setText("报名人数：" + response.getData().getMain().getSignup());
 
-                    isJoin = response.getData().getMain().getIsjoin().equals("1");
-                    if (!isJoin) {
-                        activitiesDetailSignup.setText("我要报名");
-                        activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red));
+                isJoin = response.getData().getMain().getIsjoin().equals("1");
+                if (!isJoin) {
+                    activitiesDetailSignup.setText("我要报名");
+                    activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red));
 
-                    } else {
-                        activitiesDetailSignup.setText("我已报名");
-                        activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
-
-                    }
-                    itemList.clear();
-                    for (int i = 0; i < response.getData().getInfo().size(); i++) {
-                        itemList.add(new ActivitiesItemBean(
-                                response.getData().getInfo().get(i).getId(),
-                                response.getData().getInfo().get(i).getTitle(),
-                                response.getData().getInfo().get(i).getImageurl(),
-                                response.getData().getInfo().get(i).getAddress(),
-                                response.getData().getInfo().get(i).getAddtime(),
-                                response.getData().getInfo().get(i).getPurview(),
-                                response.getData().getInfo().get(i).getFlag(),
-                                response.getData().getInfo().get(i).getStatus()));
-                    }
-                    adapter.setDataList(itemList);
-
-                    //隐藏展位图
-                    zhanwei.setVisibility(View.GONE);
                 } else {
-                    ToolUtils.showToast(ActivitiesDetail.this, response.getMsg());
+                    activitiesDetailSignup.setText("我已报名");
+                    activitiesDetailSignup.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray));
+
                 }
+                itemList.clear();
+                for (int i = 0; i < response.getData().getInfo().size(); i++) {
+                    itemList.add(new ActivitiesItemBean(
+                            response.getData().getInfo().get(i).getId(),
+                            response.getData().getInfo().get(i).getTitle(),
+                            response.getData().getInfo().get(i).getImageurl(),
+                            response.getData().getInfo().get(i).getAddress(),
+                            response.getData().getInfo().get(i).getAddtime(),
+                            response.getData().getInfo().get(i).getPurview(),
+                            response.getData().getInfo().get(i).getFlag(),
+                            response.getData().getInfo().get(i).getStatus()));
+                }
+                adapter.setDataList(itemList);
+
+                //隐藏展位图
+                zhanwei.setVisibility(View.GONE);
+
             }
         }, map, "");
     }

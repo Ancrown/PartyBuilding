@@ -1,6 +1,7 @@
 package zhuri.com.partybuilding.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class AnswerIndexAdapter extends BaseRecyclerAdapter<AnswerBean> {
 
         @Override
         public void bindData(AnswerBean answerBean, final int i) {
+            Log.e("eeeeee", "Head:" + (i + 1) + "");
             itemAnswerIndex.setText((i + 1) + "");
             if (answerBean.getMyOptions().equals("-1")) {
                 itemAnswerIndex.setTextColor(AppUtils.getColor(R.color.black));

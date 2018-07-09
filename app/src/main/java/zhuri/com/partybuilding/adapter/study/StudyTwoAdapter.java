@@ -2,6 +2,8 @@ package zhuri.com.partybuilding.adapter.study;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
+import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.StudyDetailActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
@@ -62,15 +65,17 @@ public class StudyTwoAdapter extends BaseRecyclerAdapter<StudyTwoBean.SubitemBea
                 itemStudyTwoIstop.setText("已学习");
                 itemStudyTwoIstop.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_light_gray_4));
             }
-            itemStudyTwoContent.setText(bean.getDemo());
+            itemStudyTwoContent.setText(TextUtils.isEmpty(bean.getDemo()) ? bean.getDemo() : bean.getDemo().trim());
             itemStudyTwoLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     look(isLogin, bean.getPurview().equals("0"), bean.getId());
                 }
             });
         }
     }
+
     //跳页 type判断是 查看报道 1  报名  0
     public void look(boolean isLogin, boolean purview, String id) {
 
@@ -80,7 +85,8 @@ public class StudyTwoAdapter extends BaseRecyclerAdapter<StudyTwoBean.SubitemBea
                 //游客可看
                 context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));
             } else {
-                ToolUtils.showToast(context, "游客不可看");
+                ToolUtils.showToast(context, "游客不可看，请先登陆");
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         } else {
             context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("cid", cid).putExtra("id", id));

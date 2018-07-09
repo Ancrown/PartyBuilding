@@ -113,7 +113,7 @@ public class TabLayoutTwoFragment extends BaseRecyclerFragment {
 
 
         recycler.addItemDecoration(new SpaceItemDecoration(0, SizeUtils.dip2px(1)));
-        adapter = new HomePageAdapter(true, getActivity());
+        adapter = new HomePageAdapter(true, getActivity(),"不忘初心");
         recycler.setAdapter(adapter);
         adapter.setHeadHolder(exHeader);
         //初始化数据对象
