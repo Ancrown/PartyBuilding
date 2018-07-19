@@ -10,8 +10,8 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.okhttp.Request;
 
@@ -31,11 +31,11 @@ import zhuri.com.partybuilding.activity.activities.ActivitiesTwoActivity;
 import zhuri.com.partybuilding.adapter.ActivitiesAdapter;
 import zhuri.com.partybuilding.base.BaseActivity;
 import zhuri.com.partybuilding.bean.ActivitiesItemBean;
+import zhuri.com.partybuilding.dialog.RuleDialog;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.activities.ActivitiesCVDetailsEntity;
 import zhuri.com.partybuilding.util.AddressRequest;
 import zhuri.com.partybuilding.util.AppUtils;
-import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
 import zhuri.com.partybuilding.util.StaticVariables;
@@ -73,7 +73,7 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
 
 
     @BindView(R.id.activities_detail_signup)
-    TextView activitiesDetailSignup;
+    Button activitiesDetailSignup;
     @BindView(R.id.zhanwei)
     View zhanwei;
 
@@ -273,7 +273,7 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
     }
 
 
-    @OnClick({R.id.activities_detail_signup, R.id.activities_detail_more})
+    @OnClick({R.id.activities_detail_signup, R.id.activities_detail_more,R.id.activities_detail_rule})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.activities_detail_signup:
@@ -290,13 +290,19 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
                     startActivity(new Intent(this, ActivitiesTwoActivity.class));
                 }
                 break;
+            case R.id.activities_detail_rule:
+                RuleDialog dialog = new RuleDialog(this, R.style.custom_dialog);
+                dialog.setTitle("积分获取说明");
+                dialog.setText(AppUtils.getString(R.string.rule));
+                dialog.show();
+                break;
         }
     }
 
     public void getEntity() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
         OkHttpUtil.getInstance(this).doPost(type.equals("2") ? AddressRequest.ACTIVITIES_C_DETAILS : AddressRequest.ACTIVITIES_V_DETAILS, new OkHttpUtil.ResultCallback<BaseEntity<ActivitiesCVDetailsEntity>>() {
             @Override
@@ -362,13 +368,13 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
      * @param textView
      * @param type
      */
-    public void signUp(Boolean isLogin, final Context context, String id, final TextView textView, String type) {
+    public void signUp(Boolean isLogin, final Context context, String id, final Button textView, String type) {
         if (isLogin) {
             context.startActivity(new Intent(context, LoginActivity.class));
         } else {
             Map map = new HashMap();
-            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
-            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("uid", StaticVariables.getUserId());
+            map.put("token", StaticVariables.getTOKEN());
             map.put("id", id);
             OkHttpUtil.getInstance(context).doPost(type.equals("2") ? AddressRequest.ACTIVITIES_C_SING_UP : AddressRequest.ACTIVITIES_V_SING_UP, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {
                 @Override
@@ -393,6 +399,9 @@ public class ActivitiesDetail extends BaseActivity implements TranslucentActionB
             }, map);
         }
     }
+
+
+
 
 
 }

@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="@dimen/dp10"
-                    android:text="积分获取详情"
+                    android:text="积分获取说明"
                     android:drawableLeft="@drawable/guize"
                     android:drawablePadding="@dimen/dp5"
                     android:textColor="@color/light_red"

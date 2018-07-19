@@ -59,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
         initView();
 //        }
         refreshData();
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, "") + "");
+        isLogin = TextUtils.isEmpty(StaticVariables.getUserId());
         return rootView;
     }
 

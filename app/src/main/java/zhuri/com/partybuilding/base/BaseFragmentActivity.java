@@ -154,7 +154,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         activityStack.remove(this);
     }
 
-    public void onBack(View v) {
+    public void onBack() {
         finish();
     }
 

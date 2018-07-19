@@ -1,25 +1,27 @@
 package zhuri.com.partybuilding.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
+import android.os.Message;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
+import zhuri.com.partybuilding.dialog.UpgradeDialog;
 import zhuri.com.partybuilding.dialog.load.TipLoadDialog;
+import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.CacheDataManager;
 import zhuri.com.partybuilding.util.SharedPreferencesUtils;
 import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.ToolUtils;
+import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
@@ -45,6 +47,11 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
     RelativeLayout mySetExamine;
     @BindView(R.id.my_set_sign_out)
     TextView mySetSignOut;
+    @BindView(R.id.my_set_examine_label)
+    TextView mySetExamineLabel;
+
+    //服务器apk path,这里放了百度云盘的apk 作为测试
+    String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
 
     @Override
     protected void initData() {
@@ -59,13 +66,19 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
     @Override
     protected void initView() {
         getTitleView().setData("设置", 0, R.drawable.back, null, 0, null, this);
+        mySetExamineLabel.setVisibility(View.VISIBLE);
 
+        mySetVersionText.setText("当前版本：v" + ToolUtils.getVersion(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         try {
             mySetClearText.setText("清除缓存：" + CacheDataManager.getTotalCacheSize(this));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mySetVersionText.setText("当前版本："+ToolUtils.getVersion(this));
     }
 
     @Override
@@ -95,8 +108,12 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
 
                 break;
             case R.id.my_set_version:
+
                 break;
             case R.id.my_set_examine:
+                if (PermissionManager.permissionApplication(this, PermissionManager.Write(), PermissionManager.PERMISSION)) {
+                    updateAPP();
+                }
                 break;
             case R.id.my_set_sign_out:
                 finishAllActivity();
@@ -105,6 +122,39 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
                 break;
         }
     }
+
+    public void updateAPP() {
+        UpgradeDialog uDialog = new UpgradeDialog(this, R.style.custom_dialog);
+        uDialog.setTitleString("沈阳党建 v1.0.2 来袭");
+        uDialog.setContentString(AppUtils.getString(R.string.updatecontent));
+        uDialog.serverVersionName("1.0.2");
+        uDialog.setApkPath(apkPath);
+        uDialog.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length == 0) return;
+        int count = 0;
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                count++;
+            }
+        }
+
+        if (count == grantResults.length) {
+            if (requestCode == PermissionManager.PERMISSION) {
+                updateAPP();
+            }
+        } else {
+            if (requestCode == PermissionManager.PERMISSION) {
+                PermissionManager.showDialog(this,
+                        "使用权限使用权限被禁止，一些功能无法正常使用。是否开启该权限？(步骤：应用信息->权限->'勾选'储存空间 )");
+            }
+        }
+    }
+
 
     @Override
     public void onLeftClick() {
@@ -118,6 +168,7 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
 
     //加载框
     public static TipLoadDialog dialog;
+
 
     class clearCache implements Runnable {
         @Override
@@ -137,7 +188,7 @@ public class SetActivity extends BaseActivity implements TranslucentActionBar.Ac
     }
 
     private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
                     dialog.dismiss();

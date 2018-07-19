@@ -19,6 +19,8 @@ import zhuri.com.partybuilding.fragment.ConsultationFragment;
 import zhuri.com.partybuilding.fragment.HomePageFragment;
 import zhuri.com.partybuilding.fragment.MyFragment;
 import zhuri.com.partybuilding.fragment.StudyFragment;
+import zhuri.com.partybuilding.util.ToolUtils;
+import zhuri.com.partybuilding.util.permission.PermissionManager;
 
 
 /**
@@ -160,7 +162,10 @@ public class NavigationActivity extends
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (!ToolUtils.isNotificationEnabled(NavigationActivity.this)) {
+            PermissionManager.showDialog(NavigationActivity.this,
+                    "通知管理权限被禁止，通知功能无法正常使用。是否开启该权限？(步骤：通知管理->'勾选'允许通知)");
+        }
     }
 
 

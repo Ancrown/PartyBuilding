@@ -8,8 +8,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
-
-
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme">
         <activity android:name=".activity.SplashActivity">
@@ -19,6 +17,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--适配Android7.0-->
+        <!--安卓官方为了提高私有文件的安全性，-->
+        <!--对于Android 7.0 及更高版本的应用私有目录被限制访问。-->
+        <!--因此，在使用Intent方式安装时，尝试传递 file:// URI 会触发 FileUriExposedException。-->
+        <!--解决方法是使用 FileProvider，如下：-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--下载-->
+        <receiver
+            android:name=".util.updateapp.UpdateAppReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="teprinciple.update" />
+            </intent-filter>
+        </receiver>
+
+
         <!--工具-->
         <!--扫一扫-->
         <activity
@@ -148,11 +172,16 @@
             android:name=".activity.RecordStudyActivity"
             android:label="学习记录" />
         <activity
+            android:name=".activity.RecordActivitiesActivity"
+            android:label="活动记录" />
+        <activity
             android:name=".activity.SetActivity"
             android:label="设置" />
 
     </application>
 
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <!--请求网络-->
     <uses-permission android:name="android.permission.INTERNET" />

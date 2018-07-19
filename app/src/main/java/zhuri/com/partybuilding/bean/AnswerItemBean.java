@@ -21,7 +21,11 @@ public class AnswerItemBean  implements Serializable{
 
     }
 
-
+    public AnswerItemBean(String id, String text, int type) {
+        this.id = id;
+        this.text = text;
+        this.type = type;
+    }
 
     public boolean isOnClick() {
         return isOnClick;

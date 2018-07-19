@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,9 +25,11 @@ import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.util.ToolUtils;
 import zhuri.com.partybuilding.util.date.SelectDateDialog;
+import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 import zhuri.com.partybuilding.util.popupwindow.SelectTimePopupWindow;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
@@ -144,14 +147,14 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
         recordIntegralRanking = view.findViewById(R.id.record_integral_ranking);
         recordIntegralTime = view.findViewById(R.id.record_integral_time);
 
-      //  refreshLayout.addFixedExHeader(view);
+        //  refreshLayout.addFixedExHeader(view);
 
         //是否允许越界时显示刷新控件（setOverScrollTopShow,setOverScrollBottomShow统一设置方法）
         refreshLayout.setOverScrollRefreshShow(false);
         //支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了。
         refreshLayout.setFloatRefresh(true);
         //禁止下拉
-    //    refreshLayout.setEnableRefresh(false);
+        //    refreshLayout.setEnableRefresh(false);
         //listview 效果
         lmr = new LinearLayoutManager(this);
         //设置为垂直布局，这也是默认的
@@ -171,15 +174,60 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
     }
 
     private void getdata() {
-        for (int i = 0; i < 10; i++) {
-            bean = new RecordIntegralBean(i + "",
-                    "及那附近慷慨激昂而其他其他气温气温人情味",
-                    "2018-6-28",
-                    (int) (Math.random() * 3) + "",
-                    (int) (Math.random() * 3) + "",
-                    i + "" + i);
-            list.add(bean);
-        }
+
+        recordIntegralName.setText(StaticVariables.getUserName());
+        recordIntegralPosition.setText(StaticVariables.getdName());
+        GlideUtils.LoadCircleImage(this, StaticVariables.getUserHeadImg(), recordIntegralImg);
+
+        //社区
+        list.add(new RecordIntegralBean("526",
+                "社区活动多姿多彩 好玩有趣又长知识",
+                "2018-07-12 12:00:00",
+                "1",
+                "",
+                "10"));
+        //微志愿
+        list.add(new RecordIntegralBean("877",
+                "关于面向各高校征集西部计划和研究生支教团“志愿文学”作品的启事",
+                "2018-07-13 11:13:50",
+                "2",
+                "",
+                "10"));
+        //微心愿
+        list.add(new RecordIntegralBean("874",
+                "好心人帮17位贫困环卫工人实现微心愿 他们感恩同时说出共同心愿：被尊重",
+                "2016-01-19 19:25:40",
+                "3",
+                (int) (Math.random() * 3) + "",
+                "10"));
+        //十九大报告
+        list.add(new RecordIntegralBean("798",
+                "市人社局召开庆祝建党97周年表彰大会暨党建工作报告会",
+                "2018-07-05 07:45:00",
+                "4",
+                "",
+                "10"));
+        //两学一做
+        list.add(new RecordIntegralBean("798",
+                "聚焦新时代 解读十九大 《新时代面对面》出版发行",
+                "2018-6-28",
+                "4",
+                "",
+                "10"));
+        //党务工作
+        list.add(new RecordIntegralBean("798",
+                "首份央企五年党建报告发布 教育基地为何选在这4家?",
+                "2018-06-29 00:00:00",
+                "4",
+                "",
+                "10"));
+        //考试
+        list.add(new RecordIntegralBean("1",
+                "2018党校考试题库大全",
+                "2018-06-08 12:08:00",
+                "5",
+                "",
+                "10"));
         adapter.setDataList(list);
     }
 
@@ -190,13 +238,12 @@ public class RecordIntegralActivity extends BaseActivity implements TranslucentA
 
     //根据手势 结束下拉上拉
     public void endRefresh(String gesture) {
+        if (TextUtils.isEmpty(gesture)) return;
         switch (gesture) {
-            case "":
-                break;
             case "Refresh":
                 refreshLayout.finishRefreshing();
                 break;
-            case "Loadmore":
+            case "LoadMore":
                 refreshLayout.finishLoadmore();
                 break;
         }

@@ -303,7 +303,8 @@ public class HomePageFragment extends BaseRecyclerFragment {
     //网络数据
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        // map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
+        map.put("uid", StaticVariables.getUserId());
         map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
         OkHttpUtil.getInstance(getActivity()).doPostList(AddressRequest.HOME, new OkHttpUtil.ResultCallback<BaseEntity<HomeEntity>>() {
             @Override

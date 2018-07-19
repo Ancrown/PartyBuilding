@@ -197,6 +197,7 @@ public class PhotoPickerActivity extends AppCompatActivity {
         // ActionBar Setting
         Toolbar toolbar = (Toolbar) findViewById(R.id.pickerToolbar);
         toolbar.setTitle(AppUtils.getString(R.string.image));
+
         toolbar.setTitleTextColor(AppUtils.getColor(R.color.white));
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

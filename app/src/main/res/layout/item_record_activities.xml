@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/item_record_activities_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10">
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp65"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_record_activities_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp5"
+                android:background="@drawable/fill_bg_red_4"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingLeft="@dimen/dp4"
+                android:paddingRight="@dimen/dp4"
+                android:paddingTop="@dimen/dp2"
+                android:text="活动"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/item_record_activities_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_record_activities_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll"
+            android:layout_marginTop="@dimen/dp10"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="2018-6-5 15:10"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/text_size_13" />
+
+        <TextView
+            android:id="@+id/item_record_activities_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/fill_bg_red"
+            android:paddingBottom="@dimen/dp2"
+            android:paddingLeft="@dimen/dp4"
+            android:paddingRight="@dimen/dp4"
+            android:paddingTop="@dimen/dp2"
+            android:text="未参与"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_10" />
+    </RelativeLayout>
+</LinearLayout>

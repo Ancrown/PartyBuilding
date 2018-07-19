@@ -69,30 +69,63 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
     private void getData() {
         answerBeanList = new ArrayList<>();
         answerItemBeanList0 = new ArrayList<>();
-        answerItemBeanList0.add(new AnswerItemBean("0", "选项XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
-        answerItemBeanList0.add(new AnswerItemBean("1", "选项"));
-        answerItemBeanList0.add(new AnswerItemBean("2", "选项"));
-        answerItemBeanList0.add(new AnswerItemBean("3", "选项"));
-        answerBeanList.add(new AnswerBean("1000", "1.你选那个选项", "0", answerItemBeanList0, "这个题应该选C", "2", "25"));
+        answerItemBeanList0.add(new AnswerItemBean("0", "伟大斗争、伟大工程、伟大事业、伟大梦想 "));
+        answerItemBeanList0.add(new AnswerItemBean("1", "伟大斗争、伟大建设、伟大事业、伟大梦想 "));
+        answerItemBeanList0.add(new AnswerItemBean("2", "伟大斗争、伟大工程、伟大发展、伟大梦想"));
+        answerItemBeanList0.add(new AnswerItemBean("3", "伟大斗争、伟大工程、伟大事业、伟大理想",1));
+        answerBeanList.add(new AnswerBean("1000",
+                "1、在习近平新时代中国特色社会主义思想指导下，中国共产党领导全国各族人民，统揽（），推动中国特色社会主义进入了新时代。",
+                "0",
+                answerItemBeanList0,
+                "解析",
+                "0",
+                "3",
+                false,
+                "25"));
 
         answerItemBeanList1 = new ArrayList<>();
-        answerItemBeanList1.add(new AnswerItemBean("0", "刘德华"));
-        answerItemBeanList1.add(new AnswerItemBean("1", "刘晓伟"));
-        answerBeanList.add(new AnswerBean("1001", "2.谁最高", "1", answerItemBeanList1, "刘晓伟最高", "1", "25"));
+        answerItemBeanList1.add(new AnswerItemBean("0", "毛泽东思想",1));
+        answerItemBeanList1.add(new AnswerItemBean("1", "马克思列宁主义"));
+        answerItemBeanList1.add(new AnswerItemBean("2", "习近平新时代中国特色社会主义思想"));
+        answerItemBeanList1.add(new AnswerItemBean("3", "“三个代表”重要思想"));
+        answerBeanList.add(new AnswerBean("1001",
+                "2、在（）指导下，中国共产党领导全国各族人民，统揽伟大斗争、伟大工程、伟大事业、伟大梦想，推动中国特色社会主义进入了新时代。",
+                "0",
+                answerItemBeanList1,
+                "解析",
+                "2",
+                "0",
+                false,
+                "25"));
 
         answerItemBeanList2 = new ArrayList<>();
-        answerItemBeanList2.add(new AnswerItemBean("0", "秦朝"));
-        answerItemBeanList2.add(new AnswerItemBean("1", "隋朝"));
-        answerItemBeanList2.add(new AnswerItemBean("2", "西晋"));
-        answerItemBeanList2.add(new AnswerItemBean("3", "元朝"));
-        answerBeanList.add(new AnswerBean("1002", "3.下列王朝中统治时间最短的是： ", "0", answerItemBeanList2, "秦朝最短！！！", "0", "25"));
+        answerItemBeanList2.add(new AnswerItemBean("0", "邓小平理论"));
+        answerItemBeanList2.add(new AnswerItemBean("1", "三个代表”重要思想"));
+        answerItemBeanList2.add(new AnswerItemBean("2", "科学发展观 ",1));
+        answerItemBeanList2.add(new AnswerItemBean("3", "习近平新时代中国特色社会主义思想",1));
+        answerBeanList.add(new AnswerBean("1002", "3、中国共产党以马克思列宁主义、毛泽东思想、（ ）作为自己的行动指南。  ",
+                "1",
+                answerItemBeanList2,
+                "解析",
+                "0,1,2,3",
+                "2,3",
+                false,
+                "25"));
 
         answerItemBeanList3 = new ArrayList<>();
-        answerItemBeanList3.add(new AnswerItemBean("0", "1+9"));
-        answerItemBeanList3.add(new AnswerItemBean("1", "2+8"));
-        answerItemBeanList3.add(new AnswerItemBean("2", "4+4"));
-        answerItemBeanList3.add(new AnswerItemBean("3", "5+5"));
-        answerBeanList.add(new AnswerBean("1003", "4.那个等于10？", "1", answerItemBeanList3, "1+9 / 2+8 / 5+5", "0,1,3", "25"));
+        answerItemBeanList3.add(new AnswerItemBean("0", "推进现代化建设"));
+        answerItemBeanList3.add(new AnswerItemBean("1", "推进经济建设"));
+        answerItemBeanList3.add(new AnswerItemBean("2", "完成祖国统一",1));
+        answerItemBeanList3.add(new AnswerItemBean("3", "维护世界和平与促进共同发展",1));
+        answerBeanList.add(new AnswerBean("1003",
+                "4、全党同志要为实现（ ）、（ ）、（ ）这三大历史任务，实现“两个一百年”奋斗目标、实现中华民族伟大复兴的中国梦而奋斗。 ",
+                "1",
+                answerItemBeanList3,
+                "解析",
+                "0,2,3",
+                "2,3",
+                false,
+                "25"));
 
 
     }
@@ -131,8 +164,8 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
 
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("page", page == 0 ? "1" : page + "");
         OkHttpUtil.getInstance(this).doPostList(AddressRequest.ERROR_ANSWER, new OkHttpUtil.ResultCallback<BaseEntity<AnswerErrorEntity>>() {
             @Override

@@ -301,8 +301,8 @@ public class OkHttpUtil {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (tipLoadDialogYes.isShowing())
-                            tipLoadDialogYes.dismiss();
+                        tipLoadDialogYes.dismiss();
+
                         tipLoadDialogNo.setMsgAndType("无法连接到服务器", TipLoadDialog.ICON_TYPE_FAIL);
                         tipLoadDialogNo.show();
                         callback.onError(request, e);
@@ -331,9 +331,7 @@ public class OkHttpUtil {
                     @Override
                     public void run() {
                         //结束加载框
-                        if (tipLoadDialogYes.isShowing())
-                            tipLoadDialogYes.dismiss();
-
+                        tipLoadDialogYes.dismiss();
                         if (status) {
                             callback.onResponse(o);
                         } else {

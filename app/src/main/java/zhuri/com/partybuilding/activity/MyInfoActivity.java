@@ -207,13 +207,14 @@ public class MyInfoActivity extends BaseActivity implements TranslucentActionBar
 
     //显示数据
     private void getEntity() {
-        GlideUtils.LoadCircleImage(this, SharedPreferencesUtils.getParam(this, StaticVariables.USER_HEAD_IMG, "") + "", myInfoImg);
-        myInfoNameEdit.setText(SharedPreferencesUtils.getParam(this, StaticVariables.USER_NAME, "") + "");
-        myInfoAgeTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.AGE, "") + "");
-        myInfoSexTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.SEX, "") + "");
-        myInfoPhoneTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.TEL, "") + "");
-        myInfoBirthdayTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.BIRTHDAY, "") + "");
-        myInfoPartyTextview.setText(SharedPreferencesUtils.getParam(this, StaticVariables.JOINTIME, "") + "");
+        GlideUtils.LoadCircleImage(this, StaticVariables.getUserHeadImg() + "", myInfoImg);
+        myInfoNameEdit.setText(StaticVariables.getUserName());
+        myInfoAgeTextview.setText(StaticVariables.getAGE());
+        myInfoSexTextview.setText(StaticVariables.getSEX());
+        myInfoPhoneTextview.setText(StaticVariables.getTEL());
+        myInfoBirthdayTextview.setText(StaticVariables.getBIRTHDAY());
+        myInfoPartyTextview.setText(StaticVariables.getJOINTIME());
+
 
 
     }

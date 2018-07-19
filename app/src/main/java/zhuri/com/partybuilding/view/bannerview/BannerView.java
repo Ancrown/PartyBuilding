@@ -117,8 +117,8 @@ public class BannerView<Item> extends FrameLayout {
         boolean hasAspectRatio = ta.hasValue(R.styleable.BannerView_bvAspectRatio);
         float aspectRatio = ta.getFloat(R.styleable.BannerView_bvAspectRatio, 0f);
         boolean isLoop = ta.getBoolean(R.styleable.BannerView_bvIsLoop, true);
-        mDelay = ta.getInt(R.styleable.BannerView_bvDelay, 5000);
-        mInterval = ta.getInt(R.styleable.BannerView_bvInterval, 5000);
+        mDelay = ta.getInt(R.styleable.BannerView_bvDelay, 3000);
+        mInterval = ta.getInt(R.styleable.BannerView_bvInterval, 3000);
         mIsAuto = ta.getBoolean(R.styleable.BannerView_bvIsAuto, true);
 
         mBarVisibleWhenLast = ta.getBoolean(R.styleable.BannerView_bvBarVisibleWhenLast, true);

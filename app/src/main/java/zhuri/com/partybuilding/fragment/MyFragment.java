@@ -21,6 +21,7 @@ import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.activity.AnswerErrorActivity;
 import zhuri.com.partybuilding.activity.LoginActivity;
 import zhuri.com.partybuilding.activity.MyInfoActivity;
+import zhuri.com.partybuilding.activity.RecordActivitiesActivity;
 import zhuri.com.partybuilding.activity.RecordAnswerActivity;
 import zhuri.com.partybuilding.activity.RecordIntegralActivity;
 import zhuri.com.partybuilding.activity.RecordStudyActivity;
@@ -138,6 +139,7 @@ public class MyFragment extends BaseFragment {
             case R.id.my_activity_record:
                 if (!isLogin) {
 
+                    startActivity(new Intent(getActivity(), RecordActivitiesActivity.class));
                 } else {
                     goLogin();
                 }
@@ -191,18 +193,18 @@ public class MyFragment extends BaseFragment {
 
 
         //名字
-        myName.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NAME, "") + "");
+        myName.setText(StaticVariables.getUserName());
         //头像
-        GlideUtils.LoadCircleImage(getActivity(), SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_HEAD_IMG, "") + "", img);
+        GlideUtils.LoadCircleImage(getActivity(),StaticVariables.getUserHeadImg() + "", img);
         //积分
-        myIntegral.setText("当前积分：" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.INTEGRAL, "") + "分");
+        myIntegral.setText("当前积分：" + StaticVariables.getINTEGRAL() + "分");
 
-        myLabel.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_NICK_NAME, "") + "");
+        myLabel.setText("优秀党员");
 
-        myPosition.setText(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.D_NAME, "") + "");
+        myPosition.setText(StaticVariables.getdName());
 
-        myAccumulative.setText("已加入党" + TimeUtil.differentDays(SharedPreferencesUtils.getParam(getActivity(), StaticVariables.JOINTIME, "") + "")
-                + "天    累计学习" + SharedPreferencesUtils.getParam(getActivity(), StaticVariables.STUDY_COUNT, "") + "次");
+        myAccumulative.setText("已加入党" + TimeUtil.differentDays(StaticVariables.getJOINTIME())
+                + "天    累计学习" + StaticVariables.getStudyCount()+ "次");
 
 //
 //        //昵称

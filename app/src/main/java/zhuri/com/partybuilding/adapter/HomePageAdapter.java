@@ -38,7 +38,6 @@ public class HomePageAdapter extends BaseRecyclerAdapter<HomePageItemBean> {
 
     public HomePageAdapter(Context context) {
         super(context);
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
 
     }
 

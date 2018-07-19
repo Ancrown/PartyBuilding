@@ -50,6 +50,9 @@
     <string name="confirm_to_delete">确认删除？</string>
     <string name="yes">确定</string>
     <string name="undo">撤消</string>
+    <string name="updatecontent">1.沈阳智慧党建 v1.0.2版震撼来袭\n2.界面明朗\n3.强大功能\n4.github:<a href='https://github.com/'>https://github.com/</a></string>
+    <string name="rule">一、获取路径分为：活动、学习两个地方。\n\n\n二、活动分为：社区活动、微志愿和微心愿，社区活动和微志愿要参加活动，微志愿需要认领参与即可获得积分。\n\n\n三、学习分为四个小部分：十九大报告、两学一做、党务工作和考试，九大报告、两学一做、党务工作需要阅读认真学习资料记得要认真阅读我们会记录呦，考试是检测大家对学习资料认真程度的检测认真答题考试合格即可获得积分。</string>
+
     <!--图片选择-->
 
 

@@ -85,7 +85,7 @@ public abstract class BaseActivity extends Activity {
         //初始化注解
         ButterKnife.bind(this);
 
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, "") + "");
+        isLogin = TextUtils.isEmpty(StaticVariables.getUserId());
 
         initView();
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.activity.AnswerConfirmActivity;
+import zhuri.com.partybuilding.activity.AnswerNewsResultActivity;
 import zhuri.com.partybuilding.adapter.base.BaseRecyclerAdapter;
 import zhuri.com.partybuilding.adapter.base.CommonHolder;
 import zhuri.com.partybuilding.bean.ExaminationBean;
@@ -114,7 +115,15 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<ExaminationBean> {
                         ToolUtils.showToast(context, "当前试卷已过期！");
                     }
                 } else {
-                    ToolUtils.showToast(context, "正在做查看试卷页!");
+
+                    Intent intent = new Intent(context, AnswerNewsResultActivity.class);
+                    intent.putExtra("type", "type");
+                    intent.putExtra("id", bean.getId());
+                    intent.putExtra("title", bean.getTitle());
+                    intent.putExtra("longTime", bean.getTimes());
+                    intent.putExtra("score", bean.getScore());
+                    context.startActivity(intent);
+                    //  ToolUtils.showToast(context, "正在做查看试卷页!");
                 }
             } else {
                 ToolUtils.showToast(context, "请去登陆再来！");
@@ -137,7 +146,14 @@ public class ExaminationAdapter extends BaseRecyclerAdapter<ExaminationBean> {
                     ToolUtils.showToast(context, "当前试卷已过期！");
                 }
             } else {
-                ToolUtils.showToast(context, "正在做查看试卷页!");
+                Intent intent = new Intent(context, AnswerNewsResultActivity.class);
+                intent.putExtra("type", "type");
+                intent.putExtra("id", bean.getId());
+                intent.putExtra("title", bean.getTitle());
+                intent.putExtra("longTime", bean.getTimes());
+                intent.putExtra("score", bean.getScore());
+                context.startActivity(intent);
+                //  ToolUtils.showToast(context, "正在做查看试卷页!");
             }
 
 

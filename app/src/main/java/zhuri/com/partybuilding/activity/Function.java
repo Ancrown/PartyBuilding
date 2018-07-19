@@ -54,8 +54,8 @@ public class Function {
             fabulousYes.setBounds(0, 0, fabulousYes.getMinimumWidth(), fabulousYes.getMinimumHeight());
 
             Map map = new HashMap();
-            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
-            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("uid", StaticVariables.getUserId());
+            map.put("token", StaticVariables.getTOKEN());
             map.put("pid", pid);
             map.put("types", types);
             OkHttpUtil.getInstance(context).doPost(AddressRequest.FABULOUS, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {
@@ -95,8 +95,8 @@ public class Function {
             context.startActivity(new Intent(context, LoginActivity.class));
         } else {
             Map map = new HashMap();
-            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
-            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("uid", StaticVariables.getUserId());
+            map.put("token", StaticVariables.getTOKEN());
             map.put("pid", pid);
             map.put("types", types);
             OkHttpUtil.getInstance(context).doPost(AddressRequest.FORWARD, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {
@@ -129,8 +129,8 @@ public class Function {
             context.startActivity(new Intent(context, LoginActivity.class));
         } else {
             Map map = new HashMap();
-            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
-            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("uid", StaticVariables.getUserId());
+            map.put("token", StaticVariables.getTOKEN());
             map.put("id", id);
 
             OkHttpUtil.getInstance(context).doPost(url, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {

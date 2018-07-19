@@ -59,50 +59,52 @@ public class RecordIntegralAdapter extends BaseRecyclerAdapter<RecordIntegralBea
             itemRecordIntegralTime.setText(bean.getTime());
             itemRecordIntegralAdd.setText("+" + bean.getIntegral());
             switch (bean.getType()) {
-                case "0":
-                    //活动
-                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
-                    if (bean.getActivitiesTyep().equals("0")) {
-                        itemRecordIntegralLabel.setText("活动" + "/社区活动");
-                    } else {
-                        itemRecordIntegralLabel.setText("活动" + "/微志愿");
-                    }
-
-                    break;
                 case "1":
-                    //学习
-                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_orange_4));
-                    if (bean.getActivitiesTyep().equals("0")) {
-                        itemRecordIntegralLabel.setText("学习" + "/十九大报告");
-                    } else if (bean.getActivitiesTyep().equals("1")) {
-                        itemRecordIntegralLabel.setText("学习" + "/两学一做");
-                    } else {
-                        itemRecordIntegralLabel.setText("学习" + "/党务工作");
-                    }
+                    //社区
+                    itemRecordIntegralLabel.setText("社区活动");
+                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
                     break;
                 case "2":
+                    //志愿
+                    itemRecordIntegralLabel.setText("微志愿");
+                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                    break;
+                case "3":
+                    //心愿
+                    itemRecordIntegralLabel.setText("微心愿");
+                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_red_4));
+                    break;
+                case "4":
+                    //学习
+                    itemRecordIntegralLabel.setText("学习");
+                    itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_orange_4));
+                    break;
+                case "5":
                     //考试
                     itemRecordIntegralLabel.setText("考试");
                     itemRecordIntegralLabel.setBackgroundDrawable(AppUtils.getDrawable(R.drawable.fill_bg_green_4));
                     break;
+
             }
+
+
             itemRecordIntegralRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (bean.getType()) {
-                        case "0":
-                            //活动
-                            context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
-                            break;
-                        case "1":
-                            //学习
-                            context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
-                            break;
-                        case "2":
-                            //考试
-                            context.startActivity(new Intent(context, AnswerResultActivity.class).putExtra("id", bean.getId()));
-                            break;
-                    }
+//                    switch (bean.getType()) {
+//                        case "0":
+//                            //活动
+//                            context.startActivity(new Intent(context, ActivitiesReportDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
+//                            break;
+//                        case "1":
+//                            //学习
+//                            context.startActivity(new Intent(context, StudyDetailActivity.class).putExtra("id", bean.getId()).putExtra("cid", bean.getActivitiesTyep()));
+//                            break;
+//                        case "2":
+//                            //考试
+//                            context.startActivity(new Intent(context, AnswerResultActivity.class).putExtra("id", bean.getId()));
+//                            break;
+//                    }
                 }
             });
         }

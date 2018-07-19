@@ -35,4 +35,6 @@
     <color name="app_name_color">#efdb63</color>
     <color name="translate">#00000000</color>
     <color name="pop_title_bg">#C7C7C7</color>
+    <color name="text_blue">#0076FF</color>
+    <color name="black_33">#33000000</color>
 </resources>

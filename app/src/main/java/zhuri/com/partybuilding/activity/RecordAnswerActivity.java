@@ -21,6 +21,9 @@ import zhuri.com.partybuilding.twinklingrefreshlayout.RefreshListenerAdapter;
 import zhuri.com.partybuilding.twinklingrefreshlayout.TwinklingRefreshLayout;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
+import zhuri.com.partybuilding.util.TimeUtil;
+import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
 /**
@@ -72,13 +75,22 @@ public class RecordAnswerActivity extends BaseRecyclerActivity implements Transl
 //        recyclerView.setLayoutParams(params);
 
 
-
-
     }
 
     //  随机 1~4 ((int) ((Math.random() * 4) + 1) + "")
     public void getdata() {
-        for (int i = 0; i < 5; i++) {
+        //名字
+        myName.setText(StaticVariables.getUserName());
+        //头像
+        GlideUtils.LoadCircleImage(this, StaticVariables.getUserHeadImg() + "", myImg);
+
+        myLabel.setText("优秀党员");
+
+        myPosition.setText(StaticVariables.getdName());
+
+        myAccumulative.setText("已加入党" + TimeUtil.differentDays(StaticVariables.getJOINTIME())
+                + "天    累计学习" + StaticVariables.getStudyCount() + "次");
+        for (int i = 8; i > 5; i--) {
             list.add(new ExaminationBean(i + "",
                     "201" + i + "党校考试题库大全",
                     "201" + i + "年党纪法规知识考试题库(更新) - 全市党纪法规知识考试题库(共 365 题) ",
@@ -90,7 +102,7 @@ public class RecordAnswerActivity extends BaseRecyclerActivity implements Transl
                     !cid.equals("0") ? "9" + i : "",
                     cid.equals("0") ? "0" : "1",
                     "0",
-                    i % 2 + "","")
+                    i % 2 + "", "2018-7-" + i + " 12:0" + i + ":00")
             );
         }
         adapter.setDataList(list);

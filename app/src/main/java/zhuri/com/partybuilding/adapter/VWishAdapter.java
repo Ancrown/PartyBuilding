@@ -33,11 +33,10 @@ import zhuri.com.partybuilding.util.ToolUtils;
 
 public class VWishAdapter extends BaseRecyclerAdapter<VWishBean> {
 
-    private boolean isLogin;
+
 
     public VWishAdapter(Context context) {
         super(context);
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
     }
 
     @Override

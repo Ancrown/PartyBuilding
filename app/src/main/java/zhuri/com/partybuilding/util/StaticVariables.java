@@ -1,5 +1,9 @@
 package zhuri.com.partybuilding.util;
 
+import android.content.Context;
+
+import zhuri.com.partybuilding.base.BaseApplication;
+
 /**
  * 作者 ：刘晓伟
  * 包名 ：com.ioi.distribution.util
@@ -7,6 +11,8 @@ package zhuri.com.partybuilding.util;
  * 创建时间 ：2016/11/30
  */
 public class StaticVariables {
+
+
     //app运行次数
     public static final String APP_START_NUM = "appStartNum";
     //用户id
@@ -46,5 +52,90 @@ public class StaticVariables {
     //注册时间
     public static final String REGTIME = "regtime";
     //累计学习次数
-    public static String STUDY_COUNT = "studycount";
+    public static final String STUDY_COUNT = "studycount";
+
+
+    public static String getAppStartNum() {
+        return getString(APP_START_NUM);
+    }
+
+    public static String getUserId() {
+        return getString(USER_ID);
+    }
+
+    public static String getUserName() {
+        return getString(USER_NAME);
+    }
+
+    public static String getUserNickName() {
+        return getString(USER_NICK_NAME);
+    }
+
+    public static String getUserHeadImg() {
+        return getString(USER_HEAD_IMG);
+    }
+
+    public static String getTOKEN() {
+        return getString(TOKEN);
+    }
+
+    public static String getCODES() {
+        return getString(CODES);
+    }
+
+    public static String getSEX() {
+        return getString(SEX);
+    }
+
+    public static String getAGE() {
+        return getString(AGE);
+    }
+
+    public static String getBIRTHDAY() {
+        return getString(BIRTHDAY);
+    }
+
+    public static String getTEL() {
+        return getString(TEL);
+    }
+
+    public static String getEMAIL() {
+        return getString(EMAIL);
+    }
+
+    public static String getINTEGRAL() {
+        return getString(INTEGRAL);
+    }
+
+    public static String getDID() {
+        return getString(DID);
+    }
+
+    public static String getdName() {
+        return getString(D_NAME);
+    }
+
+    public static String getIDCARD() {
+        return getString(IDCARD);
+    }
+
+    public static String getIDTYPE() {
+        return getString(IDTYPE);
+    }
+
+    public static String getJOINTIME() {
+        return getString(JOINTIME);
+    }
+
+    public static String getREGTIME() {
+        return getString(REGTIME);
+    }
+
+    public static String getStudyCount() {
+        return getString(STUDY_COUNT);
+    }
+
+    public static String getString(String name) {
+        return SharedPreferencesUtils.getParam(BaseApplication.appContext, name, "") + "";
+    }
 }

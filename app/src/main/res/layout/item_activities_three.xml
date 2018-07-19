@@ -66,7 +66,7 @@
 
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7" />
+                 />
 
             <ImageView
                 android:id="@+id/item_activities_three_img_two"
@@ -77,7 +77,7 @@
 
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7" />
+                 />
 
             <ImageView
                 android:id="@+id/item_activities_three_img_three"
@@ -87,7 +87,7 @@
 
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7" />
+                 />
 
         </LinearLayout>
 

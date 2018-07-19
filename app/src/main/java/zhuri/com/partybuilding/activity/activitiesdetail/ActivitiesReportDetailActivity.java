@@ -152,8 +152,8 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
 
     public void getEntity() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
         OkHttpUtil.getInstance(this).doPost(type.equals("2") ? AddressRequest.ACTIVITIES_C_DETAILS : AddressRequest.ACTIVITIES_V_DETAILS, new OkHttpUtil.ResultCallback<BaseEntity<ActivitiesCVDetailsEntity>>() {
             @Override

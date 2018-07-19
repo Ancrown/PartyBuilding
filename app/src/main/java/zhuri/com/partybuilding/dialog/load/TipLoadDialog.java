@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -350,7 +351,6 @@ public class TipLoadDialog {
     }
 
 
-
     /**
      * 设置tip提示框时间
      *
@@ -413,7 +413,9 @@ public class TipLoadDialog {
      * 消失
      */
     public void dismiss() {
-        dialog.dismiss();
+        Log.e("eeeee", "DIALOG调用--dismiss");
+        if (dialog.isShowing())
+            dialog.dismiss();
         if (listener != null) {
             listener.onDimissListener();
         }

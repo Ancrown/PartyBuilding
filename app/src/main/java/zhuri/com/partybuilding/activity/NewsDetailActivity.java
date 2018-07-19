@@ -139,8 +139,8 @@ public class NewsDetailActivity extends BaseActivity implements TranslucentActio
     public void getEntity() {
 
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
 
         OkHttpUtil.getInstance(this).doPost(AddressRequest.NEWS_DETAIL, new OkHttpUtil.ResultCallback<BaseEntity<NewsDetailsEntity>>() {

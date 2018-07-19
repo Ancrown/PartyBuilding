@@ -129,8 +129,8 @@ public class ExaminationActivity extends BaseRecyclerActivity implements Translu
 
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("keyword", "");
         map.put("page", page == 0 ? 1 : page);
         map.put("cid", cid);

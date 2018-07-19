@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.util;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public class CacheDataManager {
 
     /**
      * // 获取文件
+     *
      * @param context
      * @return
      * @throws Exception
@@ -35,11 +37,11 @@ public class CacheDataManager {
     }
 
     public static void clearAllCache(Context context) {
-
+        //date下的 包
         deleteDir(context.getCacheDir());
 
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-
+            //sd卡下的 包
             deleteDir(context.getExternalCacheDir());
 
         }
@@ -47,6 +49,7 @@ public class CacheDataManager {
     }
 
     private static boolean deleteDir(File dir) {
+        Log.e("eeeeee文件", "清除的文件路径：" + dir.getAbsolutePath());
 
         if (dir != null && dir.isDirectory()) {
 
@@ -126,7 +129,7 @@ public class CacheDataManager {
 
         if (kiloByte < 1) {
 
-          // return size + "Byte";
+            // return size + "Byte";
             return size + "KB";
 
         }

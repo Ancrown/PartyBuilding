@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp3"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7" />
+                 />
 
             <TextView
                 android:id="@+id/item_activities_type"

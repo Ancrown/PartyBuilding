@@ -8,8 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
+//import android.hardware.camera2.CameraManager;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ import java.lang.reflect.Method;
 
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
+import zhuri.com.partybuilding.util.AppUtils;
 import zhuri.com.partybuilding.util.permission.PermissionManager;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 import zhuri.com.partybuilding.zbarcode.camera.CameraManager;
@@ -62,6 +67,11 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     private RelativeLayout scanContainer;
     private RelativeLayout scanCropView;
     private ImageView scanLine;
+
+    private ImageView captureMaskFlashlight;
+    private boolean showFlashlight;
+
+
     private Rect mCropRect = null;
 
     private boolean isHasSurface = false;
@@ -77,8 +87,6 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     protected void initView() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initView_();
-
-
     }
 
     private void initView_() {
@@ -87,7 +95,8 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
         scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
         scanLine = (ImageView) findViewById(R.id.capture_scan_line);
-
+        captureMaskFlashlight = findViewById(R.id.capture_mask_flashlight);
+        showFlashlight(showFlashlight);
 
         isHasSurface = false;
         beepManager = new BeepManager(this);
@@ -100,6 +109,8 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         animation.setRepeatMode(Animation.RESTART);
         scanLine.startAnimation(animation);
 
+
+        manager = (android.hardware.camera2.CameraManager) getSystemService(Context.CAMERA_SERVICE);
     }
 
     @Override
@@ -151,11 +162,68 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
 
     }
 
+    private Camera camera = null;
+    private android.hardware.camera2.CameraManager manager;// 声明CameraManager对象
+    private Camera.Parameters parameters = null;
+
     @Override
     protected void initListener() {
+        captureMaskFlashlight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showFlashlight) {
+                    //关闭手电
+                    lightSwitch(true);
+                } else {
+                    //打开手电
+                    lightSwitch(false);
+                }
+                showFlashlight = !showFlashlight;
+                showFlashlight(showFlashlight);
+            }
+        });
+    }
+
+    /**
+     * 手电筒控制方法
+     *
+     * @param lightStatus
+     * @return
+     */
+    private void lightSwitch(final boolean lightStatus) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //android6.0调用的手电筒接口
+            try {
+                manager.setTorchMode("0", lightStatus);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //低于6.0系统的手电筒
+            if (lightStatus) {
+                camera = Camera.open();
+                parameters = camera.getParameters();
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);// 开启
+                camera.setParameters(parameters);
+                camera.startPreview();
+            } else {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);// 关闭
+                camera.setParameters(parameters);
+                camera.stopPreview();
+                camera.release();
+            }
+
+        }
+
 
     }
 
+    public void showFlashlight(boolean showFlashlight) {
+        if (showFlashlight) {
+            captureMaskFlashlight.setImageDrawable(AppUtils.getDrawable(R.drawable.flashlight_show));
+        } else {
+            captureMaskFlashlight.setImageDrawable(AppUtils.getDrawable(R.drawable.flashlight));
+        }
+    }
 
     //region 初始化和回收相关资源
     private void initCamera(SurfaceHolder surfaceHolder) {

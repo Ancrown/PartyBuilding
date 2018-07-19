@@ -34,13 +34,12 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public Context context;
 
-    //是否登录
     public boolean isLogin;
 
 
     public BaseRecyclerAdapter(Context context) {
         this.context = context;
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
+        isLogin = TextUtils.isEmpty(StaticVariables.getUserId());
     }
 
     @Override
@@ -267,7 +266,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             mShouldScroll = true;
         }
     }
-
 
 
     /**

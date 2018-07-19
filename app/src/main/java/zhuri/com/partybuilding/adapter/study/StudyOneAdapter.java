@@ -31,7 +31,7 @@ import zhuri.com.partybuilding.util.glideutils.GlideUtils;
 
 public class StudyOneAdapter extends BaseRecyclerAdapter<StudyOneBean> {
 
-    private Drawable video = context.getResources().getDrawable(R.drawable.video);
+    private Drawable video = context.getResources().getDrawable(R.drawable.ic_video);
 
     private String cid;
 

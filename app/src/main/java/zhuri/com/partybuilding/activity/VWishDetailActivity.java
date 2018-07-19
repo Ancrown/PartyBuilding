@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
@@ -61,7 +62,7 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
     @BindView(R.id.vwish_detail_peoplenum)
     TextView vwishDetailPeoplenum;
     @BindView(R.id.vwish_detail_signup)
-    TextView vwishDetailSignup;
+    Button vwishDetailSignup;
     private boolean isJoin;
 
     @BindView(R.id.vwish_detail_rule)
@@ -180,8 +181,8 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
 
     private void getEntity() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
         OkHttpUtil.getInstance(this).doPost(AddressRequest.ACTIVITIES_W_DETAILS, new OkHttpUtil.ResultCallback<BaseEntity<VWishDetailEntity>>() {
             @Override
@@ -246,13 +247,13 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
      * @param id
      * @param textView
      */
-    public void signUp(Boolean isLogin, final Context context, String id, final TextView textView) {
+    public void signUp(Boolean isLogin, final Context context, String id, final Button textView) {
         if (isLogin) {
             context.startActivity(new Intent(context, LoginActivity.class));
         } else {
             Map map = new HashMap();
-            map.put("uid", SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, ""));
-            map.put("token", SharedPreferencesUtils.getParam(context, StaticVariables.TOKEN, ""));
+            map.put("uid", StaticVariables.getUserId());
+            map.put("token", StaticVariables.getTOKEN());
             map.put("id", id);
             OkHttpUtil.getInstance(context).doPost(AddressRequest.ACTIVITIES_W_SING_UP, new OkHttpUtil.ResultCallback<BaseEntity<String>>() {
                 @Override
@@ -293,27 +294,8 @@ public class VWishDetailActivity extends BaseActivity implements TranslucentActi
                 break;
             case R.id.vwish_detail_rule:
                 RuleDialog dialog = new RuleDialog(this, R.style.custom_dialog);
-                dialog.setTitle("积分获取");
-                dialog.setText("一、如何获得积分？\n" +
-                        "积分：会员通过团购或商城购物获得相应积分，并以积分享受不同程度的专属优惠券或实物礼品兑换（实物兑换后期上线）、抽奖及参与知我药妆网不定期举行的活动。\n" +
-                        "\n" +
-                        "\n" +
-                        "二、获得积分规则\n" +
-                        "登录商城购物 在商城或团购购物每消费1元，获得1积分，积分按实际消费取整后金额计算， 无封顶\n" +
-                        "\n" +
-                        "\n" +
-                        "三、如何查询积分？\n" +
-                        "在\"个人中心\"-\"我的积分\"里查看积分数值\n" +
-                        "\n" +
-                        "步骤：登陆知我药妆网—点击个人中心\n" +
-                        "\n" +
-                        "\n" +
-                        "四、何时获得积分？\n" +
-                        "购物获得积分：订单发货后，积分为冻结状态，新积分暂时不显示，确认收货后积分会自动充值到账户。\n" +
-                        "\n" +
-                        "\n" +
-                        "五、如何使用积分？\n" +
-                        "兑礼券 可享受各种优惠的红包或代金券，优惠券和红包自兑换起3天有效，不定期积分抽奖，只需手指轻轻一动，梦想大奖随时拿回家！");
+                dialog.setTitle("积分获取说明");
+                dialog.setText(AppUtils.getString(R.string.rule));
                 dialog.show();
                 break;
             case R.id.vwish_detail_more:

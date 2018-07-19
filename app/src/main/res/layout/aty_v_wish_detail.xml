@@ -6,10 +6,13 @@
     android:orientation="vertical">
 
     <include layout="@layout/head_new" />
+
     <View
         android:id="@+id/zhanwei"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
     <zhuri.com.partybuilding.view.ScrollViewExt
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,33 +106,30 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_13" />
 
-            <TextView
+            <Button
                 android:id="@+id/vwish_detail_signup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp35"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/fill_bg_red"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingLeft="@dimen/dp7"
-                android:paddingRight="@dimen/dp7"
-                android:paddingTop="@dimen/dp5"
+                android:gravity="center"
                 android:text="领取任务"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_15" />
+
             <TextView
-                android:layout_marginRight="@dimen/dp10"
                 android:id="@+id/vwish_detail_rule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10"
-                android:text="积分规则"
                 android:drawableLeft="@drawable/guize"
                 android:drawablePadding="@dimen/dp5"
+                android:text="积分获取说明"
                 android:textColor="@color/light_red"
                 android:textSize="@dimen/text_size_14" />
 
@@ -172,10 +172,10 @@
                 android:background="@color/background" />
 
             <android.support.v7.widget.RecyclerView
-                android:background="@color/background"
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/background">
 
             </android.support.v7.widget.RecyclerView>
 

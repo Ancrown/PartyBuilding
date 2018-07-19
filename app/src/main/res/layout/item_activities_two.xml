@@ -66,7 +66,7 @@
                 android:layout_height="@dimen/dp75"
 
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7"
+                
                 android:layout_marginRight="@dimen/dp10"/>
             <ImageView
                 android:layout_marginLeft="@dimen/dp10"
@@ -76,7 +76,7 @@
                 android:layout_height="@dimen/dp75"
 
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo7" />
+                 />
 
         </LinearLayout>
 

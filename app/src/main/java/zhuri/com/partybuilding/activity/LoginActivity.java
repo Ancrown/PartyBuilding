@@ -2,6 +2,7 @@ package zhuri.com.partybuilding.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zhuri.com.partybuilding.R;
 import zhuri.com.partybuilding.base.BaseActivity;
+import zhuri.com.partybuilding.dialog.load.TipLoadDialog;
 import zhuri.com.partybuilding.entity.BaseEntity;
 import zhuri.com.partybuilding.entity.LogInEntity;
 import zhuri.com.partybuilding.util.AddressRequest;
@@ -64,9 +66,24 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login() {
+        String admin = loginAdmin.getText().toString().trim();
+        String password = loginPassword.getText().toString().trim();
+
+        TipLoadDialog dialog = new TipLoadDialog(this).setNoShadowTheme();
+
+        if (TextUtils.isEmpty(admin)) {
+            dialog.setMsgAndType("账号为空", TipLoadDialog.ICON_TYPE_FAIL);
+            dialog.show();
+            return;
+        } else if (TextUtils.isEmpty(password)) {
+            dialog.setMsgAndType("密码为空", TipLoadDialog.ICON_TYPE_FAIL);
+            dialog.show();
+            return;
+        }
+
         Map map = new HashMap();
-        map.put("uname", loginAdmin.getText().toString().trim());
-        map.put("upass", loginPassword.getText().toString().trim());
+        map.put("uname", admin);
+        map.put("upass", password);
         map.put("source", "android");
         OkHttpUtil.getInstance(this).doPost(AddressRequest.LOGIN, new OkHttpUtil.ResultCallback<BaseEntity<LogInEntity>>() {
             @Override

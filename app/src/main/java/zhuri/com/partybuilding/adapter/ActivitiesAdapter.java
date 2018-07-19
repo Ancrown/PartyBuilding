@@ -42,7 +42,7 @@ public class ActivitiesAdapter extends BaseRecyclerAdapter<ActivitiesItemBean> {
     public ActivitiesAdapter(Context context, String type) {
         super(context);
         this.type = type;
-        isLogin = TextUtils.isEmpty(SharedPreferencesUtils.getParam(context, StaticVariables.USER_ID, "") + "");
+        isLogin = TextUtils.isEmpty(StaticVariables.getUserId());
 
     }
 

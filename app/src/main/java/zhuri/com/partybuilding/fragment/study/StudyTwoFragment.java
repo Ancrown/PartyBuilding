@@ -220,8 +220,8 @@ public class StudyTwoFragment extends BaseFragment {
      */
     public void getEntity() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
 
         //  map.put("page", itemList.get(index).page);
         OkHttpUtil.getInstance(getActivity()).doPost(AddressRequest.STUDY_TWO, new OkHttpUtil.ResultCallback<BaseEntity<List<StudyTwoEntity>>>() {
@@ -267,8 +267,8 @@ public class StudyTwoFragment extends BaseFragment {
 
     private void getEntityFL(final String gesture, final String indexId) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("cid", indexId);
         map.put("page", itemList.get(index).page);
 

@@ -169,8 +169,8 @@ public class ActivitiesTwoFragment extends BaseRecyclerFragment {
 
     public void getEntity(final String gesture) {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(getActivity(), StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("keyword", "");
         map.put("page", page == 0 ? 1 : page);
 

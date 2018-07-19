@@ -27,7 +27,6 @@ public class BannerViewFactory implements BannerView.ViewFactory<BannerItem> {
                 }
             }
         });
-        Log.e("eeeeeeeee", item.image);
         GlideUtils.LoadImage(container.getContext().getApplicationContext(), item.image, iv);
         return iv;
     }

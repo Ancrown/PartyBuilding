@@ -127,6 +127,11 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     AlertDialog.Builder builderOne;
     AlertDialog.Builder builderTwo;
 
+
+    //题库名字
+    private String questionTitle;
+
+
     @Override
     protected void initData() {
 
@@ -289,11 +294,11 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
+
+                                    usetime = lengthTime - mTimer.getMillisUntilFinished();
+                                    Log.e("eeeeee", "用时  " + lengthTime + "   " + mTimer.getMillisUntilFinished() + "  " + TimeUtil.millisecond2String(usetime, "mm:ss"));
                                     //计时结束
                                     mTimer.stop();
-                                    usetime = lengthTime - mTimer.getMillisUntilFinished();
-
-                                    Log.e("eeeeee", "用时  " + TimeUtil.millisecond2String(usetime, "mm:ss"));
 
                                     contrastiveProblem();
 
@@ -304,6 +309,9 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
 
                                     Intent intent = new Intent();
                                     intent.setClass(AnswerActivity.this, AnswerNewsResultActivity.class);
+                                    intent.putExtra("title", questionTitle);
+                                    intent.putExtra("longTime", usetime);
+
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable("list", (Serializable) answerBeanList);//序列化,要注意转化(Serializable)
                                     intent.putExtras(bundle);//发送数据
@@ -353,15 +361,18 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        usetime = lengthTime - mTimer.getMillisUntilFinished();
+                                        Log.e("eeeeee", "用时  " + lengthTime + "   " + TimeUtil.millisecond2String(usetime, "mm:ss"));
                                         //计时结束
                                         mTimer.stop();
-                                        usetime = lengthTime - mTimer.getMillisUntilFinished();
-                                        Log.e("eeeeee", "用时  " + TimeUtil.millisecond2String(usetime, "mm:ss"));
                                         contrastiveProblem();
 
 
                                         Intent intent = new Intent();
                                         intent.setClass(AnswerActivity.this, AnswerNewsResultActivity.class);
+                                        intent.putExtra("title", questionTitle);
+                                        intent.putExtra("longTime", usetime);
                                         Bundle bundle = new Bundle();
                                         bundle.putSerializable("list", (Serializable) answerBeanList);//序列化,要注意转化(Serializable)
                                         intent.putExtras(bundle);//发送数据
@@ -502,8 +513,8 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
     //获得试卷
     public void getexaminfo() {
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
 
         OkHttpUtil.getInstance(this).doPost(AddressRequest.GET_EXAMINATION, new OkHttpUtil.ResultCallback<BaseEntity<ExaminationInfoEntity>>() {
@@ -515,7 +526,10 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
             @Override
             public void onResponse(BaseEntity<ExaminationInfoEntity> response) {
 
+                questionTitle = response.getData().getMain().getTitle();
+
                 answerBeanList = new ArrayList<>();
+
                 for (int i = 0; i < response.getData().getInfo().size(); i++) {
                     answerItemBeanList = new ArrayList<>();
                     String[] options = response.getData().getInfo().get(i).getOptions().split("##");
@@ -546,8 +560,8 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         //type 判断是否跳页  正常答题和计时结束跳转  返回不跳
 
         Map map = new HashMap();
-        map.put("uid", SharedPreferencesUtils.getParam(this, StaticVariables.USER_ID, ""));
-        map.put("token", SharedPreferencesUtils.getParam(this, StaticVariables.TOKEN, ""));
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
         map.put("id", id);
         map.put("score", score);
         map.put("allanswer", allanswer);
@@ -565,8 +579,18 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
             public void onResponse(BaseEntity<String> response) {
                 if (response.isStatus()) {
                     if (type == 0) {
+                        usetime = lengthTime - mTimer.getMillisUntilFinished();
+                        //计时结束
+                        mTimer.stop();
+                        Log.e("eeeeee", "用时  " + lengthTime + "   " + TimeUtil.millisecond2String(usetime, "mm:ss"));
+                        contrastiveProblem();
+
+
                         Intent intent = new Intent();
                         intent.setClass(AnswerActivity.this, AnswerNewsResultActivity.class);
+                        intent.putExtra("title", questionTitle);
+                        intent.putExtra("longTime", usetime);
+
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("list", (Serializable) answerBeanList);//序列化,要注意转化(Serializable)
                         intent.putExtras(bundle);//发送数据
