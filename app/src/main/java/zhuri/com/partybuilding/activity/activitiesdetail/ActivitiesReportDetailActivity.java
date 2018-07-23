@@ -122,7 +122,7 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
         switch (view.getId()) {
             case R.id.activities_report_fabulous:
 
-                Function.fabulous(isLogin, this,  activitiesReportFabulous, id,type);
+                Function.fabulous(isLogin, this, activitiesReportFabulous, id, type);
 
                 break;
             case R.id.activities_report_up:
@@ -164,34 +164,34 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
             @Override
             public void onResponse(BaseEntity<ActivitiesCVDetailsEntity> response) {
 
-                    activitiesReportTitle.setText(response.getData().getMain().getTitle());
-                    activitiesReportTimeIn.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(),"yyyy-mm-dd HH:mm:ss"));
+                activitiesReportTitle.setText(response.getData().getMain().getTitle());
+                activitiesReportTimeIn.setText("发布时间：" + TimeUtil.stampToDate(response.getData().getMain().getAddtime(), "yyyy-mm-dd HH:mm:ss"));
 
-                    if (response.getData().getMain().getMelike().equals("0")) {
-                        activitiesReportFabulous.setCompoundDrawables(fabulousNo, null, null, null);
-                    } else {
-                        activitiesReportFabulous.setCompoundDrawables(fabulousYes, null, null, null);
-                    }
-                    activitiesReportFabulous.setText(response.getData().getMain().getIlike());
-                    activitiesReportBrowse.setText(response.getData().getMain().getHits());
+                if (response.getData().getMain().getMelike().equals("0")) {
+                    activitiesReportFabulous.setCompoundDrawables(fabulousNo, null, null, null);
+                } else {
+                    activitiesReportFabulous.setCompoundDrawables(fabulousYes, null, null, null);
+                }
+                activitiesReportFabulous.setText(response.getData().getMain().getIlike());
+                activitiesReportBrowse.setText(response.getData().getMain().getHits());
 
-                    activitiesReportAddress.setText("地址：" + response.getData().getMain().getAddress());
-                    activitiesReportActtime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~" +
-                            TimeUtil.stampToDate(response.getData().getMain().getEtime(), "yyyy-mm-dd"));
+                activitiesReportAddress.setText("地址：" + response.getData().getMain().getAddress());
+                activitiesReportActtime.setText("活动时间：" + TimeUtil.stampToDate(response.getData().getMain().getStime(), "yyyy-mm-dd") + "~" +
+                        TimeUtil.stampToDate(response.getData().getMain().getEtime(), "yyyy-mm-dd"));
 
-                    activitiesReportPeopleNum.setText("报名人数：" + response.getData().getMain().getSignup());
-                    activitiesReportHost.setText("举办者：" + response.getData().getMain().getDname());
+                activitiesReportPeopleNum.setText("报名人数：" + response.getData().getMain().getSignup());
+                activitiesReportHost.setText("举办者：" + response.getData().getMain().getDname());
 
 
-                    text = response.getData().getReport();
-                    activitiesReportContent.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
+                text = response.getData().getReport();
+                activitiesReportContent.loadDataWithBaseURL(null, HtmlFormat.getNewContent(text), "text/html", "utf-8", null);
 
-                    reportUpId = response.getData().getPerv().getId();
-                    activitiesReportUp.setText("上一篇："+response.getData().getPerv().getTitle());
+                reportUpId = response.getData().getPerv().getId();
+                activitiesReportUp.setText("上一篇：" + response.getData().getPerv().getTitle());
 
-                    reportDownId = response.getData().getNext().getId();
-                    activitiesReportDown.setText("上一篇:"+response.getData().getNext().getTitle());
-                    zhanwei.setVisibility(View.GONE);
+                reportDownId = response.getData().getNext().getId();
+                activitiesReportDown.setText("上一篇：" + response.getData().getNext().getTitle());
+                zhanwei.setVisibility(View.GONE);
 
             }
         }, map, "");
