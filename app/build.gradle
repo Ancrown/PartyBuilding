@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
@@ -75,4 +75,6 @@ dependencies {
     compile 'com.umeng.sdk:utdid:1.1.5.3'
     //PushSDK
     compile 'com.umeng.sdk:push:4.2.0'
+    //app更新
+    compile 'com.liulishuo.filedownloader:library:1.6.8'
 }
