@@ -190,7 +190,7 @@ public class ActivitiesReportDetailActivity extends BaseActivity implements Tran
                 activitiesReportUp.setText("上一篇：" + response.getData().getPerv().getTitle());
 
                 reportDownId = response.getData().getNext().getId();
-                activitiesReportDown.setText("上一篇：" + response.getData().getNext().getTitle());
+                activitiesReportDown.setText("下一篇：" + response.getData().getNext().getTitle());
                 zhanwei.setVisibility(View.GONE);
 
             }

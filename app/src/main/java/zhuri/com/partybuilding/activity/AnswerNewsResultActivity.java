@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +24,7 @@ import zhuri.com.partybuilding.bean.AnswerBean;
 import zhuri.com.partybuilding.bean.AnswerItemBean;
 import zhuri.com.partybuilding.util.SizeUtils;
 import zhuri.com.partybuilding.util.SpaceItemDecoration;
+import zhuri.com.partybuilding.util.StaticVariables;
 import zhuri.com.partybuilding.util.TimeUtil;
 import zhuri.com.partybuilding.view.gradualchange.TranslucentActionBar;
 
@@ -89,7 +92,7 @@ public class AnswerNewsResultActivity extends BaseActivity implements Translucen
 
         type = getIntent().getStringExtra("type");
         title = getIntent().getStringExtra("title");
-        longTime = getIntent().getLongExtra("longTime", 1000*60*10);
+        longTime = getIntent().getLongExtra("longTime", 1000 * 60 * 10);
         score = getIntent().getStringExtra("score");
         answerNewsResultTitle.setText(title);
         answerNewsResultTime.setText("答题用时：" + TimeUtil.getFormatHMS(longTime));
@@ -99,7 +102,6 @@ public class AnswerNewsResultActivity extends BaseActivity implements Translucen
 
             answerBeanList = (List<AnswerBean>) getIntent().getSerializableExtra("list");
             adapter.setDataList(answerBeanList);
-
 
 
         } else {
@@ -158,7 +160,7 @@ public class AnswerNewsResultActivity extends BaseActivity implements Translucen
                 true,
                 "25"));
 
-         list = new ArrayList<>();
+        list = new ArrayList<>();
         list.add(new AnswerItemBean("0", "毛泽东思想"));
         list.add(new AnswerItemBean("1", "马克思列宁主义"));
         list.add(new AnswerItemBean("2", "习近平新时代中国特色社会主义思想", 1));
@@ -203,6 +205,11 @@ public class AnswerNewsResultActivity extends BaseActivity implements Translucen
                 "25"));
 
         adapter.setDataList(answerBeanList);
+    }
 
+    public void getEntity1() {
+        Map map = new HashMap();
+        map.put("uid", StaticVariables.getUserId());
+        map.put("token", StaticVariables.getTOKEN());
     }
 }

@@ -409,7 +409,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         errorid = "";
         erroranswer = "";
         for (int i = 0; i < answerBeanList.size(); i++) {
-            allanswer = allanswer + answerBeanList.get(i).getMyOptions() + "#";
+            allanswer += answerBeanList.get(i).getId() + "*" + answerBeanList.get(i).getMyOptions() + "*" + answerBeanList.get(i).isErrorOptions() + "#";
             if (!answerBeanList.get(i).isErrorOptions()) {
                 errorid = errorid + answerBeanList.get(i).getId() + "#";
                 erroranswer = erroranswer + answerBeanList.get(i).getMyOptions() + "#";
@@ -565,7 +565,7 @@ public class AnswerActivity extends BaseActivity implements TranslucentActionBar
         map.put("id", id);
         map.put("score", score);
         map.put("allanswer", allanswer);
-        map.put("errorid", errorid);
+     //   map.put("errorid", errorid);
         map.put("erroranswer", erroranswer);
         map.put("usetime", usetime);
 

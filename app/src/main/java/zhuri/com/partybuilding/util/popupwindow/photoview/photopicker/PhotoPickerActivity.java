@@ -661,4 +661,6 @@ public class PhotoPickerActivity extends AppCompatActivity {
         captureManager.onRestoreInstanceState(savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+
 }

@@ -171,7 +171,7 @@ public class HomePageFragment extends BaseRecyclerFragment {
         bannerViewFactory.setOnClikImg(new BannerViewFactory.OnClikImg() {
             @Override
             public void onItemImg(int i) {
-                Log.e("eeeee", "position:" + brolist.get(i).getId());
+               // Log.e("eeeee", "position:" + brolist.get(i).getId());
             }
         });
 
@@ -179,7 +179,7 @@ public class HomePageFragment extends BaseRecyclerFragment {
         marqueeview.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
             @Override
             public void onItemClick(int position, TextView textView) {
-                Toast.makeText(getActivity(), String.valueOf(marqueeview.getPosition()) + ". " + textView.getText(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), String.valueOf(marqueeview.getPosition()) + ". " + textView.getText(), Toast.LENGTH_SHORT).show();
             }
         });
         //下拉上拉

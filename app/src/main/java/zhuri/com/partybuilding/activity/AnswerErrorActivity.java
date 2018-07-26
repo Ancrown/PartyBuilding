@@ -72,7 +72,7 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
         answerItemBeanList0.add(new AnswerItemBean("0", "伟大斗争、伟大工程、伟大事业、伟大梦想 "));
         answerItemBeanList0.add(new AnswerItemBean("1", "伟大斗争、伟大建设、伟大事业、伟大梦想 "));
         answerItemBeanList0.add(new AnswerItemBean("2", "伟大斗争、伟大工程、伟大发展、伟大梦想"));
-        answerItemBeanList0.add(new AnswerItemBean("3", "伟大斗争、伟大工程、伟大事业、伟大理想",1));
+        answerItemBeanList0.add(new AnswerItemBean("3", "伟大斗争、伟大工程、伟大事业、伟大理想", 1));
         answerBeanList.add(new AnswerBean("1000",
                 "1、在习近平新时代中国特色社会主义思想指导下，中国共产党领导全国各族人民，统揽（），推动中国特色社会主义进入了新时代。",
                 "0",
@@ -84,7 +84,7 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
                 "25"));
 
         answerItemBeanList1 = new ArrayList<>();
-        answerItemBeanList1.add(new AnswerItemBean("0", "毛泽东思想",1));
+        answerItemBeanList1.add(new AnswerItemBean("0", "毛泽东思想", 1));
         answerItemBeanList1.add(new AnswerItemBean("1", "马克思列宁主义"));
         answerItemBeanList1.add(new AnswerItemBean("2", "习近平新时代中国特色社会主义思想"));
         answerItemBeanList1.add(new AnswerItemBean("3", "“三个代表”重要思想"));
@@ -101,8 +101,8 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
         answerItemBeanList2 = new ArrayList<>();
         answerItemBeanList2.add(new AnswerItemBean("0", "邓小平理论"));
         answerItemBeanList2.add(new AnswerItemBean("1", "三个代表”重要思想"));
-        answerItemBeanList2.add(new AnswerItemBean("2", "科学发展观 ",1));
-        answerItemBeanList2.add(new AnswerItemBean("3", "习近平新时代中国特色社会主义思想",1));
+        answerItemBeanList2.add(new AnswerItemBean("2", "科学发展观 ", 1));
+        answerItemBeanList2.add(new AnswerItemBean("3", "习近平新时代中国特色社会主义思想", 1));
         answerBeanList.add(new AnswerBean("1002", "3、中国共产党以马克思列宁主义、毛泽东思想、（ ）作为自己的行动指南。  ",
                 "1",
                 answerItemBeanList2,
@@ -115,8 +115,8 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
         answerItemBeanList3 = new ArrayList<>();
         answerItemBeanList3.add(new AnswerItemBean("0", "推进现代化建设"));
         answerItemBeanList3.add(new AnswerItemBean("1", "推进经济建设"));
-        answerItemBeanList3.add(new AnswerItemBean("2", "完成祖国统一",1));
-        answerItemBeanList3.add(new AnswerItemBean("3", "维护世界和平与促进共同发展",1));
+        answerItemBeanList3.add(new AnswerItemBean("2", "完成祖国统一", 1));
+        answerItemBeanList3.add(new AnswerItemBean("3", "维护世界和平与促进共同发展", 1));
         answerBeanList.add(new AnswerBean("1003",
                 "4、全党同志要为实现（ ）、（ ）、（ ）这三大历史任务，实现“两个一百年”奋斗目标、实现中华民族伟大复兴的中国梦而奋斗。 ",
                 "1",
@@ -184,7 +184,22 @@ public class AnswerErrorActivity extends BaseRecyclerActivity implements Translu
                     answerItemBeanList = new ArrayList<>();
 
                     for (int j = 0; j < response.getData().getInfo().get(i).getOptions().split(",").length; j++) {
-                        answerItemBeanList.add(new AnswerItemBean(j + "", StringUtil.getLetter(j) + " " + response.getData().getInfo().get(i).getOptions().split(",")[j]));
+                        String[] myanswer = response.getData().getInfo().get(i).getMyanswer().split(",");
+                        for (int y = 0; y < myanswer.length; y++) {
+                            if (myanswer[y].equals("" + j)) {
+                                answerItemBeanList.add(new AnswerItemBean(
+                                        j + "",
+                                        StringUtil.getLetter(j) + " " + response.getData().getInfo().get(i).getOptions().split(",")[j],
+                                        1));
+                                break;
+                            } else {
+                                answerItemBeanList.add(new AnswerItemBean(
+                                        j + "",
+                                        StringUtil.getLetter(j) + " " + response.getData().getInfo().get(i).getOptions().split(",")[j]));
+                                break;
+                            }
+                        }
+
                     }
                     answerBeanList.add(new AnswerBean(response.getData().getInfo().get(i).getId(),
                             i + ". " + response.getData().getInfo().get(i).getTitle(),
